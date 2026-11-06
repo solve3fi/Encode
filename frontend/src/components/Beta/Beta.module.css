@@ -1,0 +1,126 @@
+/* Shared styles for the Beta pages (ALM market view, Yield Hunter). Layout, hero and buttons come from ProtocolHome.module.css. */
+.soon { align-self: flex-start; padding: 3px 12px; border-radius: 999px; background: rgba(245, 177, 76, 0.14); color: #f5b14c; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.notice { padding: 16px 20px; border: 1px solid rgba(245, 177, 76, 0.35); border-radius: 16px; background: rgba(245, 177, 76, 0.07); color: #e9e2cf; font-size: 14px; line-height: 1.6; }
+.notice strong { color: #f5b14c; }
+
+.strategy { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pick { display: flex; flex-direction: column; gap: 10px; padding: 24px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; }
+.pick h3 { margin: 0; font-size: 20px; }
+.pick b { font-size: 34px; letter-spacing: -0.02em; line-height: 1.1; }
+.pick p { margin: 0; font-size: 14px; line-height: 1.55; color: #c9c7d6; }
+.pickOn { border-color: #5fe3a1; box-shadow: 0 0 0 1px rgba(95, 227, 161, 0.25) inset; }
+.pickOff { opacity: 0.8; }
+.tagOn, .tagOff { align-self: flex-start; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.tagOn { background: rgba(95, 227, 161, 0.16); color: #5fe3a1; }
+.tagOff { background: rgba(246, 245, 249, 0.08); color: #a6a4b8; }
+
+.ctx { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.ctxCell { display: flex; flex-direction: column; gap: 6px; padding: 22px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; }
+.ctxCell strong { font-size: 30px; letter-spacing: -0.02em; }
+.ctxCell p { margin: 0; font-size: 14px; color: #c9c7d6; line-height: 1.5; }
+.ctxCell small { font-size: 12px; color: #8d8ba0; }
+.unavailable strong { color: #8d8ba0; }
+
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th { text-align: left; font-size: 12px; font-weight: 600; color: #a6a4b8; padding: 10px 12px; border-bottom: 1px solid rgba(246, 245, 249, 0.12); }
+.table td { padding: 14px 12px; border-bottom: 1px solid rgba(246, 245, 249, 0.07); vertical-align: top; }
+.table td small { display: block; color: #8d8ba0; margin-top: 2px; }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.neg { color: #ff8a8a; }
+.pos { color: #5fe3a1; }
+.pill { display: inline-flex; padding: 3px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pillHold { background: rgba(88, 215, 255, 0.16); color: #58d7ff; }
+.pillLp { background: rgba(95, 227, 161, 0.16); color: #5fe3a1; }
+.pillMarg { background: rgba(245, 177, 76, 0.16); color: #f5b14c; }
+.tableWrap { overflow-x: auto; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; padding: 6px 10px; }
+
+.honest { display: flex; flex-direction: column; gap: 10px; padding: 24px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; }
+.honest h3 { margin: 0; font-size: 20px; }
+.honest ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.6; color: #c9c7d6; }
+.fine { margin: 0; font-size: 12px; line-height: 1.6; color: #8d8ba0; }
+
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.step { display: flex; flex-direction: column; gap: 8px; padding: 24px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; }
+.step span { color: #8c84ff; font-weight: 700; font-size: 13px; }
+.step h3 { margin: 0; font-size: 19px; }
+.step p { margin: 0; font-size: 14px; line-height: 1.6; color: #c9c7d6; }
+
+@media (max-width: 900px) {
+  .strategy, .ctx, .steps { grid-template-columns: 1fr; }
+  .pick b { font-size: 28px; }
+}
+
+/* ---- step flow (ALM) ---- */
+.flow { list-style: none; margin: 0; padding: 0; display: flex; align-items: stretch; gap: 0; }
+.flowItem { display: flex; align-items: center; flex: 1 1 0; min-width: 0; }
+.flowNode { flex: 1 1 auto; display: flex; flex-direction: column; gap: 8px; padding: 20px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #0e0e1c; min-height: 100%; }
+.flowNode h3 { margin: 0; font-size: 17px; }
+.flowNode p { margin: 0; font-size: 13px; line-height: 1.55; color: #c9c7d6; }
+.flowNum { color: #8c84ff; font-weight: 700; font-size: 12px; letter-spacing: 0.06em; }
+.flowTag { align-self: flex-start; padding: 2px 9px; border-radius: 999px; background: rgba(88, 215, 255, 0.12); color: #58d7ff; font-size: 11px; font-weight: 700; }
+.flowLink { position: relative; flex: 0 0 34px; height: 2px; margin: 0 -2px; background: rgba(246, 245, 249, 0.1); overflow: hidden; }
+.flowLink i { position: absolute; inset: 0; background: linear-gradient(90deg, transparent, #58d7ff, #8c84ff, transparent); transform: translateX(-100%); animation: slide 2.4s linear infinite; }
+@keyframes slide { to { transform: translateX(100%); } }
+
+/* ---- animated SVG flow (Yield Hunter) ---- */
+.figure { margin: 0; display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 22px; background: radial-gradient(900px 300px at 50% 0, rgba(104, 93, 247, 0.12), transparent 70%), #0b0b18; }
+.flowSvg { width: 100%; height: auto; display: block; }
+.pathBase { fill: none; stroke: rgba(246, 245, 249, 0.12); stroke-width: 2; }
+.pathFlow { fill: none; stroke: url(#yhLine); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 8 14; animation: dashMove 1.6s linear infinite; }
+.pathBack { animation-direction: reverse; stroke-dasharray: 6 12; opacity: 0.7; }
+.pathKeeper { animation-duration: 2.2s; }
+@keyframes dashMove { to { stroke-dashoffset: -44; } }
+.nodeBox { fill: #11111f; stroke: rgba(246, 245, 249, 0.16); stroke-width: 1.5; }
+.nodeVault { fill: #17163a; stroke: #8c84ff; stroke-width: 2; }
+.nodeTitle { fill: #f6f5f9; font-size: 18px; font-weight: 700; }
+.nodeSub { fill: #a6a4b8; font-size: 13px; }
+
+/* ---- terminal-style mock (keeper cycle) ---- */
+.term { margin: 0; padding: 20px 22px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #080812; font: 13px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #c9c7d6; overflow-x: auto; }
+.term .dim { color: #6f6d86; }
+.term .k { color: #58d7ff; }
+.term .ok { color: #5fe3a1; }
+.term .warn { color: #f5b14c; }
+.termHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* ---- mock vault card ---- */
+.mockCard { display: flex; flex-direction: column; gap: 14px; padding: 22px; border: 1px solid rgba(246, 245, 249, 0.12); border-radius: 22px; background: #0e0e1c; }
+.mockTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; color: #a6a4b8; }
+.mockTop b { color: #f6f5f9; font-size: 16px; }
+.allocBar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: rgba(246, 245, 249, 0.08); }
+.allocBar i { display: block; height: 100%; }
+.allocRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; }
+.allocRow span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 10px; background: var(--c, #685df7); }
+.allocRow small { color: #a6a4b8; }
+.twoCol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+
+/* ---- worked example (ALM) ---- */
+.calc { display: flex; flex-direction: column; gap: 6px; padding: 22px; border: 1px solid rgba(246, 245, 249, 0.12); border-radius: 22px; background: #0e0e1c; font-size: 14px; }
+.calc div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(246, 245, 249, 0.06); }
+.calc div:last-of-type { border-bottom: 0; }
+.calc .tot { font-weight: 700; font-size: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pathFlow, .flowLink i { animation: none; }
+}
+@media (max-width: 900px) {
+  .flow { flex-direction: column; }
+  .flowItem { flex-direction: column; align-items: stretch; }
+  .flowLink { flex: 0 0 28px; width: 2px; height: 28px; margin: -2px auto; }
+  .flowLink i { background: linear-gradient(180deg, transparent, #58d7ff, #8c84ff, transparent); transform: translateY(-100%); animation-name: slideY; }
+  .twoCol { grid-template-columns: 1fr; }
+}
+@keyframes slideY { to { transform: translateY(100%); } }
+
+.scen { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 16px; }
+.scenBtn { font: inherit; font-size: 14px; font-weight: 600; min-height: 44px; padding: 0 18px; border-radius: 99px; cursor: pointer; color: #c9c7d6; background: #141428; border: 1px solid rgba(246, 245, 249, 0.12); }
+.scenBtn[aria-pressed="true"] { background: rgba(104, 93, 247, 0.2); border-color: #8c84ff; color: #f6f5f9; }
+.rowAlm td { background: rgba(104, 93, 247, 0.12); }
+
+/* Scenario table: fixed columns so switching scenarios never reflows or rescales the text. */
+.tableWrap { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+.tableWrap .table { table-layout: fixed; min-width: 560px; }
+.tableWrap .table th:first-child, .tableWrap .table td:first-child { width: 34%; }
+.tableWrap .table th:not(:first-child), .tableWrap .table td:not(:first-child) { width: 16.5%; }
+.tableWrap .table td small { font-size: 12px; line-height: 1.4; }
+.honest { min-height: 100%; }

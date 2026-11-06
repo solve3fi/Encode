@@ -1,0 +1,19 @@
+[Unit]
+Description=Solve3 weekly epoch settlement keeper
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/solve3/epoch-keeper.env
+RuntimeDirectory=solve3-epoch-keeper
+RuntimeDirectoryMode=0700
+ExecStart=/usr/bin/flock -n -E 75 /run/solve3-epoch-keeper/lock /usr/bin/docker run --rm --read-only --network host --security-opt no-new-privileges --cap-drop ALL --tmpfs /tmp:rw,noexec,nosuid,size=16m --env-file /etc/solve3/epoch-keeper.env -v /srv/solve3/scripts:/app/scripts:ro -v /srv/solve3/src/configs/vesolve.json:/app/src/configs/vesolve.json:ro -v /etc/solve3/admin-keypair.json:/run/secrets/solve3-admin-keypair.json:ro --entrypoint /usr/local/bin/bun solve3-frontend:local /app/scripts/finalize-devnet-epoch.mjs
+SuccessExitStatus=75
+
+# The service only reads the signer, source script, and IDL. The container is ephemeral.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict

@@ -1,0 +1,4 @@
+.root {
+  --button-bg: var(--mantine-color-purple-9);
+  --button-hover: var(--mantine-color-purple-8);
+}

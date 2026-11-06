@@ -1,0 +1,7 @@
+.input {
+  background: rgba(229, 229, 229, 0.05);
+}
+
+.input::placeholder {
+  font-weight: 600;
+}

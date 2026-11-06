@@ -1,0 +1,31 @@
+.root {
+  background-color: transparent;
+
+  table {
+    background-color: transparent;
+    border-collapse: separate !important;
+    border-spacing: rem(0) rem(10);
+
+    thead tr th {
+      border-bottom: 0;
+    }
+  }
+}
+
+.row {
+  background-color: var(--mantine-color-gray-18);
+
+  td:first-child {
+    border-top-left-radius: rem(10);
+    border-bottom-left-radius: rem(10);
+  }
+
+  td:last-child {
+    border-top-right-radius: rem(10);
+    border-bottom-right-radius: rem(10);
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}

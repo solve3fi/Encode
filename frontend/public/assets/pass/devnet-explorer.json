@@ -1,0 +1,8 @@
+{
+ "name": "Solve3 Devnet Pass",
+ "symbol": "S3PASS",
+ "description": "A non-transferable Solve3 Devnet test Pass. No monetary value, claimable rewards or live XP.",
+ "image": "https://solve3.fi/assets/pass/tier-1.svg",
+ "attributes": [{"trait_type":"Network","value":"Devnet"},{"trait_type":"Tier","value":"Explorer"}],
+ "properties": {"files":[{"uri":"https://solve3.fi/assets/pass/tier-1.svg","type":"image/svg+xml"}]}
+}

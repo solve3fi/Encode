@@ -1,0 +1,10 @@
+.input {
+	border: none;
+}
+
+.section {
+	&[data-position="right"] {
+		justify-content: flex-end;
+		padding-right: var(--mantine-spacing-md);
+	}
+}

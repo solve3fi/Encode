@@ -1,0 +1,37 @@
+.item {
+	background-color: var(--mantine-color-dark-10);
+	border-width: rem(2);
+	border-color: var(--mantine-color-dark-10);
+
+	&[data-selected] {
+		background-color: var(--mantine-color-purple-16);
+		border-color: var(--mantine-color-purple-6);
+	}
+}
+
+.badge {
+	background-color: var(--mantine-color-gray-18);
+
+	&[data-selected] {
+		background-color: var(--mantine-color-purple-14);
+	}
+}
+
+.usage {
+	display: block;
+	height: 4px;
+	border-radius: 2px;
+	background: rgba(246, 245, 249, 0.1);
+	overflow: hidden;
+}
+
+.usageBar {
+	display: block;
+	height: 100%;
+	border-radius: 2px;
+	background: #58d7ff;
+
+	&[data-selected] {
+		background: #8c84ff;
+	}
+}

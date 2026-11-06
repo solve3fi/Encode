@@ -1,0 +1,39 @@
+{
+	"name": "@phongjimmy/solve3",
+	"version": "0.0.1",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"typings": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "bun run clean && NODE_ENV=production bun run build.ts",
+		"typecheck": "tsc --noEmit",
+		"clean": "rm -rf dist",
+		"npm:publish": "npm publish --access public",
+		"npm:dry-run": "npm publish --access public --dry-run"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"@coral-xyz/anchor": ">=0.31.1",
+		"@solana/spl-token": ">=0.4.13",
+		"@solana/web3.js": ">=1.69.0",
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@coral-xyz/anchor": "^0.31.1",
+		"@solana/spl-token": "^0.4.13",
+		"@solana/web3.js": "1.69.0"
+	}
+}

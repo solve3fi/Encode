@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="BONK3">
+  <circle cx="64" cy="64" r="62" fill="#ff8a3d"/>
+  <path d="M29 50 42 25l16 20h12l16-20 13 25-8 46H37z" fill="#fff1dc" stroke="#2b1b12" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="50" cy="64" r="5" fill="#2b1b12"/><circle cx="78" cy="64" r="5" fill="#2b1b12"/>
+  <path d="M57 77h14l-7 8z" fill="#2b1b12"/>
+  <text x="64" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#2b1b12">B3</text>
+</svg>

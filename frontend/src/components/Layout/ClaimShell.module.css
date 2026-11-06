@@ -1,0 +1,10 @@
+.page { display: flex; flex-direction: column; gap: 24px; max-width: 760px; margin: 0 auto; padding: 24px 24px 48px; min-width: 0; }
+.head { display: flex; flex-direction: column; gap: 14px; }
+.head h1 { margin: 0; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+.head p { margin: 0; font-size: 16px; line-height: 1.6; color: #c9c7d6; }
+.grad { background: linear-gradient(90deg, #8c84ff, #58d7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.note { padding: 22px 26px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #0e0e1c; }
+.eyebrow { color: var(--info); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.note p { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: #c9c7d6; }
+.note a { color: #8c84ff; }
+@media (max-width: 760px) { .page { padding: 16px 16px 24px; } }

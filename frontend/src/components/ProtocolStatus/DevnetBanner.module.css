@@ -1,0 +1,43 @@
+.root {
+	margin-bottom: var(--space-4);
+	border-block: 1px solid color-mix(in srgb, var(--caution) 22%, transparent);
+	background:
+		linear-gradient(90deg, color-mix(in srgb, var(--caution) 9%, transparent), transparent 46%),
+		color-mix(in srgb, var(--surface-sunken) 92%, transparent);
+}
+
+.inner {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+	min-height: 2.75rem;
+}
+
+.message {
+	color: var(--text-secondary);
+	font-size: var(--type-small);
+}
+
+.link {
+	margin-left: auto;
+	color: var(--caution);
+	font-family: var(--font-data);
+	font-size: var(--type-label);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+@media (max-width: 36em) {
+	.inner {
+		gap: var(--space-2);
+	}
+
+	.message {
+		font-size: 0.75rem;
+	}
+
+	.link {
+		display: none;
+	}
+}

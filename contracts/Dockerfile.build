@@ -1,0 +1,10 @@
+FROM rust:1.89.0-bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	pkg-config build-essential libudev-dev curl ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"
+ENV PATH="/root/.local/share/solana/install/active_release/bin:${PATH}"
+
+WORKDIR /workspace

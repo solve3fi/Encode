@@ -1,0 +1,137 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 28px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 24px;
+	background: #0e0e1c;
+	box-shadow: 0 40px 120px rgba(104, 93, 247, 0.14);
+}
+
+.eyebrow {
+	margin: 0 0 4px;
+	color: var(--info);
+	font-family: ui-monospace, "SF Mono", Menlo, monospace;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 18px 20px;
+	border-radius: 18px;
+	background: #141428;
+}
+
+.fieldTop { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.label { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #a6a4b8; }
+.balance { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #c9c7d6; }
+
+.chip {
+	min-height: 36px;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 8px;
+	background: rgba(104, 93, 247, 0.2);
+	color: #b3adff;
+	font: inherit;
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.chip:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.fieldMain { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+
+.amount, .amount input {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 48px;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: #f6f5f9;
+	font-size: 34px;
+	font-weight: 700;
+	text-align: left;
+}
+
+.amount input::placeholder { color: #8e8ca0; }
+
+.token {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 0 14px;
+	border: 1px solid rgba(246, 245, 249, 0.14);
+	border-radius: 12px;
+	background: #0e0e1c;
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.sub { font-size: 14px; color: #a6a4b8; }
+
+.summary {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 10px 16px;
+	margin: 4px 0 0;
+	padding: 16px 20px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 16px;
+	font-size: 14px;
+}
+
+.summary dt { color: #a6a4b8; }
+.summary dd { margin: 0; text-align: right; font-weight: 600; }
+.summary .status { font-weight: 500; color: #c9c7d6; }
+
+.ack { display: flex; align-items: flex-start; gap: 12px; min-height: 44px; font-size: 15px; line-height: 1.5; color: #c9c7d6; cursor: pointer; }
+.ack input { width: 22px; height: 22px; margin-top: 2px; accent-color: #685df7; flex-shrink: 0; }
+
+.primary {
+	min-height: 56px;
+	border: 0;
+	border-radius: 14px;
+	background: #685df7;
+	color: #fff;
+	font: inherit;
+	font-size: 17px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.primary:hover:not(:disabled) { background: #7c72ff; }
+.primary:disabled { background: #141428; color: #a6a4b8; cursor: not-allowed; }
+
+@media (max-width: 760px) {
+	.card { padding: 18px 16px; border-radius: 20px; }
+	.amount, .amount input { font-size: 28px; }
+}
+
+/* The permanent-lock review dialog: same look as the swap result card (dark card, violet edge, soft glow). */
+.reviewContent { background: #0e0e1c; border: 1px solid rgba(140, 132, 255, 0.35); box-shadow: 0 40px 120px -20px rgba(104, 93, 247, 0.45), 0 0 0 1px rgba(246, 245, 249, 0.04) inset; }
+.reviewHeader { background: transparent; padding: 22px 24px 6px; min-height: 0; }
+.reviewTitle { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: #f6f5f9; }
+.reviewClose { width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(246, 245, 249, 0.14); background: transparent; color: #c9c7d6; }
+.reviewClose:hover { border-color: rgba(246, 245, 249, 0.3); background: transparent; }
+.reviewBody { padding: 10px 24px 24px; }
+.reviewNote { background: rgba(88, 215, 255, 0.08); border: 1px solid rgba(88, 215, 255, 0.24); border-radius: 16px; }
+.reviewNoteTitle { color: #58d7ff; font-weight: 700; }
+.reviewSegments { background: #141428; border: 1px solid rgba(246, 245, 249, 0.08); border-radius: 12px; }
+.reviewBox { background: #141428; border: 1px solid rgba(246, 245, 249, 0.08); border-radius: 16px; }
+.reviewCancel { background: transparent; border: 1px solid rgba(246, 245, 249, 0.18); color: #f6f5f9; min-height: 52px; }
+.reviewSign { background: #685df7; color: #fff; font-weight: 600; min-height: 52px; }
+.reviewSign:hover:not(:disabled) { background: #7c72ff; }
+.reviewSign:disabled, .reviewSign[data-disabled] { background: #141428; color: #a6a4b8; }
+@media (max-width: 480px) { .reviewHeader { padding: 16px 16px 4px; } .reviewBody { padding: 8px 16px 18px; } .reviewTitle { font-size: 19px; } }

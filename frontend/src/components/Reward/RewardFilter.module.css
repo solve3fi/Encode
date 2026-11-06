@@ -1,0 +1,14 @@
+.wrapper {
+	display: flex;
+	flex: 1;
+}
+
+.input {
+	background-color: var(--mantine-color-gray-18);
+	color: var(--mantine-color-gray-8);
+	border: 0;
+
+	&::placeholder {
+		color: var(--mantine-color-gray-10);
+	}
+}

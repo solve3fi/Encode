@@ -1,0 +1,239 @@
+:root {
+	/* Color roles — all values are extracted from the existing Solve3 UI. */
+	--surface-base: #070711;
+	--surface-raised: #0e0e1c;
+	--surface-sunken: #0d0c1b;
+	--surface-overlay: #181726;
+	--surface-genesis: #0e0e1c;
+	--surface-genesis-inset: #141428;
+	--border-genesis: rgba(246, 245, 249, 0.1);
+	--glow-genesis: none;
+	--border-subtle: #6065971a;
+	--border-strong: #454365;
+	--border-accent: #685df7;
+	--text-primary: #f6f5f9;
+	--text-secondary: #c9c7d6;
+	--text-tertiary: #a6a4b8;
+	--text-inverse: #02000d;
+	--accent: #685df7;
+	--accent-hover: #7c7cfd;
+	--accent-muted: #201070;
+	--positive: #56e7a4;
+	--negative: #e44f4f;
+	--caution: #f5b14c;
+	--info: #58d7ff;
+	--overlay-soft: #e5e5e50d;
+	--overlay-line: #ffffff17;
+	--overlay-hover: #ffffff0e;
+
+	/* Type roles. */
+	--font-display: var(--funnel-fonts), sans-serif;
+	--font-body: var(--be-vietnam-pro), sans-serif;
+	--font-data: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	--type-display: clamp(3.125rem, 6.5vw, 7rem);
+	--type-h1: clamp(2.25rem, 4vw, 3.75rem);
+	--type-h2: clamp(2rem, 3vw, 3.125rem);
+	--type-h3: 1.5rem;
+	--type-body: 1rem;
+	--type-small: 0.875rem;
+	--type-label: 0.6875rem;
+
+	/* Four-pixel spacing scale. */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-10: 2.5rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+
+	/* Radius encodes hierarchy: controls, cards, pills. */
+	--radius-control: 0.25rem;
+	--radius-card: 1.125rem;
+	--radius-pill: 999px;
+	--shadow-raised: 0 14px 44px #02000d66;
+	--shadow-overlay: 0 24px 80px #02000d99;
+
+	/* Extracted legacy values. These preserve current visuals while components
+	 * migrate to the semantic roles above. No component owns a color literal. */
+	--color-000: #000;
+	--color-000000: #000000;
+	--color-00b8a1: #00b8a1;
+	--color-02000d66: #02000d66;
+	--color-02000d99: #02000d99;
+	--color-040116: #040116;
+	--color-050505: #050505;
+	--color-050505e6: #050505e6;
+	--color-059669: #059669;
+	--color-070610: #070610;
+	--color-080118: #080118;
+	--color-0a0330: #0a0330;
+	--color-0a0912: #0a0912;
+	--color-0d0d0d: #0d0d0d;
+	--color-0e0c1e: #0e0c1e;
+	--color-0f0d26: #0f0d26;
+	--color-0f766d: #0f766d;
+	--color-100d20: #100d20;
+	--color-10b981: #10b981;
+	--color-110647: #110647;
+	--color-111827: #111827;
+	--color-141226: #141226;
+	--color-14b8a9: #14b8a9;
+	--color-151325: #151325;
+	--color-171717: #171717;
+	--color-180a5c: #180a5c;
+	--color-191925: #191925;
+	--color-1a1a1a: #1a1a1a;
+	--color-1c1740: #1c1740;
+	--color-1f2937: #1f2937;
+	--color-221e3bd9: #221e3bd9;
+	--color-222: #222;
+	--color-262626: #262626;
+	--color-291782: #291782;
+	--color-321f93: #321f93;
+	--color-333333: #333333;
+	--color-34d399: #34d399;
+	--color-3d29a3: #3d29a3;
+	--color-404040: #404040;
+	--color-4d4d4d: #4d4d4d;
+	--color-5036d1: #5036d1;
+	--color-55b0ff: #55b0ff;
+	--color-5638eb: #5638eb;
+	--color-593fec: #593fec;
+	--color-595959: #595959;
+	--color-606597: #606597;
+	--color-6200ea: #6200ea;
+	--color-624dcb: #624dcb;
+	--color-666294: #666294;
+	--color-666666: #666666;
+	--color-6b7280: #6b7280;
+	--color-6e55ff: #6e55ff;
+	--color-6ee7b7: #6ee7b7;
+	--color-6f56f5: #6f56f5;
+	--color-705cd6: #705cd6;
+	--color-737373: #737373;
+	--color-747083: #747083;
+	--color-7544ff: #7544ff;
+	--color-777087: #777087;
+	--color-777383: #777383;
+	--color-77e7f2: #77e7f2;
+	--color-7f7a90: #7f7a90;
+	--color-807b91: #807b91;
+	--color-808080: #808080;
+	--color-8080801a: #8080801a;
+	--color-828282: #828282;
+	--color-858194: #858194;
+	--color-8a87af: #8a87af;
+	--color-8c8999: #8c8999;
+	--color-8c8c8c: #8c8c8c;
+	--color-8f7de8: #8f7de8;
+	--color-8f8b9e: #8f8b9e;
+	--color-91ffa7: #91ffa7;
+	--color-928e9f: #928e9f;
+	--color-991b1b: #991b1b;
+	--color-9995a8: #9995a8;
+	--color-999999: #999999;
+	--color-99f6ee: #99f6ee;
+	--color-9b8cff: #9b8cff;
+	--color-9f8fef: #9f8fef;
+	--color-a6a6a6: #a6a6a6;
+	--color-a7a3b8: #a7a3b8;
+	--color-a7f3d0: #a7f3d0;
+	--color-a98af9: #a98af9;
+	--color-a9a2bb: #a9a2bb;
+	--color-aaa5b7: #aaa5b7;
+	--color-aaa6b7: #aaa6b7;
+	--color-aaa6b8: #aaa6b8;
+	--color-aaa6bb: #aaa6bb;
+	--color-b1a3f5: #b1a3f5;
+	--color-b3b3b3: #b3b3b3;
+	--color-b5b0c5: #b5b0c5;
+	--color-bbb7ca: #bbb7ca;
+	--color-bebdd3: #bebdd3;
+	--color-bf8440: #bf8440;
+	--color-bfbfbf: #bfbfbf;
+	--color-c3b8f9: #c3b8f9;
+	--color-c9c5d5: #c9c5d5;
+	--color-cccccc: #cccccc;
+	--color-d1d5db: #d1d5db;
+	--color-d1fae5: #d1fae5;
+	--color-d2d2d2: #d2d2d2;
+	--color-d6cffc: #d6cffc;
+	--color-d7d3e1: #d7d3e1;
+	--color-d883fc: #d883fc;
+	--color-d9d9d9: #d9d9d9;
+	--color-d9edff: #d9edff;
+	--color-dc2626: #dc2626;
+	--color-dfc8b2: #dfc8b2;
+	--color-e18528: #e18528;
+	--color-e185281a: #e185281a;
+	--color-e5e5e5: #e5e5e5;
+	--color-e5e7eb: #e5e7eb;
+	--color-e9f1f0: #e9f1f0;
+	--color-ecebff: #ecebff;
+	--color-ecfdf5: #ecfdf5;
+	--color-eec8fe: #eec8fe;
+	--color-ef4444: #ef4444;
+	--color-f2f2f2: #f2f2f2;
+	--color-f3f4f6: #f3f4f6;
+	--color-f6abab: #f6abab;
+	--color-f6f3ff: #f6f3ff;
+	--color-f7f5ff: #f7f5ff;
+	--color-f7f7f7: #f7f7f7;
+	--color-f87171: #f87171;
+	--color-f8f6ff: #f8f6ff;
+	--color-f9fafb: #f9fafb;
+	--color-fca5a5: #fca5a5;
+	--color-fecaca: #fecaca;
+	--color-fee2e2: #fee2e2;
+	--color-fef2f2: #fef2f2;
+	--color-ffbd7a: #ffbd7a;
+	--color-fff: #fff;
+	--color-ffffff: #ffffff;
+	--color-ffffff0e: #ffffff0e;
+	--color-ffffff17: #ffffff17;
+}
+
+html,
+body {
+	background: var(--surface-base);
+	color: var(--text-primary);
+}
+
+body {
+	font-family: var(--font-body);
+	font-size: var(--type-body);
+}
+
+:where(h1, h2, h3) {
+	font-family: var(--font-display);
+}
+
+:where(p) {
+	max-width: 72ch;
+}
+
+:where(code, [data-numeric="true"]) {
+	font-family: var(--font-data);
+	font-variant-numeric: tabular-nums;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+	outline: 2px solid var(--info);
+	outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+	}
+}

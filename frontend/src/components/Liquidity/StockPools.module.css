@@ -1,0 +1,21 @@
+.root { min-width: 0; border: 1px solid var(--border-strong); border-radius: var(--radius-card); background: var(--surface-sunken); overflow: hidden; }
+.heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; padding: 28px; border-bottom: 1px solid var(--border-subtle); }
+.eyebrow { margin: 0 0 8px; font: 11px var(--font-data); text-transform: uppercase; letter-spacing: .12em; color: var(--info); }
+.heading h2 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 500; letter-spacing: -.03em; }
+.description { margin: 12px 0 0; max-width: 58ch; color: var(--text-secondary); line-height: 1.6; }
+.badge { flex-shrink: 0; padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); color: var(--text-secondary); font: 12px var(--font-data); }
+.empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 48px 24px; }
+.icon { display: grid; place-items: center; width: 60px; height: 60px; border: 1px solid var(--border-accent); border-radius: var(--radius-card); background: var(--accent-muted); color: var(--text-primary); }
+.empty h3 { margin: 20px 0 0; font-family: var(--font-display); font-size: 24px; font-weight: 500; }
+.empty p { margin: 12px 0 24px; max-width: 52ch; color: var(--text-secondary); line-height: 1.7; }
+.notice { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 28px; border-top: 1px solid var(--border-subtle); }
+.notice p { margin: 0; color: var(--text-tertiary); font-size: 13px; line-height: 1.6; }
+.notice a { display: inline-flex; align-items: center; min-height: 44px; flex-shrink: 0; color: var(--info); font-size: 13px; text-underline-offset: 4px; }
+@media (max-width: 48em) {
+	.heading { flex-direction: column; gap: 16px; padding: 20px; }
+	.heading h2 { font-size: 28px; }
+	.description, .empty p { font-size: 14px; }
+	.empty { padding: 32px 20px; }
+	.empty h3 { font-size: 22px; }
+	.notice { flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px 20px; }
+}

@@ -1,0 +1,26 @@
+.button {
+	display: flex;
+	width: 100%;
+	border-radius: var(--mantine-radius-sm);
+	padding: var(--mantine-spacing-sm);
+	background-color: light-dark(
+		var(--mantine-color-white),
+		var(--mantine-color-gray-18)
+	);
+
+	/* stylelint-disable-next-line at-rule-no-unknown */
+	@mixin hover {
+		background-color: light-dark(
+			var(--mantine-color-gray-0),
+			var(--mantine-color-gray-17)
+		);
+	}
+}
+
+.root {
+	margin-right: 0;
+}
+
+.radio {
+	border-color: var(--mantine-color-gray-16);
+}

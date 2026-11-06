@@ -1,0 +1,240 @@
+{
+  "address": "FdzefGxQxBCxgXETQnGC9Yf48VpyAAsB6WqqEUUREa8n",
+  "metadata": {
+    "name": "solve3",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "cpi_mint_tokens",
+      "docs": [
+        "CPI function to mint tokens via solve-token program"
+      ],
+      "discriminator": [
+        12,
+        84,
+        152,
+        98,
+        77,
+        190,
+        93,
+        242
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "solve_token_program"
+            }
+          }
+        },
+        {
+          "name": "mint_authority",
+          "writable": true
+        },
+        {
+          "name": "token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "solve_token_program",
+          "docs": [
+            "The solve-token program"
+          ]
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "MintConfig",
+      "discriminator": [
+        168,
+        252,
+        88,
+        182,
+        219,
+        205,
+        39,
+        53
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidMintAmount",
+      "msg": "Invalid mint amount - must be greater than 0"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidTransferAmount",
+      "msg": "Invalid transfer amount - must be greater than 0"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidBurnAmount",
+      "msg": "Invalid burn amount - must be greater than 0"
+    },
+    {
+      "code": 6003,
+      "name": "CpiCallFailed",
+      "msg": "CPI call failed"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidSolveTokenProgram",
+      "msg": "Invalid solve-token program"
+    }
+  ],
+  "types": [
+    {
+      "name": "MintConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "ve_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

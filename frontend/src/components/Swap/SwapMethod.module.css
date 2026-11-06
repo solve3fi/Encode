@@ -1,0 +1,10 @@
+.root {
+	background-color: var(--mantine-color-gray-18);
+	padding: 0;
+}
+
+.label {
+	&[data-disabled] {
+		color: var(--mantine-color-gray-15);
+	}
+}

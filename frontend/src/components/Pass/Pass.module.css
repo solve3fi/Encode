@@ -1,0 +1,88 @@
+.page { display: flex; flex-direction: column; gap: 48px; max-width: 1240px; margin: 0 auto; padding: 24px 24px 48px; }
+.eyebrow { color: var(--info); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.grad { background: linear-gradient(90deg, #58d7ff, #8c84ff, #f5b14c, #58d7ff); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shift 6s linear infinite; }
+@keyframes shift { to { background-position: 200% 50%; } }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 48px; align-items: center; padding-top: 32px; }
+.heroCopy { display: flex; flex-direction: column; gap: 18px; }
+.heroCopy h1 { margin: 0; font-size: clamp(36px, 5.5vw, 66px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 700; }
+.heroCopy p { margin: 0; max-width: 560px; font-size: 18px; line-height: 1.55; color: #c9c7d6; }
+.actions { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.primary { min-height: 52px; padding: 0 28px; border: 0; border-radius: 12px; background: #685df7; color: #fff; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; }
+.primary:hover:not(:disabled) { background: #7c72ff; }
+.primary:disabled { background: #141428; color: #a6a4b8; cursor: not-allowed; }
+.link { display: inline-flex; align-items: center; min-height: 44px; color: #8c84ff; font-weight: 600; text-decoration: none; }
+.notice { padding: 14px 18px; border: 1px solid rgba(245, 177, 76, 0.35); border-radius: 12px; background: rgba(245, 177, 76, 0.06); font-size: 14px !important; }
+.heroStats { display: flex; gap: 32px; flex-wrap: wrap; }
+.heroStats div { display: flex; flex-direction: column; }
+.heroStats strong { font-size: 32px; }
+.heroStats span { font-size: 14px; color: #a6a4b8; }
+
+.stageWrap { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.stage { perspective: 1200px; width: min(340px, 80vw); }
+.float { animation: float 7s ease-in-out infinite; transform-style: preserve-3d; }
+@keyframes float { 0%, 100% { transform: translateY(0) rotateY(-6deg) rotateX(3deg); } 50% { transform: translateY(-14px) rotateY(6deg) rotateX(-3deg); } }
+.edge { padding: 2px; border-radius: 26px; }
+.card { position: relative; aspect-ratio: 340 / 476; overflow: hidden; border-radius: 24px; background: #0e0e1c; color: #f6f5f9; }
+.art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.holo { position: absolute; top: 0; bottom: 0; width: 35%; left: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), rgba(140, 132, 255, 0.2), transparent); animation: holo 5s ease-in-out infinite; mix-blend-mode: screen; }
+@keyframes holo { 0% { transform: translateX(-140%) skewX(-20deg); } 60%, 100% { transform: translateX(260%) skewX(-20deg); } }
+.cardTop { position: absolute; top: 18px; left: 20px; right: 20px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.cardMid { position: absolute; left: 20px; right: 20px; bottom: 120px; display: flex; flex-direction: column; gap: 8px; }
+.cardMid strong { font-size: 26px; letter-spacing: -0.02em; }
+.tierNo { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.bar { height: 6px; border-radius: 999px; background: rgba(246, 245, 249, 0.14); overflow: hidden; }
+.bar div { height: 100%; border-radius: 999px; }
+.cardXp { position: absolute; left: 20px; right: 20px; bottom: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cardXp div { padding: 8px 12px; border-radius: 10px; background: rgba(7, 7, 17, 0.6); }
+.cardXp span { display: block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #c9c7d6; }
+.cardXp b { font-size: 18px; }
+.cardFoot { position: absolute; left: 20px; right: 20px; bottom: 16px; display: flex; justify-content: space-between; font-size: 11px; color: #c9c7d6; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.chips button { min-height: 44px; padding: 0 14px; border: 1px solid rgba(246, 245, 249, 0.16); border-radius: 999px; background: transparent; color: #c9c7d6; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.chips button[aria-pressed="true"] { border: 1.5px solid #8c84ff; background: rgba(104, 93, 247, 0.25); color: #f6f5f9; }
+.caption { font-size: 13px; color: #a6a4b8; }
+
+.section { display: flex; flex-direction: column; gap: 14px; }
+.section h2 { margin: 0; font-size: clamp(30px, 4vw, 44px); letter-spacing: -0.03em; }
+.lede { margin: 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: #c9c7d6; }
+.collection { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 12px; }
+.tierCard { padding: 2px; border-radius: 20px; transition: transform 0.2s; }
+.tierCard:hover { transform: translateY(-8px) scale(1.03); }
+.tierInner { position: relative; aspect-ratio: 340 / 476; overflow: hidden; border-radius: 18px; background: #0e0e1c; }
+.tierLabel { position: absolute; top: 12px; left: 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.tierName { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; }
+.tierName strong { font-size: 16px; }
+.tierName span { font-size: 12px; color: #c9c7d6; }
+
+.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.howCard { display: flex; flex-direction: column; gap: 10px; padding: 24px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #0e0e1c; }
+.howCard h3 { margin: 0; font-size: 20px; }
+.howCard p { margin: 0; font-size: 15px; line-height: 1.6; color: #c9c7d6; }
+
+.details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.panel { display: flex; flex-direction: column; gap: 16px; padding: 24px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #0e0e1c; }
+.xp { display: flex; flex-direction: column; gap: 8px; }
+.xp > div:first-child { display: flex; justify-content: space-between; font-weight: 600; }
+.xp small { color: #a6a4b8; font-size: 13px; line-height: 1.5; }
+.path { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.path li { display: grid; grid-template-columns: 36px 1fr; column-gap: 12px; align-items: center; }
+.path small { grid-column: 2; color: #a6a4b8; font-size: 12px; }
+.pathNo { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid rgba(140, 132, 255, 0.5); border-radius: 50%; background: rgba(104, 93, 247, 0.12); color: #b3adff; font-size: 12px; font-weight: 700; grid-row: span 2; }
+.muted { margin: 0; color: #a6a4b8; font-size: 15px; line-height: 1.6; }
+.disclosure { padding: 16px 20px; border: 1px solid rgba(245, 177, 76, 0.35); border-radius: 14px; background: rgba(245, 177, 76, 0.06); color: #c9c7d6; font-size: 14px; line-height: 1.55; }
+.disclosure a { color: #8c84ff; }
+
+@media (max-width: 1000px) {
+	.hero { grid-template-columns: minmax(0, 1fr); }
+	.collection { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.how, .details { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) { .page { padding: 16px 16px 24px; gap: 36px; } }
+@media (prefers-reduced-motion: reduce) { .float, .holo, .grad { animation: none; } }
+
+/* Inside the Quests & Pass hub, which already supplies width, gutters and the top spacing. */
+.embedded { max-width: none; padding: 0; gap: 40px; }
+.embedded .hero { padding-top: 0; }
+@media (max-width: 760px) { .embedded { padding: 0; gap: 32px; } }

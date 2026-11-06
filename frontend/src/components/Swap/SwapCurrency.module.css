@@ -1,0 +1,16 @@
+.root {
+	border-radius: var(--mantine-radius-xl) 0 0 var(--mantine-radius-xl);
+	padding-left: rem(4px);
+	flex: 1;
+	margin-right: calc(var(--mantine-spacing-md) * -1);
+}
+
+.label {
+	margin-right: auto;
+}
+
+.section {
+	&[data-position="left"] {
+		margin-right: rem(5px);
+	}
+}

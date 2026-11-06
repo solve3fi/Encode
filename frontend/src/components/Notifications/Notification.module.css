@@ -1,0 +1,21 @@
+.root {
+	background-color: rgb(255 255 255 / 12.8%) !important;
+	backdrop-filter: blur(10px) !important;
+	border-radius: rem(10) !important;
+}
+
+.title {
+	color: var(--mantine-color-main-5) !important;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.closeButton {
+	color: var(--mantine-color-white);
+	border-radius: 100% !important;
+	backdrop-filter: blur(10px) !important;
+
+	/* stylelint-disable-next-line at-rule-no-unknown */
+	@mixin hover {
+		background-color: rgb(255 255 255 / 12.8%);
+	}
+}

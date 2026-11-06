@@ -1,0 +1,19 @@
+[Unit]
+Description=Solve3 public Auto-Vote keeper (votes enrolled locks; follows partner gauge choices)
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/solve3/public-auto-vote-keeper.env
+RuntimeDirectory=solve3-public-auto-vote-keeper
+RuntimeDirectoryMode=0700
+# The keeper key is the program's AUTO_VOTE_KEEPER: it can only vote locks whose owners enrolled them,
+# and it only reads the partner stores (data volume mounted read-only).
+ExecStart=/usr/bin/flock -n -E 75 /run/solve3-public-auto-vote-keeper/lock /usr/bin/docker run --rm --read-only --network host --security-opt no-new-privileges --cap-drop ALL --tmpfs /tmp:rw,noexec,nosuid,size=16m --env-file /etc/solve3/public-auto-vote-keeper.env -e PUBLIC_AUTO_VOTE_KEEPER_KEYPAIR=/run/secrets/keeper.json -e SOLVE3_DATA_DIR=/app/data -v /etc/solve3/public-auto-vote-keeper.json:/run/secrets/keeper.json:ro -v /srv/solve3/scripts:/app/scripts:ro -v /srv/solve3/src/configs/vesolve.json:/app/src/configs/vesolve.json:ro -v solve3-production_solve3_data:/app/data:ro --entrypoint /usr/local/bin/bun solve3-frontend:local /app/scripts/public-auto-vote-keeper.mjs
+SuccessExitStatus=75
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict

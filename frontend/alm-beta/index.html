@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en" data-trial-runtime="browser">
+  <head>
+    <meta charset="utf-8" /><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self' https://solana-rpc.publicnode.com; base-uri 'none'; form-action 'none'">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070711" />
+    <meta
+      name="description"
+      content="Solve3 liquidity management. Explore positions, preview range strategies and inspect keeper snapshots."
+    />
+    <title>Solve3 · Liquidity workspace</title>
+    <link rel="icon" href="./assets/symbol.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./start.js"></script>
+<script type="module" src="./app.js"></script>
+    <script type="module" src="./trial-ui.js"></script>
+<script type="module" src="./mainnet-ui.js"></script>
+<script type="module" src="./backtest-ui.js"></script>
+    <link rel="stylesheet" href="./trial.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Solve3 home"
+        ><img src="./assets/solve3.svg" alt="Solve3"
+      /></a>
+      <div class="workspace-label">LIQUIDITY WORKSPACE <span>01</span></div>
+      <nav aria-label="Main navigation"><a href="#backtest" data-view="backtest"><span class="nav-icon" aria-hidden="true">↗</span>Orca backtest</a><a href="#mainnet" data-view="mainnet"><span class="nav-icon" aria-hidden="true">◎</span>Mainnet pools</a>
+        <a href="#trial" data-view="trial"
+          ><span class="nav-icon" aria-hidden="true">◇</span>Try ALM</a
+        >
+        <a href="#overview" data-view="overview"
+          ><span class="nav-icon"
+            ><svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M9 3v18M9 10h12" /></svg></span
+          >Overview</a
+        >
+        <a href="#positions" data-view="positions"
+          ><span class="nav-icon"
+            ><svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4" width="18" height="16" rx="2" />
+              <path d="M3 10h18M3 15h18M9 10v10" /></svg></span
+          >Positions<span class="nav-count" id="position-count">3</span></a
+        >
+        <a href="#strategy" data-view="strategy"
+          ><span class="nav-icon"
+            ><svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 7h16M4 17h16M9 4v6M15 14v6" />
+              <circle cx="9" cy="7" r="2" />
+              <circle cx="15" cy="17" r="2" /></svg></span
+          >Strategy</a
+        >
+        <a href="#activity" data-view="activity"
+          ><span class="nav-icon"
+            ><svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M3 12h4l3-7 4 14 3-7h4" /></svg></span
+          >Activity</a
+        >
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="keeper-indicator">
+          <span class="dot"></span>
+          <div>
+            Keeper sandbox<small id="keeper-label">Demo controls ready</small>
+          </div>
+          <span class="mono">↗</span>
+        </div>
+        <a
+          href="https://github.com/solve3fi/ALM"
+          target="_blank"
+          rel="noreferrer"
+          >Documentation
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 19 19 5M5 5h14v14" /></svg
+        ></a>
+        <div class="network">
+          <span class="solana-mark">≋</span> Built for Solana <span>v0.1</span>
+        </div>
+      </div>
+    </aside>
+    <div class="shell">
+      <header class="topbar">
+        <div class="breadcrumb">
+          Workspace <span>/</span> <strong id="breadcrumb">Overview</strong>
+        </div>
+        <div class="top-actions">
+          <span class="mode-badge" id="mode-badge">● Demo workspace</span
+          ><button
+            class="button subtle"
+            id="import-button"
+            aria-label="Import keeper snapshot"
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 16V3m-5 5 5-5 5 5M4 15v6h16v-6" />
+            </svg>
+            Import snapshot</button
+          ><input
+            type="file"
+            id="snapshot-file"
+            accept=".json,application/json"
+            hidden
+          />
+        </div>
+      </header>
+      <main id="main">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">SOLVE3 / AUTOMATED LIQUIDITY</div>
+            <h1 id="page-title">Make your liquidity work.</h1>
+            <p id="page-description">
+              A clearer view of your positions. A smarter way to manage your
+              ranges.
+            </p>
+          </div>
+          <button class="button primary" id="configure-button">
+            Configure strategy
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 19 19 5M5 5h14v14" />
+            </svg>
+          </button>
+        </div>
+        <div class="notice" id="data-notice">
+          <span class="notice-symbol">◈</span>
+          <div>
+            <strong>A space to explore.</strong> All balances, prices and
+            activity below are simulated. Import a keeper snapshot to inspect
+            observed data.
+          </div>
+          <button id="reset-demo" class="text-button" hidden>
+            Return to demo ↗
+          </button>
+        </div>
+        <section id="overview-view" class="view">
+          <div class="metrics" id="metrics"></div>
+          <div class="dashboard-grid">
+            <section class="panel performance-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Portfolio performance</h2>
+                  <p id="chart-subtitle">Illustrative portfolio value · USD</p>
+                </div>
+                <div class="segmented" aria-label="Chart period">
+                  <button data-period="1D" aria-pressed="false">1D</button
+                  ><button
+                    data-period="1W"
+                    class="selected"
+                    aria-pressed="true"
+                  >
+                    1W</button
+                  ><button data-period="1M" aria-pressed="false">1M</button>
+                </div>
+              </div>
+              <div class="chart-head">
+                <strong id="chart-value">$24,850.00</strong
+                ><span class="positive" id="chart-change"
+                  >+$642.80 <small>this week · simulated</small></span
+                >
+              </div>
+              <div
+                id="chart"
+                class="chart"
+                role="img"
+                aria-label="Illustrative portfolio value over one week"
+              ></div>
+              <div class="chart-labels">
+                <span id="chart-start">MON</span><span>TUE</span><span>WED</span
+                ><span>THU</span><span>FRI</span><span>SAT</span
+                ><span id="chart-end">SUN</span>
+              </div>
+              <div class="chart-footer">
+                <span><i class="legend-line"></i>Portfolio value</span
+                ><span>DEMO DATA <span class="mono">↗</span></span>
+              </div>
+            </section>
+            <section class="panel automation-panel">
+              <div class="panel-heading">
+                <h2>Your keeper</h2>
+                <span class="small-badge">SANDBOX</span>
+              </div>
+              <div class="orbit">
+                <div class="orbit-ring"></div>
+                <img src="./assets/symbol.svg" alt="" /><span
+                  class="orbit-node"
+                ></span>
+              </div>
+              <div class="automation-copy">
+                <span class="status" id="keeper-status">● Demo active</span>
+                <h3>Stay within your range.</h3>
+                <p>
+                  Preview how a keeper monitors positions and waits for your
+                  strategy’s rebalance conditions.
+                </p>
+              </div>
+              <div class="keeper-stats">
+                <div>
+                  <span>Strategy</span><strong>Delayed rebalance</strong>
+                </div>
+                <div>
+                  <span>Cooldown</span
+                  ><strong id="keeper-cooldown">5 minutes</strong>
+                </div>
+                <div>
+                  <span>Execution</span><strong>Simulation only</strong>
+                </div>
+              </div>
+              <button class="button full" id="pause-button">
+                Ⅱ Pause demo keeper
+              </button>
+            </section>
+          </div>
+        </section>
+        <section id="positions-view" class="view">
+          <div class="section-heading">
+            <div>
+              <h2>
+                Your positions <span class="count" id="positions-total">3</span>
+              </h2>
+              <p>Concentrated liquidity, with every range in view.</p>
+            </div>
+            <div class="position-controls">
+              <label class="search"
+                ><span>⌕</span
+                ><input
+                  id="search"
+                  placeholder="Search positions"
+                  aria-label="Search positions" /></label
+              ><select id="position-filter" aria-label="Filter positions">
+                <option value="all">All positions</option>
+                <option value="in">In range</option>
+                <option value="out">Out of range</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel positions-panel">
+            <div class="position-table-head">
+              <span>POOL / STRATEGY</span><span>POSITION VALUE</span
+              ><span>PRICE RANGE</span><span>UNCLAIMED FEES</span
+              ><span>STATUS</span><span></span>
+            </div>
+            <div id="positions-list"></div>
+          </div>
+          <p class="table-note" id="positions-note">
+            Demo positions illustrate the interface. No deposits or transactions
+            are submitted.
+          </p>
+        </section>
+        <section id="strategy-view" class="view" hidden>
+          <div class="strategy-layout">
+            <section class="panel strategy-form">
+              <div class="panel-heading">
+                <div>
+                  <h2>Range strategy</h2>
+                  <p>A local preview of keeper settings.</p>
+                </div>
+                <span class="small-badge">DEMO CONFIG</span>
+              </div>
+              <label for="width"
+                >Half-width <span id="width-value">128 ticks</span></label
+              ><input
+                type="range"
+                id="width"
+                min="16"
+                max="512"
+                step="8"
+                value="128"
+              />
+              <div class="range-extents">
+                <span>Narrower range</span><span>Wider range</span>
+              </div>
+              <label for="delay">Out-of-range delay</label
+              ><select id="delay">
+                <option value="60">1 minute</option>
+                <option value="180">3 minutes</option>
+                <option value="300">5 minutes</option></select
+              ><label for="cooldown">Rebalance cooldown</label
+              ><select id="cooldown">
+                <option value="300">5 minutes</option>
+                <option value="900">15 minutes</option>
+                <option value="1800">30 minutes</option></select
+              ><label for="actions">Maximum actions per day</label
+              ><input id="actions" type="number" min="1" max="24" value="5" />
+              <div class="form-actions">
+                <button class="button primary" id="save-strategy">
+                  Save demo strategy</button
+                ><button class="button" id="export-strategy">
+                  Export settings
+                </button>
+              </div>
+              <p class="muted">
+                Saved in this browser only. Exported settings are a partial
+                draft for operator review, not an executable keeper
+                configuration.
+              </p>
+            </section>
+            <section class="panel strategy-preview">
+              <div class="eyebrow">RANGE PREVIEW</div>
+              <h2>Room for the market to move.</h2>
+              <p>
+                Wider ranges tolerate larger price moves. Narrower ranges
+                concentrate liquidity and can move out of range sooner.
+              </p>
+              <div id="strategy-visual"></div>
+              <dl>
+                <div>
+                  <dt>Lower bound</dt>
+                  <dd id="lower-preview"></dd>
+                </div>
+                <div>
+                  <dt>Upper bound</dt>
+                  <dd id="upper-preview"></dd>
+                </div>
+                <div>
+                  <dt>Rebalance trigger</dt>
+                  <dd>Sustained out of range</dd>
+                </div>
+              </dl>
+              <div class="subtle-note">
+                Tick spacing: 8 · Illustrative SOL / USDC price: $146.80. Actual
+                pool spacing and token decimals determine valid ranges.
+              </div>
+            </section>
+          </div>
+        </section>
+        <section id="backtest-view" class="view" hidden>
+<div class="trial-intro"><div><h2>Orca SOL / USDC · $10,000</h2><p>Observed prices and volume. Estimated LP fees. Initial inventory: $5,000 SOL + $5,000 USDC.</p></div><span class="small-badge">HISTORICAL RESEARCH</span></div>
+<div id="backtest-status" role="status">Loading verified research results…</div>
+<div id="backtest-data" hidden>
+<div class="trial-guide"><strong>A small modeled edge, not a live strategy.</strong><p>Historical liquidity depth is unavailable. Fees use the current Orca liquidity snapshot and can change materially under different depths. No emissions are included.</p></div>
+<div id="backtest-metrics" class="metrics"></div>
+<div class="trial-title-row"><div><h2>Held-out portfolio value</h2><p id="backtest-period"></p></div><span class="small-badge">AFTER MODELED COSTS</span></div>
+<div class="panel trial-card"><svg id="backtest-chart" viewBox="0 0 900 260" role="img" aria-label="Held-out selected ALM strategy compared with holding SOL and USDC"></svg><div class="research-legend"><span>● Selected ALM</span><span>● Hold 50 / 50</span></div></div>
+<div class="trial-title-row"><h2>Compare strategies</h2></div><div class="panel research-table-wrap"><table class="research-table" id="backtest-table"></table></div>
+<div class="trial-title-row"><h2>What if competing liquidity changes?</h2></div><div class="panel trial-card"><label for="backtest-depth">Competing liquidity relative to the current snapshot<select id="backtest-depth"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1× · baseline</option><option value="2">2×</option><option value="5">5×</option></select></label><p id="backtest-depth-result" role="status"></p><p class="trial-note">This changes only the estimated fee share, keeping strategy parameters fixed. It does not rerun parameter selection or reconstruct historical liquidity.</p></div>
+<div class="trial-title-row"><h2>Can we use this on Solve3?</h2></div><div class="panel trial-card" id="backtest-transfer"></div>
+<div class="trial-title-row"><h2>How it was tested</h2><div class="trial-buttons"><a class="button" href="./research/orca-report.md" download>Download report</a><a class="button" href="./research/orca-solusdc.json" download>Download results</a></div></div><div class="panel trial-card" id="backtest-method"></div>
+</div></section>
+<section id="mainnet-view" class="view" hidden>
+<div class="trial-intro"><div><h2>Live pool observations</h2><p>Finalized Solana mainnet data. Deployment, config, pool PDA, mints and vault identities are checked before display.</p></div><span class="small-badge">READ ONLY · NO SIGNING</span></div>
+<div class="panel trial-card"><div class="trial-fields"><label for="mainnet-owner">Wallet public address (optional)<input id="mainnet-owner" autocomplete="off" spellcheck="false" placeholder="Paste a Solana wallet address"></label><label for="mainnet-extra-pool">Additional Solve3 pool address (optional)<input id="mainnet-extra-pool" autocomplete="off" spellcheck="false" placeholder="Verified against the same mainnet config"></label></div><div class="trial-buttons"><button class="button primary" id="mainnet-refresh">Load / refresh mainnet</button><button class="button" id="mainnet-wallet">Use wallet address</button><button class="button" id="mainnet-export" disabled>Export observation</button></div><p class="trial-note">Queries go directly to PublicNode’s public mainnet RPC. A wallet address is shared with that provider only when you request inspection. Connecting supplies a public address; this app never requests signatures. Observations cover selected pools, not every deployed Solve3 pool.</p></div>
+<div class="trial-error" id="mainnet-error" role="alert"></div><p id="mainnet-status" class="trial-clock" role="status">Not connected. Load mainnet to verify deployment and fetch the configured SOL / USDC pool.</p>
+<div id="mainnet-data" hidden><div id="mainnet-pools" class="trial-grid"></div><div class="trial-title-row"><h2>Observed wallet positions</h2><p id="mainnet-position-count"></p></div><div class="panel" id="mainnet-positions"></div><div class="trial-guide" id="mainnet-coverage"></div><div class="trial-title-row"><h2>Observation identity</h2></div><div class="panel trial-card"><dl id="mainnet-identity"></dl></div></div>
+</section>
+<section id="trial-view" class="view trial-view" hidden>
+          <div class="trial-intro">
+            <div>
+              <h2>Try the real keeper planner.</h2>
+              <p>
+                Preview decisions, apply paper actions and move the market. This
+                is synthetic token inventory, with no wallet or network
+                transactions.
+              </p>
+            </div>
+            <span class="small-badge">PRIVATE / PAPER ONLY</span>
+          </div>
+          <div class="trial-guide">
+            <strong>Try this flow:</strong> Load an empty wallet → preview and
+            apply an open → set tick to 256 and advance 300 seconds → preview
+            strategy (wait) → advance 61 seconds at the same tick → preview and
+            apply rebalance → preview and apply owner exit.
+          </div>
+          <div class="panel trial-scenario">
+            <label for="trial-scenario">Starting scenario</label
+            ><select id="trial-scenario">
+              <option value="empty">Empty wallet</option>
+              <option value="in-range">In-range position</option>
+              <option value="waiting">Out-of-range delay</option>
+              <option value="rebalance">Ready to rebalance</option>
+              <option value="one-sided">One-sided inventory</option>
+              <option value="paused">Paused pool</option>
+            </select>
+            <p id="trial-scenario-description">Start with idle tokens</p>
+            <button class="button primary" id="trial-start">
+              Load / reset scenario
+            </button>
+          </div>
+          <div id="trial-error" class="trial-error" role="alert"></div>
+          <span id="trial-clock" class="trial-clock"
+            >Start a scenario to create a private paper session.</span
+          >
+          <div class="metrics" id="trial-balances"></div>
+          <div class="trial-grid">
+            <section class="panel trial-card">
+              <h2>Move the market</h2>
+              <p>Synthetic token A / token B · tick spacing 8.</p>
+              <div class="trial-fields">
+                <label for="trial-tick"
+                  >Market tick<input
+                    id="trial-tick"
+                    type="number"
+                    min="-10000"
+                    max="10000"
+                    value="256" /></label
+                ><label for="trial-seconds"
+                  >Advance paper time (seconds)<input
+                    id="trial-seconds"
+                    type="number"
+                    min="0"
+                    max="86400"
+                    value="300"
+                /></label>
+              </div>
+              <button
+                class="button"
+                id="trial-market"
+                data-needs-session="true"
+              >
+                Update market / time
+              </button>
+              <div class="trial-fields">
+                <label for="trial-half-width"
+                  >Half-width (ticks)<input
+                    id="trial-half-width"
+                    type="number"
+                    min="16"
+                    max="512"
+                    step="8"
+                    value="128" /></label
+                ><label for="trial-delay"
+                  >Out-of-range delay<select id="trial-delay">
+                    <option value="60">1 minute</option>
+                    <option value="180">3 minutes</option>
+                    <option value="300">5 minutes</option>
+                  </select></label
+                ><label for="trial-cooldown"
+                  >Cooldown<select id="trial-cooldown">
+                    <option value="300">5 minutes</option>
+                    <option value="900">15 minutes</option>
+                    <option value="1800">30 minutes</option>
+                  </select></label
+                ><label for="trial-limit"
+                  >Maximum strategy actions/day<input
+                    id="trial-limit"
+                    type="number"
+                    min="1"
+                    max="24"
+                    value="5"
+                /></label>
+              </div>
+              <button
+                class="button"
+                id="trial-settings"
+                data-needs-session="true"
+              >
+                Use settings in trial
+              </button>
+              <p class="trial-note">
+                Settings apply only to this paper session. Updates invalidate
+                the previous preview.
+              </p>
+            </section>
+            <section class="panel trial-card">
+              <span class="eyebrow">KEEPER DECISION</span>
+              <h2 id="trial-plan-kind" style="margin-top: 16px">
+                Evaluate your next move
+              </h2>
+              <div id="trial-plan-reasons" class="trial-reasons">
+                <p>
+                  Load a scenario, then inspect the actual planner decision.
+                </p>
+              </div>
+              <dl id="trial-plan-fields"></dl>
+              <div class="trial-buttons">
+                <button
+                  class="button"
+                  data-trial-purpose="strategy"
+                  data-needs-session="true"
+                >
+                  Preview strategy</button
+                ><button
+                  class="button"
+                  data-trial-purpose="exit"
+                  data-needs-session="true"
+                >
+                  Preview owner exit</button
+                ><button
+                  class="button"
+                  data-trial-purpose="harvest"
+                  data-needs-session="true"
+                >
+                  Preview fee harvest</button
+                ><button
+                  class="button"
+                  data-trial-purpose="cleanup"
+                  data-needs-session="true"
+                >
+                  Preview cleanup
+                </button>
+              </div>
+              <button
+                class="button primary full"
+                id="trial-apply"
+                data-needs-session="true"
+              >
+                Apply to paper inventory
+              </button>
+              <p class="trial-note" style="margin-top: 16px">
+                The real planner and exact SDK math drive decisions. Applying
+                uses a paper ledger, not an RPC simulation. Fixed illustrative
+                network cost: 5,000 lamports/action. Rent, fee accrual and
+                investment returns are not modeled.
+              </p>
+            </section>
+          </div>
+          <div class="trial-title-row">
+            <h2>Paper positions</h2>
+            <p id="trial-summary">No session started</p>
+          </div>
+          <div class="panel" id="trial-positions">
+            <div class="empty">
+              Start a scenario to inspect paper inventory.
+            </div>
+          </div>
+          <div class="trial-title-row">
+            <h2>Trial receipts</h2>
+            <button class="button" id="trial-export" data-needs-session="true">
+              Export trial JSON
+            </button>
+          </div>
+          <div class="panel" id="trial-receipts"></div>
+        </section>
+        <section id="activity-view" class="view" hidden>
+          <div class="section-heading">
+            <div>
+              <h2>Workspace activity</h2>
+              <p>Local demo events and snapshot imports from this session.</p>
+            </div>
+            <span class="small-badge">NO ON-CHAIN TRANSACTIONS</span>
+          </div>
+          <div class="panel" id="activity-list"></div>
+        </section>
+        <footer>
+          <span
+            ><img src="./assets/symbol.svg" alt="" />Liquidity with
+            intention.</span
+          ><span
+            >Solve3 ALM <span class="footer-dot">·</span> Preview release</span
+          ><a href="https://solve3.fi" target="_blank" rel="noreferrer"
+            >Explore Solve3 ↗</a
+          >
+        </footer>
+      </main>
+    </div>
+    <dialog id="position-dialog" aria-labelledby="position-dialog-title">
+      <div class="dialog-top">
+        <span class="eyebrow">POSITION DETAILS</span
+        ><button
+          id="close-dialog"
+          class="icon-button"
+          aria-label="Close position details"
+        >
+          ×
+        </button>
+      </div>
+      <div id="position-detail"></div>
+      <button class="button full" id="dialog-done">Done</button>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

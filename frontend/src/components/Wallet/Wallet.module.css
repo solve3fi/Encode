@@ -1,0 +1,34 @@
+.connect {
+	border: 0;
+	cursor: pointer;
+	font-family: inherit;
+	min-height: 44px;
+	height: 44px;
+	padding: 0 20px;
+	border-radius: 10px;
+	background: #685df7;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.connect:hover { background: #7c72ff; }
+
+.connected {
+	min-height: 44px;
+	height: 44px;
+	padding: 0 14px;
+	border: 1px solid rgba(246, 245, 249, 0.14);
+	border-radius: 10px;
+	background: #0e0e1c;
+	color: var(--text-primary);
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.connected:hover { background: #141428; }
+
+@media (max-width: 760px) {
+	.connect { padding: 0 14px; font-size: 14px; }
+}

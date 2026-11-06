@@ -1,0 +1,284 @@
+{
+	"name": "Solana Token List",
+	"logoURI": "https://cdn.jsdelivr.net/gh/trustwallet/assets@master/blockchains/solana/info/logo.png",
+	"keywords": ["solana", "spl"],
+	"tags": {
+		"stablecoin": {
+			"name": "stablecoin",
+			"description": "Tokens that are fixed to an external asset, e.g. the US dollar"
+		},
+		"boozcoin": {
+			"name": "boozcoin",
+			"description": "Crypto Currency that is changing the alcohol industry"
+		},
+		"ethereum": {
+			"name": "ethereum",
+			"description": "Asset bridged from ethereum"
+		},
+		"lp-token": {
+			"name": "lp-token",
+			"description": "Asset representing liquidity provider token"
+		},
+		"wrapped-sollet": {
+			"name": "wrapped-sollet",
+			"description": "Asset wrapped using sollet bridge"
+		},
+		"wrapped": {
+			"name": "wrapped",
+			"description": "Asset wrapped using wormhole bridge"
+		},
+		"leveraged": {
+			"name": "leveraged",
+			"description": "Leveraged asset"
+		},
+		"bull": {
+			"name": "bull",
+			"description": "Leveraged Bull asset"
+		},
+		"bear": {
+			"name": "bear",
+			"description": "Leveraged Bear asset"
+		},
+		"nft": {
+			"name": "nft",
+			"description": "Non-fungible token"
+		},
+		"security-token": {
+			"name": "security-token",
+			"description": "Tokens that are used to gain access to an electronically restricted resource"
+		},
+		"utility-token": {
+			"name": "utility-token",
+			"description": "Tokens that are designed to be spent within a certain blockchain ecosystem e.g. most of the SPL-Tokens"
+		},
+		"tokenized-stock": {
+			"name": "tokenized-stock",
+			"description": "Tokenized stocks are tokenized derivatives that represent traditional securities, particularly shares in publicly firms traded on regulated exchanges"
+		}
+	},
+	"timestamp": "2021-03-03T19:57:21+0000",
+	"tokens": [
+		{
+			"chainId": 101,
+			"address": "So11111111111111111111111111111111111111112",
+			"symbol": "SOL",
+			"name": "Wrapped SOL",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/sol.png",
+			"tags": ["native-token", "wrapped", "sollet"],
+			"extensions": {
+				"website": "https://solana.com/"
+			}
+		},
+		{
+			"chainId": 101,
+			"address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+			"symbol": "USDC",
+			"name": "USDC",
+			"decimals": 6,
+			"logoURI": "/assets/tokens/usdc.png",
+			"tags": ["stablecoin"],
+			"extensions": {
+				"website": "https://www.terra.money"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "So11111111111111111111111111111111111111112",
+			"symbol": "SOL",
+			"name": "Wrapped SOL",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/sol.png",
+			"tags": ["native-token", "wrapped", "sollet"],
+			"extensions": {
+				"website": "https://solana.com/"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "Gmxv83QkYpmT2NXwRAEbqfxbeuzftLsHyiBmLpSGj6at",
+			"symbol": "SOLV3",
+			"name": "SOLV3",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/solv3.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://solve3.fi"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "AuWNjJrBhuyRna415rW1S6StEjs4TFUTgu6bF7CYrCo1",
+			"symbol": "xSOLV3",
+			"name": "XSOLV3",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/xsolv3.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://solve3.fi"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "BRjpCHtyQLNCo8gqRUr8jtdAj5AjPYQaoqbvcZiHok1k",
+			"symbol": "devUSDC",
+			"name": "devUSDC",
+			"decimals": 6,
+			"logoURI": "https://everlastingsong.github.io/nebula/devtoken_metadata/devUSDC/image.png",
+			"tags": ["social-token"],
+			"extensions": { "website": "https://www.terra.money" }
+		},
+		{
+			"chainId": 102,
+			"address": "H8UekPGwePSmQ3ttuYGPU1szyFfjZR4N53rymSFwpLPm",
+			"symbol": "devUSDT",
+			"name": "devUSDT",
+			"decimals": 6,
+			"logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
+			"tags": ["social-token"],
+			"extensions": { "website": "https://www.terra.money" }
+		},
+		{
+			"chainId": 102,
+			"address": "Jd4M8bfJG3sAkd82RsGWyEXoaBXQP7njFzBwEaCTuDa",
+			"symbol": "devSAMO",
+			"name": "devSAMO",
+			"decimals": 9,
+			"logoURI": "https://api.phantom.app/image-proxy/?image=https%3A%2F%2Feverlastingsong.github.io%2Fnebula%2Fdevtoken_metadata%2FdevSAMO%2Fimage.png",
+			"tags": [],
+			"extensions": {
+				"website": "https://solana.com/",
+				"background": "https://solana.com/static/8c151e179d2d7e80255bdae6563209f2/6833b/validators.webp"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "Afn8YB1p4NsoZeS5XJBZ18LTfEy5NFPwN46wapZcBQr6",
+			"symbol": "devTMAC",
+			"name": "devTMAC",
+			"decimals": 6,
+			"logoURI": "https://api.phantom.app/image-proxy/?image=https%3A%2F%2Feverlastingsong.github.io%2Fnebula%2Fdevtoken_metadata%2FdevTMAC%2Fimage.png",
+			"tags": ["utility-token"],
+			"extensions": {
+				"website": "https://step.finance/",
+				"twitter": "https://twitter.com/StepFinance_",
+				"coingeckoId": "step-finance",
+				"waterfallbot": "https://bit.ly/STEPwaterfall"
+			}
+		},
+
+		{
+			"chainId": 104,
+			"address": "94PFydGtZ1uZvQtPpngq4n1VTPdRJDRscwRx4pHmomeB",
+			"symbol": "SOLV3",
+			"name": "SOLV3",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/solv3.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://solve3.fi"
+			}
+		},
+		{
+			"chainId": 104,
+			"address": "AuWNjJrBhuyRna415rW1S6StEjs4TFUTgu6bF7CYrCo1",
+			"symbol": "xSOLV3",
+			"name": "xSOLV3",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/xsolv3.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://solve3.fi"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "BetzELXJMGXJGkzxZbMqAzwLJ4M7sUrsqpW8JZp2WG2e",
+			"symbol": "WOOF",
+			"name": "wOOF",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/usdt.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://yeve.fi"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "YMjnxDXEFwtJnfQfsx8gstToTq7FHm1zscaeVu1qiaL",
+			"symbol": "MEOW",
+			"name": "mEOW",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/usdt.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://yeve.fi"
+			}
+		},
+		{
+			"chainId": 104,
+			"address": "AkpgSaZzJofyhCKyqPR7zd1xPHGSNErChLFQqJkYb5ts",
+			"symbol": "DOGE",
+			"name": "wDOGE",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/usdt.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://yeve.fi"
+			}
+		},
+		{
+			"chainId": 104,
+			"address": "3DLKxpVA7L8mtvNAXmohiA7DfuzjcHDerUffFUTgGLsT",
+			"symbol": "testUSDT",
+			"name": "testUSDT",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/usdt.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://yeve.fi"
+			}
+		},
+		{
+			"chainId": 104,
+			"address": "8H9gs8H3NLdgC4BZCYybSsjAcgacVeL8LDYj5huvgFBQ",
+			"symbol": "testUSDC",
+			"name": "testUSDC",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/usdc.png",
+			"tags": ["ve-token", "payment-token"],
+			"extensions": {
+				"website": "https://yeve.fi"
+			}
+		},
+		{
+			"chainId": 104,
+			"address": "So11111111111111111111111111111111111111112",
+			"symbol": "SOL",
+			"name": "Wrapped SOL",
+			"decimals": 9,
+			"logoURI": "/assets/tokens/sol.png",
+			"tags": ["native-token", "wrapped", "sollet"],
+			"extensions": {
+				"website": "https://solana.com/"
+			}
+		},
+		{
+			"chainId": 102,
+			"address": "DzkTGZGQsh8zsYo275JSQgwqRmREKb3D617EMCg2njao",
+			"symbol": "TEST",
+			"name": "Test Token",
+			"decimals": 6,
+			"logoURI": "/assets/tokens/usdc.png",
+			"tags": ["utility-token"],
+			"extensions": {
+				"website": "https://solve3.fi"
+			}
+		}
+	],
+	"version": {
+		"major": 0,
+		"minor": 3,
+		"patch": 2
+	}
+}

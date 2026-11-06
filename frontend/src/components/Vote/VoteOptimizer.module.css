@@ -1,0 +1,28 @@
+.allocationRail {
+	display: flex;
+	overflow: hidden;
+	height: 14px;
+	border: 1px solid var(--mantine-color-gray-4);
+	border-radius: 999px;
+	background: var(--mantine-color-gray-1);
+}
+
+.allocationSegment {
+	min-width: 0;
+	transition: width 180ms ease;
+}
+
+.rewardInput input {
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+.dataValue {
+	font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.allocationSegment {
+		transition: none;
+	}
+}

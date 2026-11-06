@@ -1,0 +1,32 @@
+# Devnet swap indexer worker (TEST ONLY). Add as a third compose file next to the base and public
+# files. It writes the Genesis swap ledger with a least-privilege login; it awards nothing and has
+# no published port. Secrets come from /etc/solve3/quest/swap.env (root 0600), never from Git.
+services:
+  quest-swap-worker:
+    image: solve3-quest-backend:local
+    restart: unless-stopped
+    env_file: /etc/solve3/quest/swap.env
+    command: ["bun", "server/swap-worker.mjs"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m"]
+    depends_on:
+      quest-db:
+        condition: service_healthy
+    networks: [internal, web]
+
+  # Records weekly test receipts for completed quests; a database trigger turns each into XP.
+  quest-xp-settler:
+    image: solve3-quest-backend:local
+    restart: unless-stopped
+    env_file: /etc/solve3/quest/settler.env
+    command: ["bun", "server/xp-settler.mjs"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m"]
+    depends_on:
+      quest-db:
+        condition: service_healthy
+    networks: [internal]

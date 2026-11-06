@@ -1,0 +1,17 @@
+# Optional verified LP history feed. Provision the dedicated publisher login and
+# immutable baseline before enabling. This service cannot admit inventory or XP.
+services:
+  quest-lp-feed:
+    image: solve3-quest-backend:local
+    restart: unless-stopped
+    env_file: /etc/solve3/quest/lp-feed.env
+    command: ["bun", "server/lp-feed-worker.mjs"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m"]
+    stop_grace_period: 30s
+    depends_on:
+      quest-db:
+        condition: service_healthy
+    networks: [internal, web]

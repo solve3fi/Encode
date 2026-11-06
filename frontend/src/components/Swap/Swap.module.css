@@ -1,0 +1,179 @@
+.heading {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	max-width: 480px;
+}
+
+.heading h1 {
+	margin: 0;
+	font-size: clamp(34px, 4vw, 44px);
+	line-height: 1.05;
+	letter-spacing: -0.03em;
+	font-weight: 700;
+}
+
+.heading p { margin: 0; font-size: 16px; line-height: 1.55; color: #c9c7d6; }
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+	max-width: 480px;
+	padding: 20px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 24px;
+	background: #0e0e1c;
+	box-shadow: 0 40px 120px rgba(104, 93, 247, 0.14);
+}
+
+.cardHead { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
+.cardTitle { font-size: 17px; font-weight: 700; }
+.iconRow { display: flex; gap: 8px; }
+
+.iconBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border: 1px solid rgba(246, 245, 249, 0.14);
+	border-radius: 12px;
+	background: transparent;
+	color: #c9c7d6;
+	cursor: pointer;
+}
+
+.iconBtn[aria-expanded="true"] { border-color: #8c84ff; background: rgba(104, 93, 247, 0.16); color: #b3adff; }
+.spin svg { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.settings {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px 18px;
+	border-radius: 16px;
+	background: #141428;
+}
+
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #a6a4b8; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.chip {
+	min-height: 44px;
+	padding: 0 16px;
+	border: 1px solid rgba(246, 245, 249, 0.22);
+	border-radius: 10px;
+	background: transparent;
+	color: #c9c7d6;
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.chip[aria-pressed="true"] { border-color: #685df7; background: #685df7; color: #fff; }
+.linkBtn { background: none; border: 0; padding: 0; min-height: 44px; color: #8c84ff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; text-align: left; }
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 18px 20px;
+	border-radius: 18px;
+	background: #141428;
+}
+
+.fieldTop { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.balance { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #c9c7d6; }
+
+.max {
+	min-height: 36px;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 8px;
+	background: rgba(104, 93, 247, 0.2);
+	color: #b3adff;
+	font: inherit;
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.fieldMain { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+
+.amount, .amount input {
+	width: 100%;
+	min-height: 48px;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: #f6f5f9;
+	font-size: 34px;
+	font-weight: 700;
+	text-align: left;
+}
+
+.amount input::placeholder { color: #8e8ca0; }
+
+.token {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 0 14px;
+	border: 1px solid rgba(246, 245, 249, 0.14);
+	border-radius: 12px;
+	background: #0e0e1c;
+	color: #f6f5f9;
+	font: inherit;
+	font-size: 17px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.flipWrap { display: flex; justify-content: center; margin: -26px 0; position: relative; z-index: 1; }
+
+.flip {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border: 4px solid #0e0e1c;
+	border-radius: 14px;
+	background: #685df7;
+	color: #fff;
+	cursor: pointer;
+}
+
+.details {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 10px 16px;
+	margin: 4px 0 0;
+	padding: 4px 8px;
+	font-size: 14px;
+}
+
+.details dt { color: #a6a4b8; }
+.details dd { margin: 0; text-align: right; font-weight: 600; }
+.pos { color: var(--positive); }
+.neg { color: #ff7a7a; }
+
+.note { width: 100%; max-width: 480px; margin: 0; font-size: 14px; line-height: 1.6; color: #a6a4b8; }
+
+.page { display: flex; flex-direction: column; align-items: center; gap: 28px; max-width: 1240px; margin: 0 auto; padding: 32px 24px 48px; }
+
+@media (max-width: 760px) {
+	.page { padding: 20px 16px 24px; gap: 20px; }
+	.card { padding: 16px; border-radius: 20px; }
+	.amount, .amount input { font-size: 28px; }
+}
+
+.tradeModes { padding-top: 24px; }
+.modeList { width: calc(100% - 32px); max-width: 480px; margin: 0 auto; }

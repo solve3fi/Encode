@@ -1,0 +1,21 @@
+.value {
+	display: inline-flex;
+	align-items: baseline;
+	min-height: 1em;
+	padding: 0;
+	border: 0;
+	border-radius: var(--radius-control);
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-variant-numeric: tabular-nums;
+	cursor: copy;
+	transition: background-color 600ms ease;
+}
+
+.changed { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.copied { color: var(--positive); }
+
+.skeleton::after {
+	animation: none !important;
+}

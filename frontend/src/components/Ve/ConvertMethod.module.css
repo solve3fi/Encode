@@ -1,0 +1,19 @@
+.root {
+  background-color: var(--mantine-color-dark-10);
+  padding: 0;
+}
+
+.label {
+  &[data-disabled] {
+    color: var(--mantine-color-gray-15);
+  }
+}
+
+.button {
+  background-color: var(--mantine-color-purple-9);
+
+  &:disabled {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--mantine-color-gray-10);
+  }
+}

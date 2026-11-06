@@ -1,0 +1,46 @@
+.section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	width: 100%;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding: 24px 28px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 20px;
+	background: #0e0e1c;
+}
+
+.heading { display: flex; flex-direction: column; gap: 6px; }
+
+.eyebrow {
+	margin: 0;
+	color: var(--info);
+	font-family: ui-monospace, "SF Mono", Menlo, monospace;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.note { margin: 0; font-size: 14px; line-height: 1.5; color: #a6a4b8; }
+
+.rail { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+
+.metric {
+	padding: 18px 20px;
+	border-radius: 16px;
+	background: #141428;
+}
+
+.metric > div { display: flex; flex-direction: column; gap: 4px; }
+
+.metric strong { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+.metric span { color: #a6a4b8; font-size: 14px; }
+
+@media (max-width: 760px) {
+	.section { padding: 18px 16px; }
+	.rail { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+	.metric strong { font-size: 26px; }
+}

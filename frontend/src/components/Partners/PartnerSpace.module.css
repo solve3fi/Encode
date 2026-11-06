@@ -1,0 +1,76 @@
+.page { display: flex; flex-direction: column; gap: 28px; max-width: 1240px; margin: 0 auto; padding: 48px 24px 96px; }
+.eyebrow { color: var(--info); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.grad { background: linear-gradient(90deg, #8c84ff, #58d7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.muted { margin: 0; font-size: 14px; line-height: 1.6; color: #a6a4b8; }
+.head { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.head h1 { margin: 0; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.05; letter-spacing: -0.03em; }
+.head p { margin: 0; max-width: 620px; font-size: 17px; line-height: 1.55; color: #c9c7d6; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.pills { display: flex; gap: 10px; align-items: center; font-weight: 600; }
+.badge { padding: 4px 12px; border-radius: 999px; background: rgba(88, 215, 255, 0.14); color: #58d7ff; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.link { display: flex; flex-direction: column; gap: 8px; min-width: 300px; padding: 16px 18px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 16px; background: #0e0e1c; }
+.link > div { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+.link code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; color: #c9c7d6; }
+
+.primary, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border: 0; border-radius: 12px; font: inherit; font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.primary { background: #685df7; color: #fff; }
+.primary:hover:not(:disabled) { background: #7c72ff; color: #fff; }
+.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.ghost { border: 1px solid rgba(246, 245, 249, 0.22); background: transparent; color: #f6f5f9; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.tiles > div { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #0e0e1c; }
+.tiles span { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #a6a4b8; }
+.tiles strong { font-size: 28px; letter-spacing: -0.02em; }
+.tiles small { color: #a6a4b8; font-size: 13px; }
+
+.columns { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.side { display: flex; flex-direction: column; gap: 20px; }
+.panel { display: flex; flex-direction: column; gap: 18px; padding: 26px 28px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; min-width: 0; }
+.panel h2 { margin: 0; font-size: 22px; }
+.panel p { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: #c9c7d6; }
+.panelHead { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+
+.tableWrap { overflow-x: auto; }
+.table { min-width: 560px; }
+.row { display: grid; grid-template-columns: 1fr 1.6fr 1.2fr 1fr; gap: 16px; align-items: center; padding: 14px 4px; border-bottom: 1px solid rgba(246, 245, 249, 0.06); font-size: 14px; }
+.rowHead { color: #a6a4b8; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
+.status { padding: 3px 10px; border-radius: 999px; background: rgba(88, 215, 255, 0.14); color: #58d7ff; font-size: 12px; font-weight: 700; }
+
+.toggle { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.toggle div { display: flex; flex-direction: column; gap: 4px; }
+.toggle small { color: #a6a4b8; font-size: 13px; line-height: 1.45; }
+.switch { position: relative; flex-shrink: 0; width: 52px; height: 30px; padding: 0; border: 0; border-radius: 999px; background: #2a2a48; cursor: pointer; }
+.switch span { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #f6f5f9; transition: transform 0.15s; }
+.switch[aria-checked="true"] { background: #685df7; }
+.switch[aria-checked="true"] span { transform: translateX(22px); }
+
+.field { display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: #c9c7d6; }
+.field span { display: flex; align-items: center; gap: 10px; }
+.field input { flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 1.5px solid rgba(246, 245, 249, 0.14); border-radius: 12px; background: #141428; color: #f6f5f9; font: inherit; font-size: 16px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chips button { min-height: 44px; padding: 0 16px; border: 1px solid rgba(246, 245, 249, 0.22); border-radius: 10px; background: transparent; color: #c9c7d6; font: inherit; font-weight: 600; cursor: pointer; }
+
+.path { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.path > div { display: flex; flex-direction: column; gap: 6px; padding: 16px; border-radius: 14px; background: #141428; }
+.path small { color: #a6a4b8; font-size: 13px; line-height: 1.45; }
+.done, .next { align-self: flex-start; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.done { background: rgba(88, 215, 255, 0.14); color: #58d7ff; }
+.next { background: rgba(104, 93, 247, 0.2); color: #b3adff; }
+
+.foot { display: flex; gap: 24px; flex-wrap: wrap; font-size: 14px; }
+.foot a { display: inline-flex; align-items: center; min-height: 44px; color: #a6a4b8; text-decoration: none; }
+
+@media (max-width: 1000px) {
+	.columns { grid-template-columns: minmax(0, 1fr); }
+	.tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+	.page { padding: 28px 16px 64px; }
+	.link { min-width: 0; width: 100%; }
+	.panel { padding: 20px 16px; }
+	.tiles { grid-template-columns: minmax(0, 1fr); }
+	.path { grid-template-columns: minmax(0, 1fr); }
+}

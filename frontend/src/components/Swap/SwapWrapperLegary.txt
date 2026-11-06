@@ -1,0 +1,126 @@
+import { DEX_PROGRAM_ID } from "@/configs/address";
+import { useCluster } from "@/providers/ClusterProvider";
+import { useApplication } from "@/stores/application/ApplicationProvider";
+import { getOrderMints } from "@/stores/pool/utils/getOrderMints";
+import { getPoolAddress } from "@/stores/pool/utils/getPoolAddress";
+import { useSwap } from "@/stores/swap/SwapProvider";
+import { useSwapQuote } from "@/stores/swap/hooks/useSwapQuote";
+import { Grid, Group, Stack } from "@mantine/core";
+import { DecimalUtil } from "@orca-so/common-sdk";
+import { useMemo } from "react";
+import { CardLayout } from "../Layout/CardLayout";
+import { RefreshAmount } from "./RefreshAmount";
+import { Slippage } from "./Slippage";
+import { SwapAssetPanel } from "./SwapAssetPanel";
+import { SwapMethod } from "./SwapMethod";
+import { SwapRouter } from "./SwapRouter";
+
+export const SwapWrapperLegary: React.FC = () => {
+	const to = useSwap((state) => state.to);
+	const from = useSwap((state) => state.from);
+	const swapAmount = useSwap((state) => state.swapAmount);
+	const slippage = useApplication((state) => state.slippage);
+	const { network } = useCluster();
+
+	const { tokenMintA, tokenMintB } = useMemo(
+		() => getOrderMints(from.address, to.address),
+		[from.address, to.address],
+	);
+
+	const poolId = useMemo(
+		() =>
+			getPoolAddress(
+				network,
+				DEX_PROGRAM_ID[network],
+				tokenMintA,
+				tokenMintB,
+				64,
+			),
+		[network, tokenMintA, tokenMintB],
+	);
+
+	const { data: quoteData, isLoading } = useSwapQuote(
+		network,
+		poolId.publicKey.toBase58(),
+		from,
+		swapAmount,
+		slippage,
+	);
+
+	const swapAmountOut = useMemo(
+		() =>
+			quoteData
+				? DecimalUtil.fromBN(
+						quoteData?.estimatedAmountOut,
+						to.decimals,
+					).toString()
+				: 0,
+		[quoteData, to.decimals],
+	);
+
+	const swapAmountThreshold = useMemo(
+		() =>
+			quoteData
+				? DecimalUtil.fromBN(
+						quoteData?.otherAmountThreshold,
+						to.decimals,
+					).toString()
+				: 0,
+		[quoteData, to.decimals],
+	);
+
+	return (
+		<Grid
+			gutter={{ base: 5, xs: "md", md: "xl", xl: 30 }}
+			py={{
+				base: 20,
+				md: 80,
+			}}
+		>
+			<Grid.Col
+				span={{
+					base: 12,
+					md: 4.5,
+				}}
+			>
+				<CardLayout>
+					<Group align="center" justify="space-between" gap={5}>
+						<SwapMethod />
+						<RefreshAmount />
+						<Slippage />
+					</Group>
+
+					<Stack gap={10} mt={20}>
+						<SwapAssetPanel
+							from={from}
+							to={to}
+							isLoading={isLoading}
+							poolId={poolId}
+							quoteData={quoteData}
+							slippage={slippage}
+							swapAmount={swapAmount}
+							swapAmountOut={swapAmountOut}
+							swapAmountThreshold={swapAmountThreshold}
+						/>
+					</Stack>
+				</CardLayout>
+			</Grid.Col>
+			<Grid.Col
+				span={{
+					base: 12,
+					md: 7.5,
+				}}
+			>
+				<CardLayout>
+					<SwapRouter
+						from={from}
+						to={to}
+						swapAmount={swapAmount}
+						swapAmountOut={swapAmountOut}
+						poolId={poolId}
+					/>
+				</CardLayout>
+			</Grid.Col>
+		</Grid>
+	);
+};

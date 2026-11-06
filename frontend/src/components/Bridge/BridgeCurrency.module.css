@@ -1,0 +1,14 @@
+.root {
+  border-radius: var(--mantine-radius-xl) 4px 4px var(--mantine-radius-xl);
+  padding-left: rem(4px);
+}
+
+.label {
+  margin-right: auto;
+}
+
+.section {
+  &[data-position='left'] {
+    margin-right: rem(5px);
+  }
+}

@@ -1,0 +1,166 @@
+=== run 1 2026-10-08T22:14:43.405Z exit=0
+{"timestamp":"2026-10-08T22:15:14.785Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":2,"poolChanges":1,"defaultFrom":500,"defaultTo":0}
+{"timestamp":"2026-10-08T22:15:15.629Z","action":"default_protocol_fee_rate_set","from":500,"to":0,"signature":"KcLL22R1ebV1DJ4mP8hXV9rUso4wcVTEXp5kVYuAyZrnvF45QFXLPr21rnN3Lqwgiub3Nt9mG24JJyeS2NhaPwf"}
+{"timestamp":"2026-10-08T22:15:16.629Z","action":"pool_protocol_fee_rate_set","pool":"6CkH16c6ekHEPXNgfTvVGeDDFkp6SSn7DeLGxdWz9z4e","from":500,"to":0,"gauge":null,"signature":"2YZ82sMowf9LSMdYnpN2ZeAoTwq1DMRC3tuocm3q6hDQBkNFWiuEXXDm5BjeJ6CefsnE5tu4ggw1SiFL8QsUAehn"}
+{"timestamp":"2026-10-08T22:15:16.731Z","action":"keeper_started","dryRun":false,"slot":508964228,"chainTime":1791497716,"currentEpoch":10,"epochEnd":1791496800,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:15:36.852Z","action":"epoch_rolled_over","epoch":11,"signature":"512ooRSTXLPFgb1yHScRkCjr9PqNNttHMQjVMb1VHhLqmesJBehfyJHrkpEkJo4wEq8j27zZNguxfauvPDAhfhZP"}
+{"timestamp":"2026-10-08T22:15:37.681Z","action":"emission_initialized","emissionEpoch":11,"votingEpoch":10,"signature":"2uB2rJr6DDYwig88h7JVF5J8CwycuMw8TrUQaJEXZtb8UG9fxwoMWgDaPp7zy5FtfTLauUNKiyPTKA68RmJvm7nt"}
+{"timestamp":"2026-10-08T22:15:37.682Z","action":"gauge_funding_skipped","emissionEpoch":11,"reason":"zero_total_voting_power"}
+=== run 2 2026-10-08T22:17:37.683Z exit=0
+{"timestamp":"2026-10-08T22:18:06.099Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:18:06.170Z","action":"keeper_started","dryRun":false,"slot":508964939,"chainTime":1791497885,"currentEpoch":11,"epochEnd":1791498000,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:18:06.524Z","action":"route_skipped_no_votes","epoch":11,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"7500000","tokenBAmount":"36000000"}
+{"timestamp":"2026-10-08T22:18:06.859Z","action":"route_skipped_no_votes","epoch":11,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"7500000","tokenBAmount":"30000000000"}
+{"timestamp":"2026-10-08T22:18:07.092Z","action":"emission_already_initialized","emissionEpoch":11}
+{"timestamp":"2026-10-08T22:18:07.092Z","action":"gauge_funding_skipped","emissionEpoch":11,"reason":"zero_total_voting_power"}
+=== run 3 2026-10-08T22:20:07.215Z exit=0
+{"timestamp":"2026-10-08T22:20:34.135Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:20:34.203Z","action":"keeper_started","dryRun":false,"slot":508965556,"chainTime":1791498033,"currentEpoch":11,"epochEnd":1791498000,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:20:34.672Z","action":"route_skipped_no_votes","epoch":11,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"7500000","tokenBAmount":"36000000"}
+{"timestamp":"2026-10-08T22:20:35.088Z","action":"route_skipped_no_votes","epoch":11,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"7500000","tokenBAmount":"30000000000"}
+{"timestamp":"2026-10-08T22:20:36.122Z","action":"epoch_rolled_over","epoch":12,"signature":"4qgmoreazQaxgxbkwQyLweQbyESwcGqx7A7hqMV6fs6ooR79n78ujbUkimoByDJX63Md2kSZR9XQozPbbnqxs1su"}
+{"timestamp":"2026-10-08T22:20:53.181Z","action":"gauge_activated","gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","pool":"6CkH16c6ekHEPXNgfTvVGeDDFkp6SSn7DeLGxdWz9z4e","settledOwedFees":false,"signature":"ZBBdc7U2duqf3d4FBTMTUGL8yuUBpjUmrJy72F7TtbXd4CouEZP33zDywxNRvFoT8z6xQ8NcHxER6veJpT6ARwx"}
+{"timestamp":"2026-10-08T22:20:54.073Z","action":"emission_initialized","emissionEpoch":12,"votingEpoch":11,"signature":"5NBpuyMSMg9qzQtoBd7jpdN72zpRrLWBsApssV9BXrL2p6HVyeco5zkKw5NM7RBHsrVkqsx6i8Bg21qRM8po49R5"}
+{"timestamp":"2026-10-08T22:20:54.073Z","action":"gauge_funding_skipped","emissionEpoch":12,"reason":"zero_total_voting_power"}
+=== run 4 2026-10-08T22:22:54.179Z exit=0
+{"timestamp":"2026-10-08T22:23:21.352Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:23:21.431Z","action":"keeper_started","dryRun":false,"slot":508966259,"chainTime":1791498200,"currentEpoch":12,"epochEnd":1791499200,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:23:22.745Z","action":"pool_fees_routed","epoch":12,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"16500000","tokenBAmount":"81000000","signature":"2qMq7Nxd4gK8XL7cfAW1X1nmbw8yaXnMkpcLde7QHP6aLuLdRPUYB4jKVc19bLZNwwfFyAGHqnhUqxYHnVMDPtWL"}
+{"timestamp":"2026-10-08T22:23:40.350Z","action":"pool_fees_routed","epoch":12,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"18000000","tokenBAmount":"75000000000","signature":"65HFkTcz1EC6L7gkvhajwtm6bT21jenBSHAVd51aE4HLTaS9e3pNHgPU1TCv36bhKbzNvTdLa2ZXhjRQsFhzroyh"}
+{"timestamp":"2026-10-08T22:23:57.126Z","action":"emission_already_initialized","emissionEpoch":12}
+{"timestamp":"2026-10-08T22:23:57.126Z","action":"gauge_funding_skipped","emissionEpoch":12,"reason":"zero_total_voting_power"}
+=== run 5 2026-10-08T22:25:57.182Z exit=0
+{"timestamp":"2026-10-08T22:26:25.472Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:26:41.843Z","action":"keeper_started","dryRun":false,"slot":508967032,"chainTime":1791498384,"currentEpoch":12,"epochEnd":1791499200,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:27:24.252Z","action":"pool_fees_routed","epoch":12,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"31500000","tokenBAmount":"198000000","signature":"4ozssQzWWw2hsStENZ5hM8RCHcPrTsdLokSraMN3txF3am3PPq4sL1TszJEEfQXVpGcpCU8aKXCnsuUH3MTcYKhg"}
+{"timestamp":"2026-10-08T22:27:49.674Z","action":"pool_fees_routed","epoch":12,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"36000000","tokenBAmount":"180000000000","signature":"4SHBScq6AozEYysreCEibwq7fWtYwPe2wjQrxyqsiCm82ixoiw1McWo3XiAmgGGMCzBvhkgdoqJDwWmoTiZFW9Kp"}
+{"timestamp":"2026-10-08T22:28:14.557Z","action":"emission_already_initialized","emissionEpoch":12}
+{"timestamp":"2026-10-08T22:28:14.557Z","action":"gauge_funding_skipped","emissionEpoch":12,"reason":"zero_total_voting_power"}
+=== run 6 2026-10-08T22:30:14.606Z exit=0
+{"timestamp":"2026-10-08T22:30:41.127Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:30:41.197Z","action":"keeper_started","dryRun":false,"slot":508968097,"chainTime":1791498640,"currentEpoch":12,"epochEnd":1791499200,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:30:50.624Z","action":"pool_fees_routed","epoch":12,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"34500000","tokenBAmount":"216000000","signature":"MPTr4vf1du6zwGoWriDvwz6bMp4begQ4JHixH6enE8oV83dRrVNV3w93qCgRd4RfpUzGZ1y7XBDXcYCEqJefYwH"}
+{"timestamp":"2026-10-08T22:31:00.545Z","action":"pool_fees_routed","epoch":12,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"31500000","tokenBAmount":"165000000000","signature":"3YzXd2XewG1vQ7STQkM2SDeMEJCTZ6WeQXv22rWfaLRVwuLbNTfjtf1QPxgHKP6F7ixRrR2QWazj6A9a6wahXdAY"}
+{"timestamp":"2026-10-08T22:31:17.332Z","action":"emission_already_initialized","emissionEpoch":12}
+{"timestamp":"2026-10-08T22:31:17.332Z","action":"gauge_funding_skipped","emissionEpoch":12,"reason":"zero_total_voting_power"}
+=== run 7 2026-10-08T22:33:17.427Z exit=0
+{"timestamp":"2026-10-08T22:33:44.133Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:33:44.206Z","action":"keeper_started","dryRun":false,"slot":508968871,"chainTime":1791498823,"currentEpoch":12,"epochEnd":1791499200,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:33:55.371Z","action":"pool_fees_routed","epoch":12,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"31500000","tokenBAmount":"180000000","signature":"5wSv7wSKm3bvp8tnvt6a3tTNJYBEN3Uk7DvR2UoyHkqUzYcrUV5QYrjrELXVu9Ri3eAryRkEy3r8WCzdLnV3E2Lf"}
+{"timestamp":"2026-10-08T22:34:04.927Z","action":"pool_fees_routed","epoch":12,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"31500000","tokenBAmount":"157500000000","signature":"5q8iGDTAoBPbYTU5amsrrAVtmzCBFgY9zmCKHDiCuFV1uP1a3oASK3JVbHpEiqn7uGTjmYu42z65vMTHNLavinK9"}
+{"timestamp":"2026-10-08T22:34:13.630Z","action":"emission_already_initialized","emissionEpoch":12}
+{"timestamp":"2026-10-08T22:34:13.630Z","action":"gauge_funding_skipped","emissionEpoch":12,"reason":"zero_total_voting_power"}
+=== run 8 2026-10-08T22:36:13.733Z exit=0
+{"timestamp":"2026-10-08T22:36:40.650Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:36:40.725Z","action":"keeper_started","dryRun":false,"slot":508969611,"chainTime":1791499000,"currentEpoch":12,"epochEnd":1791499200,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:36:58.271Z","action":"pool_fees_routed","epoch":12,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"28500000","tokenBAmount":"180000000","signature":"6aimFCGuoGvGq9744esT6xuZKne1kBmhrque5N7ype6kWce6zCaRWq49ywiN2b4r6Rh3VXSvJV4PU86E3Z6zU5R"}
+{"timestamp":"2026-10-08T22:37:15.843Z","action":"pool_fees_routed","epoch":12,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"31500000","tokenBAmount":"150000000000","signature":"zLkM1Pmi81CmPEdhqpqXQiizbAVvydyvuoS4Cf2bj31bHi4ZkTj81FUNjroCyCtPK8fp2B5B7byH935BGvFZisi"}
+{"timestamp":"2026-10-08T22:37:24.502Z","action":"emission_already_initialized","emissionEpoch":12}
+{"timestamp":"2026-10-08T22:37:24.502Z","action":"gauge_funding_skipped","emissionEpoch":12,"reason":"zero_total_voting_power"}
+=== run 9 2026-10-08T22:39:24.615Z exit=0
+{"timestamp":"2026-10-08T22:39:51.229Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:39:51.300Z","action":"keeper_started","dryRun":false,"slot":508970409,"chainTime":1791499190,"currentEpoch":12,"epochEnd":1791499200,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:40:00.553Z","action":"pool_fees_routed","epoch":12,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"34500000","tokenBAmount":"207000000","signature":"meriGd7y7RQHHrWiN2nwefB6xyBMscczuk1GFNaTShsex2BSATJoWpcav7DTvNBVaznvCNrZynwg46iLesyYzxt"}
+{"timestamp":"2026-10-08T22:40:09.845Z","action":"pool_fees_routed","epoch":12,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"31500000","tokenBAmount":"157500000000","signature":"4Puf3yr8pfqRHeGthNscJrMJtSkBTFDAspZoTfvB4xWu1JBzr9TJsKE1tjnvDFdrC6tJ8AZKefRrQpqLhoJdm6YB"}
+{"timestamp":"2026-10-08T22:40:11.214Z","action":"epoch_rolled_over","epoch":13,"signature":"P9xMY4JxJu8TPUsXsVJBjCm7uedEMVxRjrJqePvbQZihu7oZ83aTGY4YCBPHLYqgD4Cv8QvemYCoK6Z6pFbrYNg"}
+{"timestamp":"2026-10-08T22:40:11.246Z","action":"gauge_removal_due","gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","note":"complete it from Admin > Gauge status"}
+{"timestamp":"2026-10-08T22:40:12.102Z","action":"emission_initialized","emissionEpoch":13,"votingEpoch":12,"signature":"5FuBynz8xcx7J9vxLVRSSvyMtvgqUJVaSoNMPtT3GeJE69coxcwZjGDJNPf53fc6RJPqvKDH7as4NnCG2uu6N4gn"}
+{"timestamp":"2026-10-08T22:40:21.222Z","action":"gauge_funded","emissionEpoch":13,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","weight":"920000000000000","totalVotingPower":"2600000000000000","signature":"bf1B1GhsVFK4inYdtEN5DYbVbCfctdKgJBdvHkPQqEASrEgMRu75whu1BXaQqFhqfqXsWTHrgEYpTD4x1y9tvf6"}
+{"timestamp":"2026-10-08T22:40:22.196Z","action":"gauge_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","weight":"1680000000000000","totalVotingPower":"2600000000000000","signature":"4JcRWYBDYcz1hcvbpmq66mBPX8XWk8v4xRkKLfWPWLiaQRoNYvZX3MfNVgULem4jXrGqy4JzxY29tYCicJqnnswo"}
+{"timestamp":"2026-10-08T22:40:22.196Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:40:22.196Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 10 2026-10-08T22:42:22.734Z exit=0
+{"timestamp":"2026-10-08T22:42:49.830Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:42:49.901Z","action":"keeper_started","dryRun":false,"slot":508971153,"chainTime":1791499369,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:42:50.250Z","action":"route_skipped_no_votes","epoch":13,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"4500000","tokenBAmount":"18000000"}
+{"timestamp":"2026-10-08T22:42:50.603Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:43:07.327Z","action":"gauge_removal_due","gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","note":"complete it from Admin > Gauge status"}
+{"timestamp":"2026-10-08T22:43:07.399Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:43:07.463Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294"}
+{"timestamp":"2026-10-08T22:43:07.529Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:43:07.529Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:43:07.529Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 11 2026-10-08T22:45:07.667Z exit=0
+{"timestamp":"2026-10-08T22:45:34.796Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:45:34.870Z","action":"keeper_started","dryRun":false,"slot":508971841,"chainTime":1791499534,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:45:35.235Z","action":"route_skipped_no_votes","epoch":13,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","tokenAAmount":"4500000","tokenBAmount":"18000000"}
+{"timestamp":"2026-10-08T22:45:35.573Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:45:52.323Z","action":"gauge_removal_due","gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","note":"complete it from Admin > Gauge status"}
+{"timestamp":"2026-10-08T22:45:52.395Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:45:52.464Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294"}
+{"timestamp":"2026-10-08T22:45:52.538Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:45:52.538Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:45:52.539Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 12 2026-10-08T22:47:52.585Z exit=0
+{"timestamp":"2026-10-08T22:48:22.376Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":1,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:48:23.282Z","action":"pool_protocol_fee_rate_set","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","from":500,"to":0,"gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","signature":"4YjaQxVabet2t3isWQSbTmB7yke1zimKp8WvkXYdqdvLnSoqXhvQ2BVGodCKbJFMKfX4muL35s9qDAe75TqGxpQk"}
+{"timestamp":"2026-10-08T22:48:23.381Z","action":"keeper_started","dryRun":false,"slot":508972543,"chainTime":1791499702,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:48:31.828Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:48:32.373Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:48:32.444Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:48:32.444Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:48:32.444Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 13 2026-10-08T22:50:32.537Z exit=0
+{"timestamp":"2026-10-08T22:50:58.633Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:50:58.703Z","action":"keeper_started","dryRun":false,"slot":508973196,"chainTime":1791499858,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:50:59.045Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:50:59.634Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:50:59.702Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:50:59.702Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:50:59.702Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 14 2026-10-08T22:52:59.802Z exit=0
+{"timestamp":"2026-10-08T22:53:26.108Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:53:26.176Z","action":"keeper_started","dryRun":false,"slot":508973811,"chainTime":1791500005,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:53:26.512Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:53:27.052Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:53:27.118Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:53:27.118Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:53:27.118Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 15 2026-10-08T22:55:27.153Z exit=0
+{"timestamp":"2026-10-08T22:55:53.795Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:55:53.865Z","action":"keeper_started","dryRun":false,"slot":508974435,"chainTime":1791500153,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:55:54.229Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:55:54.786Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:55:54.855Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:55:54.855Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:55:54.855Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 16 2026-10-08T22:57:54.949Z exit=0
+{"timestamp":"2026-10-08T22:58:21.206Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T22:58:21.276Z","action":"keeper_started","dryRun":false,"slot":508975052,"chainTime":1791500300,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T22:58:21.623Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T22:58:22.205Z","action":"emission_already_initialized","emissionEpoch":13}
+{"timestamp":"2026-10-08T22:58:22.270Z","action":"gauge_already_funded","emissionEpoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd"}
+{"timestamp":"2026-10-08T22:58:22.270Z","action":"gauge_funding_skipped","emissionEpoch":13,"gauge":"51hz2ithmEsP6BHmruVFeXxcq2wDpb3GSZL6YuLqU2vL","reason":"no_final_vote_weight"}
+{"timestamp":"2026-10-08T22:58:22.270Z","action":"keeper_complete","emissionEpoch":13,"gaugesActivated":0}
+=== run 17 2026-10-08T23:00:22.326Z exit=0
+{"timestamp":"2026-10-08T23:00:49.293Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T23:00:49.362Z","action":"keeper_started","dryRun":false,"slot":508975673,"chainTime":1791500449,"currentEpoch":13,"epochEnd":1791500400,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T23:00:49.716Z","action":"route_skipped_no_votes","epoch":13,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T23:00:51.143Z","action":"epoch_rolled_over","epoch":14,"signature":"5BbFjQC6PzZQWRMqaL3HiR2HQYmfurwqa2azvAAMuhVhfvpqpjEQw5DmDuqyeHgRKwxErDs6pvApbqx9VxK21RRd"}
+{"timestamp":"2026-10-08T23:01:08.358Z","action":"gauge_activated","gauge":"2jACkbhWSQ71Ub8kqgFQCsrgwamnas3XqtaEs27Gv294","pool":"7r4tnFpDeBgzEAUnNCXz3UdnpnmS86TDRyNJ61XXpRQe","settledOwedFees":true,"signature":"3XBvHmktvEGByC6ZAAZ3fmm2hqqy7rrcoLXVe6dQmYyRaMqBCbVVpgdpRWehKWhNWn4jxwygpRbEpU53aNruLzZr"}
+{"timestamp":"2026-10-08T23:01:09.192Z","action":"emission_initialized","emissionEpoch":14,"votingEpoch":13,"signature":"5dbLyxtERsGFX1pVXj5eDhcrnhN3bfjHbXmoJBfE6ZTyp4YoLDTRJGTYDcb44DfrVS2F8WofSsZFTLAfVEhGPQrF"}
+{"timestamp":"2026-10-08T23:01:09.193Z","action":"gauge_funding_skipped","emissionEpoch":14,"reason":"zero_total_voting_power"}
+=== run 18 2026-10-08T23:03:09.208Z exit=0
+{"timestamp":"2026-10-08T23:03:36.541Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T23:03:36.610Z","action":"keeper_started","dryRun":false,"slot":508976371,"chainTime":1791500615,"currentEpoch":14,"epochEnd":1791501600,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T23:03:37.296Z","action":"route_skipped_no_votes","epoch":14,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T23:03:54.091Z","action":"emission_already_initialized","emissionEpoch":14}
+{"timestamp":"2026-10-08T23:03:54.091Z","action":"gauge_funding_skipped","emissionEpoch":14,"reason":"zero_total_voting_power"}
+=== run 19 2026-10-08T23:05:54.111Z exit=0
+{"timestamp":"2026-10-08T23:06:21.258Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T23:06:21.328Z","action":"keeper_started","dryRun":false,"slot":508977064,"chainTime":1791500780,"currentEpoch":14,"epochEnd":1791501600,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T23:06:21.983Z","action":"route_skipped_no_votes","epoch":14,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T23:06:38.770Z","action":"emission_already_initialized","emissionEpoch":14}
+{"timestamp":"2026-10-08T23:06:38.771Z","action":"gauge_funding_skipped","emissionEpoch":14,"reason":"zero_total_voting_power"}
+=== run 20 2026-10-08T23:08:38.805Z exit=0
+{"timestamp":"2026-10-08T23:09:06.303Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T23:09:06.423Z","action":"keeper_started","dryRun":false,"slot":508977755,"chainTime":1791500945,"currentEpoch":14,"epochEnd":1791501600,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T23:09:07.081Z","action":"route_skipped_no_votes","epoch":14,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T23:09:23.840Z","action":"emission_already_initialized","emissionEpoch":14}
+{"timestamp":"2026-10-08T23:09:23.840Z","action":"gauge_funding_skipped","emissionEpoch":14,"reason":"zero_total_voting_power"}
+=== run 21 2026-10-08T23:11:23.841Z exit=0
+{"timestamp":"2026-10-08T23:11:50.484Z","action":"fee_policy_planned","dryRun":false,"dexConfig":"H2rKTtLTUPountjnqWCQRoTkBRC6JZn2mLpM1GMmwBZ6","pools":3,"gauges":3,"poolChanges":0,"defaultFrom":0,"defaultTo":0}
+{"timestamp":"2026-10-08T23:11:50.556Z","action":"keeper_started","dryRun":false,"slot":508978443,"chainTime":1791501109,"currentEpoch":14,"epochEnd":1791501600,"admin":"4j3VFftvWC4R2KxbF4R8bJKz2Mxk3m6a2RjkEu8ySVPs"}
+{"timestamp":"2026-10-08T23:12:07.476Z","action":"route_skipped_no_votes","epoch":14,"gauge":"3Ao8EhT7qSZUfddp9GFXhjZR51AVmHVL5eN3CVkWi6sd","pool":"7hb35SDWira6CqXva3m7JiqFuQz9uLGR1gXJGg5hwnEk","tokenAAmount":"4500000","tokenBAmount":"15000000000"}
+{"timestamp":"2026-10-08T23:12:08.039Z","action":"emission_already_initialized","emissionEpoch":14}
+{"timestamp":"2026-10-08T23:12:08.039Z","action":"gauge_funding_skipped","emissionEpoch":14,"reason":"zero_total_voting_power"}

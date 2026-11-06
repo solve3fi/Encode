@@ -1,0 +1,94 @@
+name: Rust unit tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.89.0 --profile minimal
+          rustup default 1.89.0
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+
+      - name: Test vesolve
+        run: cargo test -p vesolve --lib
+
+      - name: Test solve
+        run: cargo test -p solve --lib
+
+  svm-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchains
+        run: |
+          rustup toolchain install 1.89.0 --profile minimal
+          rustup toolchain install 1.99.0 --profile minimal
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ~/.cargo/bin/cargo-build-sbf
+            ~/.cache/solana
+            target
+            tests/svm/target
+          key: svm-${{ runner.os }}-${{ hashFiles('Cargo.lock', 'tests/svm/Cargo.toml') }}
+
+      - name: Install cargo-build-sbf
+        run: command -v cargo-build-sbf || cargo +1.99.0 install cargo-build-sbf --version 4.0.0 --locked
+
+      # cargo-build-sbf prints stack-frame overflows as "Error: Function ..." but still
+      # exits 0, and an overflowing instruction crashes on-chain. Fail the build on them.
+      - name: Build the programs for the SBF target
+        run: |
+          set -o pipefail
+          for p in solve vesolve token; do
+            cargo build-sbf --manifest-path programs/$p/Cargo.toml --sbf-out-dir target/deploy 2>&1 | tee build-$p.log
+          done
+          if grep -h "^Error: Function" build-solve.log build-vesolve.log build-token.log; then
+            echo "::error::an instruction overflows the 4096-byte SBF stack frame (box large accounts)"
+            exit 1
+          fi
+
+      # The 20 minute test epochs must compile, and must never be in the real build.
+      - name: Check the fast-epochs test build is separate
+        run: |
+          if grep -q "fast-epochs test build" target/deploy/vesolve.so; then
+            echo "::error::the release vesolve build contains the fast-epochs test code"
+            exit 1
+          fi
+          cargo build-sbf --manifest-path programs/vesolve/Cargo.toml --features fast-epochs --sbf-out-dir target/deploy-fast
+          grep -q "fast-epochs test build" target/deploy-fast/vesolve.so
+
+      - name: Run instruction-level tests (LiteSVM)
+        working-directory: tests/svm
+        run: cargo test

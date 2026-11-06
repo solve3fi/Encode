@@ -1,0 +1,148 @@
+.chartWrap {
+	position: relative;
+}
+
+.chart {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.chart text {
+	font-size: 11px;
+	fill: var(--mantine-color-gray-9);
+	font-variant-numeric: tabular-nums;
+}
+
+.chart .label {
+	font-size: 11.5px;
+	fill: var(--mantine-color-gray-4);
+}
+
+.chart .labelStrong {
+	font-size: 11.5px;
+	font-weight: 600;
+	fill: var(--mantine-color-gray-1);
+}
+
+.grid {
+	stroke: var(--mantine-color-gray-17);
+	stroke-width: 1;
+}
+
+.axis {
+	stroke: var(--mantine-color-gray-15);
+	stroke-width: 1;
+}
+
+.launchLine {
+	stroke: var(--mantine-color-gray-4);
+	stroke-width: 1;
+	stroke-dasharray: 3 3;
+	opacity: 0.8;
+}
+
+.bar {
+	transition: opacity 120ms;
+}
+
+.bar:hover {
+	opacity: 0.85;
+}
+
+.curve {
+	fill: none;
+	stroke-width: 2;
+	stroke-linejoin: round;
+}
+
+.marker {
+	stroke: var(--mantine-color-dark-6);
+	stroke-width: 2;
+}
+
+.cross {
+	stroke: var(--mantine-color-gray-4);
+	stroke-width: 1;
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.hit {
+	fill: transparent;
+	cursor: crosshair;
+}
+
+.tip {
+	position: absolute;
+	pointer-events: none;
+	z-index: 2;
+	background: var(--mantine-color-gray-1);
+	color: var(--mantine-color-gray-19);
+	font-size: 12px;
+	line-height: 1.4;
+	padding: 6px 9px;
+	border-radius: var(--mantine-radius-sm);
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+}
+
+.swatch {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 2px;
+	margin-right: 8px;
+	vertical-align: -1px;
+}
+
+.stat {
+	padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+	border: 1px solid var(--mantine-color-dark-10);
+	border-radius: var(--mantine-radius-md);
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.mono {
+	font-family: var(--mantine-font-family-monospace);
+	font-size: 12.5px;
+	font-variant-numeric: tabular-nums;
+}
+
+.json {
+	margin: 0;
+	max-height: 320px;
+	overflow: auto;
+	padding: var(--mantine-spacing-sm);
+	border: 1px solid var(--mantine-color-dark-10);
+	border-radius: var(--mantine-radius-sm);
+	background: rgba(255, 255, 255, 0.03);
+	color: var(--mantine-color-gray-3);
+	font-family: var(--mantine-font-family-monospace);
+	font-size: 11.5px;
+	line-height: 1.45;
+}
+
+.steps {
+	counter-reset: step;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.steps li {
+	display: grid;
+	grid-template-columns: 36px 1fr;
+	gap: var(--mantine-spacing-sm);
+	padding: var(--mantine-spacing-sm) 0;
+	border-top: 1px solid var(--mantine-color-dark-10);
+	counter-increment: step;
+}
+
+.steps li::before {
+	content: counter(step, decimal-leading-zero);
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--mantine-color-gray-10);
+	line-height: 1.1;
+}

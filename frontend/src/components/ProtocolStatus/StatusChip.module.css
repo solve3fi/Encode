@@ -1,0 +1,56 @@
+.root {
+	--status-color: var(--text-secondary);
+	--status-fill: color-mix(in srgb, var(--text-secondary) 10%, transparent);
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	min-height: 1.75rem;
+	padding: 0.25rem 0.65rem;
+	border: 1px solid color-mix(in srgb, var(--status-color) 34%, transparent);
+	border-radius: var(--radius-pill);
+	background: var(--status-fill);
+	color: var(--status-color);
+	font-size: var(--type-label);
+	font-weight: 700;
+	letter-spacing: 0.075em;
+	line-height: 1;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.dot {
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 50%;
+	background: currentColor;
+	box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.pulse {
+	animation: signal 1.8s ease-out infinite;
+}
+
+.live,
+.success {
+	--status-color: var(--positive);
+	--status-fill: color-mix(in srgb, var(--positive) 9%, transparent);
+}
+
+.devnet,
+.snapshot,
+.pending {
+	--status-color: var(--caution);
+	--status-fill: color-mix(in srgb, var(--caution) 9%, transparent);
+}
+
+.error {
+	--status-color: var(--negative);
+	--status-fill: color-mix(in srgb, var(--negative) 9%, transparent);
+}
+
+@keyframes signal {
+	70%,
+	100% {
+		box-shadow: 0 0 0 0.42rem transparent;
+	}
+}

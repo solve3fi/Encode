@@ -1,0 +1,12 @@
+.page { display: flex; flex-direction: column; gap: 28px; max-width: 1240px; margin: 0 auto; padding: 24px 24px 48px; }
+.head { display: flex; flex-direction: column; gap: 12px; }
+.head h1 { margin: 0; font-size: clamp(34px, 4.5vw, 52px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+.head p { margin: 0; max-width: 620px; font-size: 16px; line-height: 1.55; color: #c9c7d6; }
+.back { display: inline-flex; align-items: center; min-height: 44px; width: fit-content; color: #8c84ff; font-size: 15px; font-weight: 600; text-decoration: none; }
+.grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: start; }
+.panel { display: flex; flex-direction: column; gap: 22px; padding: 24px 28px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 20px; background: #0e0e1c; }
+.right { min-width: 0; }
+.hint { margin: 0; font-size: 14px; color: #a6a4b8; }
+.hint a { color: #8c84ff; }
+@media (max-width: 1000px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { .page { padding: 16px 16px 24px; } .panel { padding: 18px 16px; } }

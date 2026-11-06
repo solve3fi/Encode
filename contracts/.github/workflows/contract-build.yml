@@ -1,0 +1,70 @@
+name: Build veSOLV3 contract
+
+on:
+  push:
+    branches:
+      - codex/permanent-vesolv3-locks
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-vesolve:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy
+          rustup default 1.89.0
+          rustc --version
+          cargo --version
+
+      - name: Install Solana CLI 2.3.0
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/v2.3.0/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+
+      - name: Install Anchor CLI 0.32.1
+        run: |
+          rustup toolchain install stable --profile minimal
+          cargo +stable install --git https://github.com/solana-foundation/anchor avm --locked --force
+          avm install 0.32.1
+          avm use 0.32.1
+          rustup default 1.89.0
+          anchor --version
+          solana --version
+          rustc --version
+
+      - name: Pin dependency for Solana SBF compiler
+        run: |
+          cargo update -p indexmap@2.12.0 --precise 2.11.4
+          cargo tree -i indexmap@2.11.4
+
+      - name: Run veSOLV3 unit tests
+        run: cargo test -p vesolve --lib --locked
+
+      - name: Build veSOLV3 SBF program
+        run: anchor build --program-name vesolve
+
+      - name: Record artifact digest and size
+        run: |
+          sha256sum target/deploy/vesolve.so | tee target/deploy/vesolve.so.sha256
+          stat --printf='%n %s bytes\n' target/deploy/vesolve.so
+
+      - name: Upload contract artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: vesolve-permanent-no-decay
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            target/deploy/vesolve.so
+            target/deploy/vesolve.so.sha256
+            target/idl/vesolve.json
+            target/types/vesolve.ts

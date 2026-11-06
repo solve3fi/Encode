@@ -1,0 +1,18 @@
+.item {
+	background-color: var(--mantine-color-gray-19);
+	border-width: rem(2);
+	border-color: var(--mantine-color-gray-19);
+
+	&[data-selected] {
+		background-color: var(--mantine-color-purple-16);
+		border-color: var(--mantine-color-purple-6);
+	}
+}
+
+.root {
+	margin-right: 0;
+}
+
+.radio {
+	border-color: var(--mantine-color-gray-16);
+}

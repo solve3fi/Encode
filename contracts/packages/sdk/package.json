@@ -1,0 +1,30 @@
+{
+	"name": "@solvefi/vesolve-sdk",
+	"version": "0.0.0",
+	"main": "./dist/index.js",
+	"module": "./dist/index.esm.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.esm.js",
+			"require": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/invariant": "^2.2.37"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@coral-xyz/anchor": "^0.32.1",
+		"@solvefi/common": "^0.1.0",
+		"invariant": "^2.2.4"
+	}
+}

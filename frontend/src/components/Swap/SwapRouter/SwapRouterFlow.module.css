@@ -1,0 +1,22 @@
+.line {
+	height: 55%;
+	position: absolute;
+	top: rem(30);
+	left: rem(12);
+	right: rem(12);
+	background-color: transparent;
+	border-radius: rem(5);
+	border: rem(2) solid var(--mantine-color-purple-9);
+	border-top: none;
+	z-index: 0;
+}
+
+.node {
+	position: relative;
+	z-index: 1;
+	top: rem(20);
+}
+
+.item {
+	border-top: rem(2) solid var(--mantine-color-purple-9);
+}

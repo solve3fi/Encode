@@ -1,0 +1,4 @@
+.root {
+  --ai-bg: var(--mantine-color-gray-light);
+  --ai-hover: var(--mantine-color-gray-light-hover);
+}

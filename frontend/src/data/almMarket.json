@@ -1,0 +1,73 @@
+{
+ "asOf": "2026-11-01T20:05:55.676Z",
+ "source": "Solve3 ALM research engine (snapshot of the T-150 verdicts, T-151 forward log and T-154 emissions comparison)",
+ "capitalUSD": 10000,
+ "horizonHours": 96,
+ "sigmaAnnualized": 0.646,
+ "driftPctPerHour": -0.00294,
+ "pools": [
+  {
+   "verdict": "hold-favored"
+  },
+  {
+   "verdict": "hold-favored"
+  },
+  {
+   "verdict": "hold-favored"
+  },
+  {
+   "verdict": "hold-favored"
+  },
+  {
+   "verdict": "hold-favored"
+  }
+ ],
+ "walkForward": {
+  "folds": 4,
+  "lpFavoredFolds": 2,
+  "holdFavoredFolds": 1,
+  "marginalFolds": 1,
+  "overall": "hold-on-net"
+ },
+ "forward": {
+  "liveScored": 0,
+  "backfillScored": 74,
+  "backfillHitRate": 0.5676,
+  "minScored": 30,
+  "meaningful": false
+ },
+ "sample": {
+  "asOf": "2026-11-01",
+  "rows": [
+   {
+    "venue": "Orca",
+    "pool": "SOL/USDC (Whirlpool)",
+    "tvlUSD": 25449260,
+    "feeApr": "14.7%",
+    "emissions": "None observed"
+   },
+   {
+    "venue": "Raydium",
+    "pool": "SOL/USDC (CLMM)",
+    "tvlUSD": 7268808,
+    "feeApr": "14.5%",
+    "emissions": "Not confirmed"
+   },
+   {
+    "venue": "Meteora",
+    "pool": "SOL/USDC",
+    "tvlUSD": null,
+    "feeApr": "n/a",
+    "emissions": "Not measured in this sample"
+   },
+   {
+    "venue": "Solve3",
+    "pool": "SOL/USDC",
+    "tvlUSD": 18626,
+    "feeApr": "0.3% to 2.4%",
+    "emissions": "None yet (gauges are not live)"
+   }
+  ],
+  "note": "Solve3 fee APR is shown as a range because two public-flow samples (1.5 hours and 23 hours) gave 0.28% and 2.43%."
+ }
+}

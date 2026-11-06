@@ -1,0 +1,42 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 22px 24px;
+	border: 1px solid rgba(140, 132, 255, 0.28);
+	border-radius: 16px;
+	background: #141428;
+}
+.card h2 {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	color: #a6a4b8;
+}
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+	font-size: 14px;
+}
+.row span {
+	color: #a6a4b8;
+}
+.row b {
+	color: #f6f5f9;
+	font-weight: 600;
+	text-align: right;
+	overflow-wrap: anywhere;
+}
+.rule {
+	height: 1px;
+	background: rgba(246, 245, 249, 0.1);
+}
+.card p {
+	margin: 0;
+	font-size: 12.5px;
+	line-height: 1.5;
+	color: #a6a4b8;
+}

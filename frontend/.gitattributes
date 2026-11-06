@@ -1,0 +1,3 @@
+scripts/quest/*.sh text eol=lf
+*.sh text eol=lf
+deploy/**/*.sh text eol=lf

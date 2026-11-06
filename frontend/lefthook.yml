@@ -1,0 +1,19 @@
+pre-commit:
+  parallel: true
+  # commands:
+  #   formatter:
+  #     glob: '*.{js,ts,jsx,tsx}'
+  #     run: npx @biomejs/biome check --write {staged_files}
+  #     exclude:
+  #       - '**/node_modules/**'
+      
+  #   styles:
+  #     glob: '*.{css,scss}'
+  #     run: bun run stylelint {staged_files} -o {staged_files} --fix
+  #     exclude:
+  #       - '**/node_modules/**'
+
+commit-msg:
+  commands:
+    lint-commit-msg:
+      run: npx commitlint --edit {1}

@@ -1,0 +1,152 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	padding: 28px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 20px;
+	background: #0e0e1c;
+	color: #f6f5f9;
+}
+.head {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+.head h3 {
+	margin: 6px 0 0;
+	font-size: 24px;
+	letter-spacing: -0.02em;
+}
+.eyebrow {
+	font-family: ui-monospace, "SF Mono", Menlo, monospace;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #58d7ff;
+}
+.rate {
+	padding: 5px 11px;
+	border-radius: 8px;
+	background: rgba(245, 177, 76, 0.14);
+	color: #f5b14c;
+	font-size: 12.5px;
+	font-weight: 700;
+}
+.grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+.block {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 20px 22px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 16px;
+	background: #141428;
+}
+.label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #a6a4b8;
+}
+.code {
+	font-family: ui-monospace, "SF Mono", Menlo, monospace;
+	font-size: 30px;
+	letter-spacing: 0.18em;
+}
+.row {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.input {
+	flex: 1 1 200px;
+	min-width: 0;
+	min-height: 44px;
+	padding: 0 14px;
+	border: 1px solid rgba(246, 245, 249, 0.18);
+	border-radius: 10px;
+	background: #0e0e1c;
+	color: #f6f5f9;
+	font: inherit;
+	font-size: 14px;
+}
+.cta {
+	min-height: 44px;
+	padding: 0 18px;
+	border: 0;
+	border-radius: 10px;
+	background: #685df7;
+	color: #fff;
+	font: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	cursor: pointer;
+}
+.cta:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+.cta:focus-visible,
+.input:focus-visible {
+	outline: 2px solid #58d7ff;
+	outline-offset: 2px;
+}
+.muted {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.55;
+	color: #c9c7d6;
+}
+.note {
+	margin: 0;
+	font-size: 14px;
+	color: #f5b14c;
+}
+.done {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #7be0a8;
+}
+.stats {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+	margin: 0;
+}
+.stats div {
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: #0e0e1c;
+}
+.stats dt {
+	font-size: 12px;
+	color: #a6a4b8;
+}
+.stats dd {
+	margin: 4px 0 0;
+	font-size: 20px;
+	font-weight: 700;
+}
+@media (max-width: 760px) {
+	.card {
+		padding: 20px;
+	}
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Inside a column block the 200px flex basis was becoming the field height. */
+.block > .input {
+	flex: 0 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+}

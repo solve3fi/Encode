@@ -1,0 +1,28 @@
+.root {
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 18px;
+	background: #0e0e1c;
+	overflow: hidden;
+
+	table {
+		background-color: transparent;
+	}
+
+	thead tr th {
+		padding: 16px 28px;
+		border-bottom: 1px solid rgba(246, 245, 249, 0.1);
+		background: transparent;
+		color: #a6a4b8;
+		font-size: 13px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: none;
+	}
+
+	tbody tr td { padding: 20px 28px; }
+}
+
+.row {
+	background-color: transparent;
+	border-bottom: 1px solid rgba(246, 245, 249, 0.06);
+}

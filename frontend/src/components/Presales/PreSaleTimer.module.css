@@ -1,0 +1,4 @@
+.root {
+  background: var(--mantine-color-dark-10);
+  border: 2px solid var(--overlay-soft);
+}

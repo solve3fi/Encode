@@ -1,0 +1,58 @@
+# Orca SOL/USDC ALM backtest — $10,000
+
+**Observed Orca prices and volume; estimated LP fees. Research only.** Initial inventory: $5,000 SOL / $5,000 USDC. 4,999 consecutive observed hourly candles, 2026-03-24T17:00:00.000Z to 2026-10-19T00:00:00.000Z (exclusive end), no gaps. Pool: [Czfq3xZZDmsdGdUyrNLtRhGc47cXcZtLG4crryfu44zE](https://www.orca.so/pools/Czfq3xZZDmsdGdUyrNLtRhGc47cXcZtLG4crryfu44zE). Data: Orca official pool snapshot plus GeckoTerminal pool OHLCV. Historical pagination stopped at the public API's 180-day cursor restriction; the last successful page extends further back. No synthetic candles or interpolated gaps.
+
+## Held-out result
+
+Selected on validation: **volatility-2-0-24-0-no-swap**. Test return **0.22%** ($21.81), ending $10,021.81. Holding the original inventory ended at $9,901.18. Excess over holding: **$120.63**. This is a conditional modeled advantage, sensitive to unobserved historical liquidity.
+
+| Strategy | Net end | vs holding | Estimated fees | Action / swap costs | Max drawdown | In range | Rebalances |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| hold-50-50 | $9,901.18 | $0.00 | $0.00 | $0.00 / $0.00 | 10.3% | 0.0% | 0 |
+| static-0.05 | $10,470.26 | $569.08 | $590.39 | $1.00 / $0.00 | 6.7% | 44.4% | 0 |
+| static-0.2 | $10,326.26 | $425.08 | $431.74 | $1.00 / $0.00 | 5.9% | 100.0% | 0 |
+| static-10 | $9,953.36 | $52.18 | $53.89 | $1.00 / $0.00 | 9.6% | 100.0% | 0 |
+| volatility-2-0-6-0-no-swap | $10,023.52 | $122.34 | $103.66 | $3.00 / $0.00 | 18.8% | 74.6% | 4 |
+| volatility-2-0-24-0-no-swap | $10,021.81 | $120.63 | $102.35 | $3.00 / $0.00 | 18.9% | 70.9% | 4 |
+
+## Selection
+
+175 candidates cover static ranges, delayed repositioning and trailing-volatility ranges, 0/25% reserves and optional balancing swaps. Training: 2026-03-24T17:00:00.000Z → 2026-07-26T17:00:00.000Z. Validation: 2026-07-26T17:00:00.000Z → 2026-09-06T17:00:00.000Z. Locked test: 2026-09-06T17:00:00.000Z → 2026-10-19T00:00:00.000Z. Each period starts independently at $10,000; historical prices before its start may initialize trailing volatility. The top 12 training-screened ALM candidates are ranked by validation net ending value; screening targets at most 35% drawdown and at least 50% range occupancy (12 validation candidates passed). Test outcomes never choose parameters. Holding is always reported, even if it beats the selected ALM candidate.
+
+## Economics and uncertainty
+
+Observed Orca hourly USD volume is used directly as USDC notional at a $1 peg. Fee 0.04%, LP share 87%, spacing 4, adaptive fees disabled in current snapshot. Fees per hour = observed volume × fee × LP share × estimated own share of active liquidity × estimated range occupancy. Competing liquidity is fixed at 23842457.52 normalized units from snapshot 2026-10-19T19:16:54.444083Z; **this is not historical liquidity and creates material look-ahead in fee calibration**. Price/volume selection is chronological, but the fee model is not an out-of-sample revenue prediction.
+
+Baseline action cost $0.50; balancing swaps pay 4 bps pool fee + 5 bps slippage. Initial deployment and final exit are charged. Costs already lost through swap execution are not deducted twice. Fees are segregated, not compounded. Selected strategy does not assume balancing swaps.
+
+| Competing liquidity multiple | Test net return | vs holding |
+| --- | ---: | ---: |
+| 0.25× | 3.28% | $426.76 |
+| 0.5× | 1.24% | $222.83 |
+| 1× | 0.22% | $120.63 |
+| 2× | -0.29% | $69.48 |
+| 5× | -0.60% | $38.76 |
+
+Zero LP fee share gives test return -0.81%. Full volume, fee-share, cost, slippage and path sensitivities are in results.json.
+
+## Solve3 and ve33 transfer
+
+Orca returns cannot be copied into Solve3. Applying the same frozen strategy to Orca prices with Solve3's current liquidity, 95% LP fee share and $3,262.28/day short-sample flow gives a **counterfactual** return -0.71%, $28.13 versus holding. The flow sample covers only 22.99 hours and is net swap-like vault flow, not exact gross volume or a forecast. At zero LP trading-fee share, the transfer return is -0.81%. Funded/activity-gated emissions need a separate verified model. See [ve33 proposal](../../VE33_ALM_PROPOSAL.md).
+
+## Reproduce
+
+The exact observed dataset is bundled as [observed-hourly.json.gz](observed-hourly.json.gz), SHA-256 of decompressed JSON: `9f3e28062d48e087fd0df351884b38fcf8978fc8b12d6fa394deb0ffcc5ba90a`. Source URLs, raw-response hashes and current Orca snapshot are in [source-manifest.json](source-manifest.json). Unpack into ignored `data/research/orca-solusdc-hourly.json` and copy the manifest there as `orca-solusdc-manifest.json`; restore the exact Solve3 observation and flow from `results.json.solve3Transfer` into `mainnet-observation.json` and `pool-flow-summary.json`. Run `bun scripts/backtest-orca-solusdc.ts`. Fetching fresh source with `python scripts/fetch-orca-solusdc.py` can produce different snapshots or revised indexer data.
+
+## Limitations
+
+- Prices and pool volume are observed Orca OHLCV from GeckoTerminal. Fees are estimates, not reconstructed historical LP fee growth or realized vault performance.
+- Competing active liquidity is frozen at the current Orca API snapshot. Historical tick liquidity, protocol fee changes and fee growth are unavailable; changing this assumption can reverse profitability. The snapshot is later than every test bar, so fee calibration is not out of sample.
+- Pool volumes are indexed USD notional treated as USDC at $1. Stablecoin deviations, missing routed legs and indexer revisions are not modeled.
+- Hourly OHLC log-linear paths approximate range occupancy and allocate volume uniformly along the assumed path. Tick crossings, swaps, jumps between bars, MEV, latency and endogenous volume are not replayed.
+- Balanced candidates assume inventory swaps with pool fees plus modeled slippage. The current Solve3 keeper does not execute balancing swaps. No parameter here is an executable production configuration.
+- Action costs are fixed assumptions, deducted from net returns. Historical rent/refunds, tick initialization, priority fees, taxes and operator service fees are not reconstructed. Fees stay segregated and are not compounded.
+- No ORCA/SOLV3 emissions or voter income. Zero LP fee share models the LP trading-fee effect of routing fees to voters; it does not estimate emissions.
+- Solve3 transfer is a separate counterfactual using current Solve3 active liquidity and less than one day of net-vault flow. It scales Orca hourly activity to that short sample; it is not historical Solve3 performance or a forecast.
+- 175 candidates and one chronological holdout do not establish a durable edge. A longer independent period and historical liquidity/fee-growth evidence are required before selecting a live strategy.
+
+Machine-readable output: [results.json](results.json). Held-out equity: [test-equity.csv](test-equity.csv).

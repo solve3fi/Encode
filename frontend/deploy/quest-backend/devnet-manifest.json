@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"purpose": "Operator-attested candidate manifest for the isolated Devnet Quest/Pass TEST backend. It pins the deployment this backend is allowed to describe. It is not an approved program manifest and activates no award.",
+	"network": "DEVNET",
+	"genesisHash": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+	"deployedOn": "2026-10-03",
+	"programs": {
+		"vesolve": "HMqzJpD85Z74R1vhor9LWm6KFhK6tYVChzjzyBRyjUmN",
+		"solve": "HnosXNWPvKSFkY6xjUpCJ9nhbvTRhdfNTfWpgp3m4GK",
+		"token": "CKRSmDf3n1ZsAc91YyRyCwWLoNShZ4xi2nWESMbDw7Pw"
+	},
+	"solv3Mint": "DvGitpT8Qujq6sxXoq7M1vueGf97dGVpoPWY4ifYHCHu",
+	"solvesConfig": "F2QtwRjDpdVR25n3ZMWpmAKdMK21LDdi3pTGUTc8ELef",
+	"epochLengthSeconds": 604800
+}

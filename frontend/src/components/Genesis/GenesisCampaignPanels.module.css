@@ -1,0 +1,127 @@
+.section {
+	display: grid;
+	gap: var(--space-4);
+	margin: var(--space-6) 0;
+}
+
+.heading {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: var(--space-4);
+}
+
+.heading h2 {
+	margin: var(--space-2) 0 0;
+	font-size: var(--type-h3);
+}
+
+.poolGrid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--space-4);
+}
+
+.poolName {
+	margin: 0 0 var(--space-2);
+	font-size: 1.3rem;
+}
+
+.poolDetail, .lead, .note {
+	color: var(--text-secondary);
+	line-height: 1.5;
+}
+
+.poolDetail {
+	min-height: 3em;
+}
+
+.lead {
+	margin: 0 0 var(--space-4);
+}
+
+.note {
+	margin: var(--space-4) 0;
+	font-size: var(--type-small);
+}
+
+.metric {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding: var(--space-3) 0;
+	border-top: 1px solid var(--border-subtle);
+	font-size: var(--type-small);
+}
+
+.metric span {
+	color: var(--text-secondary);
+}
+
+.metric strong {
+	text-align: right;
+}
+
+.progressList {
+	display: grid;
+	gap: var(--space-3);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.progressList li {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding: var(--space-3);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-control);
+	background: var(--surface-genesis-inset);
+}
+
+.progressList li span:last-child {
+	color: var(--text-secondary);
+}
+
+.link {
+	color: var(--accent);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+.disclosure {
+	margin: 0;
+	padding: var(--space-4);
+	border: 1px solid var(--border-genesis);
+	border-radius: var(--radius-control);
+	color: var(--text-secondary);
+	font-size: var(--type-small);
+	line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+	.poolGrid {
+		grid-template-columns: 1fr;
+	}
+
+	.poolDetail {
+		min-height: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.heading {
+		align-items: start;
+		flex-direction: column;
+	}
+
+	.metric {
+		flex-wrap: wrap;
+	}
+}

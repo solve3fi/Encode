@@ -1,0 +1,49 @@
+.page { width: min(1240px, 100%); margin: 0 auto; padding: 48px 24px 80px; display: flex; flex-direction: column; gap: 28px; color: #f6f5f9; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.headText { display: flex; flex-direction: column; gap: 14px; max-width: 640px; }
+.pill { align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: rgba(88, 215, 255, 0.12); color: #58d7ff; border: 1px solid rgba(88, 215, 255, 0.3); font-size: 12px; font-weight: 600; }
+.head h1 { margin: 0; font-size: clamp(36px, 5vw, 60px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 700; }
+.head p { margin: 0; font-size: 16px; line-height: 1.6; color: #c9c7d6; }
+.signed { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border: 1px solid rgba(246, 245, 249, 0.12); border-radius: 12px; background: #0e0e1c; font-size: 14px; color: #c9c7d6; }
+.signed i { width: 8px; height: 8px; border-radius: 50%; background: #58d7ff; }
+.signed strong { color: #f5b14c; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-weight: 600; }
+
+.layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 24px; align-items: start; }
+.sidebar { position: sticky; top: 88px; max-height: calc(100vh - 112px); overflow-y: auto; padding: 14px 12px; border: 1px solid rgba(246, 245, 249, 0.1); border-radius: 18px; background: #0e0e1c; }
+.group { display: flex; flex-direction: column; gap: 2px; }
+.group + .group { margin-top: 14px; }
+.groupLabel { padding: 6px 12px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #a6a4b8; }
+.item { display: flex; align-items: center; min-height: 40px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #c9c7d6; font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+.item { justify-content: space-between; gap: 8px; }
+.count { min-width: 22px; padding: 1px 7px; border-radius: 999px; background: #f5b14c; color: #070711; font-size: 12px; font-weight: 700; text-align: center; }
+.reminder { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; width: 100%; padding: 14px 18px; border: 1px solid rgba(245, 177, 76, 0.45); border-radius: 14px; background: rgba(245, 177, 76, 0.1); color: #f6f5f9; font: inherit; font-size: 15px; text-align: left; cursor: pointer; }
+.reminder strong { color: #f5b14c; }
+.reminder span { color: #c9c7d6; font-size: 14px; }
+.reminder:hover { background: rgba(245, 177, 76, 0.16); }
+.item:hover { background: rgba(246, 245, 249, 0.05); color: #f6f5f9; }
+.item[aria-current="page"] { background: rgba(104, 93, 247, 0.28); color: #fff; font-weight: 600; }
+.item:focus-visible { outline: 2px solid #58d7ff; outline-offset: 2px; }
+
+.content { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.sectionHead { display: flex; flex-direction: column; gap: 4px; }
+.sectionHead h2 { margin: 0; font-size: 22px; letter-spacing: -0.02em; }
+.sectionHead span { font-size: 13px; color: #a6a4b8; }
+
+/* The sections are existing components; give their controls the redesigned tokens. */
+.content :is(input, textarea, select) { background: #141428 !important; border-color: rgba(246, 245, 249, 0.14) !important; color: #f6f5f9 !important; }
+.content :is(input, textarea)::placeholder { color: #a6a4b8 !important; }
+.content table { width: 100%; }
+.content :is(th) { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #a6a4b8 !important; }
+
+.chips { display: none; }
+
+@media (max-width: 900px) {
+ .page { padding: 28px 16px 64px; gap: 20px; }
+ .layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+ .sidebar { display: none; }
+ .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+ .chip { flex: none; min-height: 44px; padding: 0 16px; border: 1px solid rgba(246, 245, 249, 0.16); border-radius: 999px; background: transparent; color: #c9c7d6; font: inherit; font-size: 14px; white-space: nowrap; cursor: pointer; }
+ .chip { display: inline-flex; align-items: center; gap: 8px; }
+ .chip[aria-current="page"] { background: rgba(104, 93, 247, 0.28); border-color: #8c84ff; color: #fff; font-weight: 600; }
+ .head { align-items: flex-start; }
+}

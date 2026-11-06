@@ -1,0 +1,306 @@
+.root {
+	padding: clamp(16px, 3vw, 32px);
+	color: #f4f1ff;
+	background:
+		radial-gradient(ellipse at 50% 44%, #251848 0%, transparent 58%), #131125;
+	border: 1px solid #39315c;
+	border-radius: 16px;
+}
+.headerRail > span {
+	color: #b8afff;
+	font-size: 0.75rem;
+	letter-spacing: 0.14em;
+}
+.header h3 {
+	font-size: clamp(1.3rem, 3vw, 2rem);
+	line-height: 1.2;
+	margin: 8px 0;
+}
+.header p,
+.note {
+	color: #c2bbd7;
+	font-size: 0.85rem;
+}
+.entry {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-top: 20px;
+	color: #c8f1df;
+	font-size: 0.85rem;
+}
+.diagram {
+	position: relative;
+	margin-top: 12px;
+}
+.arrows {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+.steps {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 110px 48px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+.step:nth-child(4) {
+	grid-area: 2 / 3;
+}
+.step:nth-child(5) {
+	grid-area: 2 / 2;
+}
+.step:nth-child(6) {
+	grid-area: 2 / 1;
+}
+.step button {
+	width: 100%;
+	min-height: 110px;
+	position: relative;
+	overflow: hidden;
+	border: 1px solid #524779;
+	border-radius: 12px;
+	padding: 16px;
+	text-align: left;
+	background: #201a38;
+	color: inherit;
+	cursor: pointer;
+	font: inherit;
+}
+.step button[aria-pressed="true"] {
+	background: #33265b;
+	border-color: #a49bff;
+	box-shadow: 0 0 0 1px #a49bff;
+}
+.step button:focus-visible {
+	outline: 3px solid #d4ceff;
+	outline-offset: 4px;
+}
+.step strong,
+.step small {
+	display: block;
+}
+.step small {
+	color: #c2bbd7;
+	font-size: 0.8rem;
+	margin-top: 5px;
+}
+.number {
+	color: #a49bff;
+	font-size: 0.7rem;
+	font-variant-numeric: tabular-nums;
+}
+.center {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+.center b {
+	font-size: 1.15rem;
+}
+.center span {
+	font-size: 0.8rem;
+	color: #c2bbd7;
+}
+.return {
+	font-size: 0.8rem;
+	color: #b8afff;
+	margin: 18px 0;
+}
+.detail {
+	border-inline-start: 3px solid #a49bff;
+	background: #1c1834;
+	padding: 16px 20px;
+	border-radius: 0 10px 10px 0;
+	min-height: 140px;
+}
+.detail small {
+	color: #b8afff;
+}
+.detail h4 {
+	margin: 4px 0 6px;
+}
+.detail p {
+	margin: 0;
+	line-height: 1.6;
+	color: #ded8ec;
+}
+.note {
+	margin-bottom: 0;
+}
+@media (max-width: 640px) {
+	.arrows,
+	.center {
+		display: none;
+	}
+	.steps {
+		grid-template-columns: 1fr;
+		gap: 28px;
+	}
+	.step:nth-child(n) {
+		grid-area: auto;
+		position: relative;
+	}
+	.step:not(:last-child)::after {
+		content: "↓";
+		position: absolute;
+		bottom: -26px;
+		left: 50%;
+		color: #a49bff;
+	}
+	.step button {
+		min-height: 88px;
+		padding: 10px 14px;
+	}
+	.detail {
+		min-height: 0;
+	}
+}
+
+.headerRail {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 8px 16px;
+}
+.motionControl {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	border: 1px solid #645589;
+	border-radius: 999px;
+	background: #201a38;
+	color: #eee8ff;
+	padding: 6px 10px;
+	font: inherit;
+	font-size: 0.75rem;
+	cursor: pointer;
+}
+.motionControl:focus-visible {
+	outline: 2px solid #d4ceff;
+	outline-offset: 4px;
+}
+.stepTop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	color: #c4b5ff;
+	margin-bottom: 7px;
+}
+.track,
+.pulse {
+	fill: none;
+	vector-effect: non-scaling-stroke;
+}
+.track {
+	stroke: #8877c2;
+	stroke-width: 1.5;
+}
+.pulse {
+	stroke: #c1ffdf;
+	stroke-linecap: round;
+	stroke-width: 3;
+	stroke-dasharray: 24 110;
+	filter: drop-shadow(0 0 5px #a3ffd9);
+	opacity: 0;
+	animation: transmit 9.6s linear infinite both;
+	animation-delay: var(--delay);
+}
+.step button::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	background: linear-gradient(125deg, #a39bff44, transparent 65%);
+	opacity: 0;
+	animation: energize 9.6s ease-out infinite both;
+	animation-delay: var(--delay);
+}
+.hub {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 76px;
+	height: 76px;
+	margin-bottom: 4px;
+	color: #eee8ff;
+	border-radius: 50%;
+	background: radial-gradient(circle, #493583, #201937 64%, transparent 65%);
+}
+.rotor {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	fill: none;
+	stroke: #8f7dce;
+	stroke-width: 1;
+	animation: orbit 19.2s linear infinite;
+}
+.rotor path {
+	stroke: #a3ffd9;
+	stroke-width: 2;
+	stroke-linecap: round;
+}
+.rotor circle:last-child {
+	stroke-dasharray: 1 4;
+}
+@keyframes transmit {
+	0% {
+		opacity: 0;
+		stroke-dashoffset: 28;
+	}
+	3% {
+		opacity: 1;
+	}
+	14% {
+		opacity: 1;
+		stroke-dashoffset: -100;
+	}
+	16%,
+	100% {
+		opacity: 0;
+		stroke-dashoffset: -110;
+	}
+}
+@keyframes energize {
+	0%,
+	17%,
+	100% {
+		opacity: 0;
+	}
+	4%,
+	10% {
+		opacity: 1;
+	}
+}
+@keyframes orbit {
+	to {
+		transform: rotate(360deg);
+	}
+}
+.root[data-paused="true"] :is(.pulse, .rotor),
+.root[data-paused="true"] .step button::after {
+	animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+	.motionControl,
+	.pulse {
+		display: none;
+	}
+	.rotor,
+	.step button::after {
+		animation: none;
+	}
+}

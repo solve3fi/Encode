@@ -1,0 +1,15 @@
+.primary {
+	min-height: 56px;
+	border: 0;
+	border-radius: 14px;
+	background: #685df7;
+	color: #fff;
+	font: inherit;
+	font-size: 17px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.primary:hover:not(:disabled) { background: #7c72ff; }
+.primary:disabled { background: #141428; color: #a6a4b8; cursor: not-allowed; }

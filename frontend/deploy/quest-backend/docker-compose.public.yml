@@ -1,0 +1,11 @@
+# Opt-in override after owner-approved key creation and schema/role upgrade.
+# docker compose -f docker-compose.yml -f docker-compose.public.yml up -d quest-backend
+services:
+  quest-backend:
+    volumes:
+      - type: bind
+        source: /etc/solve3/quest/pass-authority.json
+        target: /run/secrets/pass-authority.json
+        read_only: true
+        bind:
+          create_host_path: false

@@ -1,0 +1,82 @@
+{
+  "sourceRepository": "solve3fi/ALM",
+  "sourceCommit": "60640cd1d6c5b3971d0824042357b999dc80b008",
+  "files": {
+    "app.js": {
+      "sha256": "708ec07ea383ead7ddb6e6070b9cb715e0221454683a257c1f6e2883625a3be9",
+      "bytes": 17263
+    },
+    "assets/BeVietnamPro-Medium.ttf": {
+      "sha256": "b60832bfa0fcd015158112c64d7e3fdad3b0c6287d1823f85a3103636e845268",
+      "bytes": 135980
+    },
+    "assets/BeVietnamPro-Regular.ttf": {
+      "sha256": "cd1ef6e9d7db28ad5cdb88a65ccbe693870e60d340b791f349d248342b4fe4c3",
+      "bytes": 132948
+    },
+    "assets/FunnelDisplay-OFL.txt": {
+      "sha256": "c6ff6dad54105e0c921b676eda28f4cb39d04570c985ffbb68bb1cbe4b3b12b1",
+      "bytes": 4382
+    },
+    "assets/FunnelDisplay-Regular.ttf": {
+      "sha256": "894cfc3ab21a1b117bfeb2c2159dcc65f5c3ca8dc168a80c4d0795222b833b6b",
+      "bytes": 34032
+    },
+    "assets/OFL.txt": {
+      "sha256": "6b7f8f73609a25ea78c891e34cf37b06f8a676b7ea986e941e43b009110f2a85",
+      "bytes": 4397
+    },
+    "assets/solve3.svg": {
+      "sha256": "f0b652716ceae12b45d6f6936d82b0caaf408408b1ac3d853d68e7ac658955b6",
+      "bytes": 31448
+    },
+    "assets/symbol.svg": {
+      "sha256": "7a52c598808a8bb36b0ab87a18d0290b1fa3104001583e3f87b151e9eb689391",
+      "bytes": 3330
+    },
+    "backtest-ui.js": {
+      "sha256": "c358172bebf1e6db7016504bd3c958efddc514a4706abbe8bc56a9e0c8baffa2",
+      "bytes": 5502
+    },
+    "index.html": {
+      "sha256": "65b29a636f67cffbc75d20a7f5539a1ec9c0f9e5cda5d344a6e48b3af44cd91c",
+      "bytes": 28015
+    },
+    "mainnet-ui.js": {
+      "sha256": "5d511468d0a41e932336b0348e79caed2e04363aab379f36e8f7f9f552368f61",
+      "bytes": 6575
+    },
+    "model.js": {
+      "sha256": "579e9f7829dc1546fe0879d42e63ebe5a641a3eae94c790612f0fb58d6a8623c",
+      "bytes": 5747
+    },
+    "research/orca-report.txt": {
+      "sha256": "cd57c4bbafc7abc5060affca6f03fc2f4e99603652e6f8f2469bf48219ae601a",
+      "bytes": 6911
+    },
+    "research/orca-solusdc.json": {
+      "sha256": "5cdd0a67cb15db79127125a8c991ee399ab848dd2057833b56285c89952f022e",
+      "bytes": 459839
+    },
+    "start.js": {
+      "sha256": "a5bb5eb2dfd3682f89abd1b148aba8e075d512bf626886d46d4acecb06fe51f0",
+      "bytes": 41
+    },
+    "styles.css": {
+      "sha256": "ad74c32c039a98b3a4b9ebfcd8350860d1d0530177e1b67474d79f201eca6e18",
+      "bytes": 26131
+    },
+    "trial-engine.js": {
+      "sha256": "bb687945e3853b08b0c3d6816dc8f4814a8220c81e5988dc945e2c86543ee073",
+      "bytes": 1709142
+    },
+    "trial-ui.js": {
+      "sha256": "27af673b01c5f18d6b5ecf980105519858e4fe2ab5816950e082ba3cf996e635",
+      "bytes": 7634
+    },
+    "trial.css": {
+      "sha256": "09fc67310fe8fe5d2a9e3895656d33cd8405def2a1eb58993dd9c82e7a3bd9fc",
+      "bytes": 4615
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #f6f5f9;
+}
+.track {
+	position: relative;
+	height: 10px;
+	border-radius: 5px;
+	background: #2a2a44;
+}
+.marker {
+	position: absolute;
+	top: -4px;
+	width: 4px;
+	height: 18px;
+	margin-left: -2px;
+	border-radius: 2px;
+	background: #58d7ff;
+	box-shadow: 0 0 10px rgba(88, 215, 255, 0.6);
+}
+.marker[data-out] {
+	background: #f5b14c;
+	box-shadow: 0 0 10px rgba(245, 177, 76, 0.6);
+}
+.ends {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	color: #a6a4b8;
+}
+.warn {
+	color: #f5b14c;
+	line-height: 1.5;
+}

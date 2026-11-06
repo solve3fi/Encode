@@ -1,0 +1,65 @@
+.root {
+	color: #f4f1ff;
+}
+.root h2 {
+	margin: 0 0 8px;
+}
+.root p,
+.root dt,
+.root small {
+	color: #c2bbd7;
+}
+.address {
+	overflow-wrap: anywhere;
+}
+.metrics {
+	display: grid;
+	gap: 12px;
+}
+.metrics > div {
+	border-bottom: 1px solid #39315c;
+	padding: 10px 0;
+}
+.metrics dt {
+	font-size: 0.8rem;
+}
+.metrics dd {
+	margin: 5px 0 0;
+	font-weight: 650;
+}
+.earnings {
+	border: 1px solid #524779;
+	padding: 16px;
+	background: #1c1834;
+	border-radius: 12px;
+}
+.earnings h3 {
+	margin-top: 0;
+}
+.earnings > div {
+	padding: 12px 0;
+}
+.earnings span {
+	display: block;
+	color: #a49bff;
+	margin: 6px 0;
+}
+.earnings p {
+	margin: 0;
+}
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 20px 0;
+}
+.actions a {
+	padding: 10px 14px;
+	background: #685df7;
+	border-radius: 8px;
+	color: white;
+}
+.actions a:focus-visible {
+	outline: 2px solid #c3bbff;
+	outline-offset: 3px;
+}

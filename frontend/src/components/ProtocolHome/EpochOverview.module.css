@@ -1,0 +1,110 @@
+.board {
+	scroll-margin-top: 6rem;
+	padding: clamp(1rem, 4vw, 2.5rem);
+	margin-block: 2rem;
+	background: #131125;
+	border: 1px solid #39315c;
+	border-top: 3px solid #7c7cfd;
+	border-radius: 18px;
+	color: #f4f1ff;
+}
+.board p,
+.board small,
+.journey small {
+	color: #c2bbd7;
+}
+.masthead,
+.caption {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+.masthead h2 {
+	margin: 0;
+	font-size: clamp(2rem, 6vw, 4rem);
+	letter-spacing: -0.05em;
+}
+.masthead small,
+.totals strong,
+.gauge strong {
+	font-variant-numeric: tabular-nums;
+}
+.totals,
+.journey,
+.gauge {
+	display: grid;
+	gap: 1rem;
+}
+.totals {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin-block: 1.25rem;
+}
+.totals > div,
+.journey > a,
+.journey > li {
+	padding: 0.85rem;
+	background: #1c1834;
+	border-radius: 10px;
+	min-width: 0;
+}
+.totals small,
+.journey small,
+.gauge small {
+	display: block;
+}
+.totals strong {
+	font-size: clamp(1.05rem, 3vw, 1.65rem);
+}
+.journey {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.journey a,
+.caption a,
+.gauge a {
+	color: #bbb3ff;
+	text-decoration: none;
+}
+.journey a:hover,
+.caption a:hover {
+	text-decoration: underline;
+}
+.journey a:focus-visible,
+.caption a:focus-visible {
+	outline: 2px solid #bbb3ff;
+	outline-offset: 3px;
+}
+.caption {
+	margin-top: 1.25rem;
+}
+.caption h3 {
+	margin: 0;
+}
+.gauge {
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	border-top: 1px solid #39315c;
+	padding: 1rem 0;
+	overflow-wrap: anywhere;
+}
+.track {
+	height: 4px;
+	background: #39315c;
+	margin-top: 0.4rem;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.track span {
+	display: block;
+	height: 100%;
+	background: #9088ff;
+}
+@media (max-width: 640px) {
+	.journey {
+		grid-template-columns: 1fr;
+		gap: 0.4rem;
+	}
+	.gauge {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}

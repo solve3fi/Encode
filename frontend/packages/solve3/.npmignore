@@ -1,0 +1,37 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Build folders
+dist-ssr
+
+# Source code (exclude root src folder)
+/src
+/src/**
+
+# But keep dist/src folder
+!/dist/src
+!/dist/src/**
+
+# Build utilities
+build.ts
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,109 @@
+.heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+
+.headingText { display: flex; flex-direction: column; gap: 12px; }
+
+.heading h1,
+.heading h2 {
+	margin: 0;
+	font-size: clamp(36px, 4.5vw, 52px);
+	line-height: 1.05;
+	letter-spacing: -0.03em;
+	font-weight: 700;
+}
+
+.heading p { margin: 0; max-width: 560px; font-size: 17px; line-height: 1.55; color: #c9c7d6; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.primary,
+.secondary {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	padding: 0 22px;
+	border-radius: 12px;
+	font-size: 15px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.primary { background: #685df7; color: #fff; }
+.primary:hover { background: #7c72ff; color: #fff; }
+.secondary { border: 1px solid rgba(246, 245, 249, 0.22); color: #f6f5f9; }
+.secondary:hover { border-color: #8c84ff; color: #fff; }
+
+.controls { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+.tabs {
+	display: flex;
+	gap: 4px;
+	padding: 4px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 12px;
+	background: #0e0e1c;
+}
+
+.tab {
+	min-height: 44px;
+	padding: 0 20px;
+	border: 0;
+	border-radius: 9px;
+	background: transparent;
+	color: #c9c7d6;
+	font: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.tab[aria-pressed="true"] { background: #685df7; color: #fff; }
+
+.select,
+.search {
+	min-height: 52px;
+	border: 1px solid rgba(246, 245, 249, 0.1);
+	border-radius: 12px;
+	background: #0e0e1c;
+	color: #f6f5f9;
+	font: inherit;
+	font-size: 15px;
+}
+
+.select { padding: 0 16px; }
+
+.search {
+	display: flex;
+	align-items: center;
+	flex: 1 1 260px;
+	max-width: 420px;
+	gap: 10px;
+	padding: 0 16px;
+	color: #a6a4b8;
+}
+
+.search input {
+	flex: 1;
+	min-width: 0;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: #f6f5f9;
+	font: inherit;
+}
+
+.search input::placeholder { color: #a6a4b8; }
+
+.clear { background: none; border: 0; color: #a6a4b8; cursor: pointer; min-width: 44px; min-height: 44px; }
+
+@media (max-width: 760px) {
+	.actions { width: 100%; }
+	.actions > * { flex: 1 1 auto; }
+	.search { max-width: none; flex-basis: 100%; }
+	.select { flex: 1; }
+}

@@ -1,0 +1,48 @@
+# Isolated Devnet Quest test stack. Secrets come from /etc/solve3/quest/*.env on the host;
+# nothing secret is committed. The database has no published port.
+name: solve3-quest
+
+services:
+  quest-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: /etc/solve3/quest/db.env
+    volumes:
+      - quest_pgdata:/var/lib/postgresql/data
+    networks: [internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  quest-backend:
+    image: solve3-quest-backend:local
+    build:
+      context: /srv/solve3
+      dockerfile: deploy/quest-backend/Dockerfile
+    restart: unless-stopped
+    env_file: /etc/solve3/quest/backend.env
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m"]
+    depends_on:
+      quest-db:
+        condition: service_healthy
+    networks: [internal, web]
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  quest_pgdata:
+
+networks:
+  internal:
+  web:
+    external: true
+    name: solve3-production_web

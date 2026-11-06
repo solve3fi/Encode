@@ -1,0 +1,14 @@
+.root {
+	padding-left: rem(10px);
+	flex: 1;
+}
+
+.label {
+	margin-right: auto;
+}
+
+.section {
+	&[data-position="left"] {
+		margin-right: rem(5px);
+	}
+}
