@@ -15,10 +15,11 @@ trading fees and partner incentives of the pools they back.
 | --- | --- |
 | `contracts/` | Anchor workspace with three programs: `solve` (concentrated-liquidity DEX), `vesolve` (vote-escrow locks, gauges, voting, rewards) and `token`. Also tests, scripts, docs and the security audit notes. |
 | `frontend/` | Next.js app: Epoch Arena, swap, liquidity, locks and voting, quests and Pass, partner portal and accelerator, Just Ask command bar, Aurora Intents funding, and the private ALM and Yield Hunter preview pages. Includes the SDK packages it uses (`frontend/packages`). |
+| `frontend/deploy/quest-backend/` and `frontend/db/quest/` | Devnet quest backend, worker scripts, database migrations and database tests. |
 
 ## Provenance
 
-- **Contracts:** branch `feat/partner-voter-fee` at commit `d55804d` (2026-10-13) of the Solve3 `ve33-contracts` repository, tracked files only.
+- **Contracts:** commit `d55804d4da512617209df6b4aa1366a436e936b6` (2026-10-13) of the Solve3 `ve33-contracts` repository. This revision makes voter rewards from epoch N claimable in epoch N+1.
 - **Frontend:** the source behind the dev site (https://dev.solve3.fi), taken 2026-11-06.
 
 ## Devnet deployment
@@ -36,9 +37,19 @@ Tokens on devnet have no monetary value.
 ## Building
 
 - **Contracts:** Rust 1.89.0 (`contracts/rust-toolchain.toml`) and the Anchor toolchain. See `contracts/Anchor.toml` and `contracts/docs`.
-- **Frontend:** Node and bun. Run `bun install`, then `npm run dev` (development) or `npm run build` (production). RPC endpoints
-  and API keys are read from environment variables that are not included here (for example `SOLVE3_DEVNET_RPC_URL`);
-  without them the app falls back to the public devnet RPC.
+- **Frontend:** Install Node and Bun, then build the local SDK packages before starting Next.js:
+
+  ```sh
+  cd frontend
+  bun install --frozen-lockfile --ignore-scripts
+  bun run --cwd packages/common build
+  bun run --cwd packages/sdk build
+  bun run --cwd packages/solve3 build
+  NEXT_PUBLIC_CLUSTER=devnet bun run dev
+  ```
+
+  Use `NEXT_PUBLIC_CLUSTER=devnet bun run build` to make a devnet build. The app uses the public devnet RPC by default. Private
+  RPC and service credentials are configured through environment variables.
 
 ## Not included
 
