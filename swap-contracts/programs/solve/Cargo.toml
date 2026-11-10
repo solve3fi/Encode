@@ -1,0 +1,41 @@
+[package]
+name = "solve"
+version = "0.1.0"
+description = "Solve3 DEX program (fork of Orca Whirlpools, Apache-2.0)"
+license = "Apache-2.0"
+repository = "https://github.com/solve3fi/contracts"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "solve"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+anchor-debug = []
+fast-epochs = []
+custom-heap = []
+custom-panic = []
+
+
+[dependencies]
+anchor-lang = { version = "=0.32.1", features = ["init-if-needed"] }
+anchor-spl = { version = "=0.32.1", features = ["metadata", "memo"] }
+spl-transfer-hook-interface ={ version = "=0.9.0" }
+solana-program = { version = "=2.2.1" }
+uint = { version = "=0.9.5", default-features = false }
+arrayref = { version = "=0.3.9" }
+solana-security-txt = { version = "=1.1.1" }
+bytemuck = { version = "=1.22.0", features = ["derive", "min_const_generics"] }
+num_enum = { version = "=0.7.4" }
+bitflags = { version = "=2.8.0" }
+borsh09 = { package = "borsh", version = "=0.9.3" }
+
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }

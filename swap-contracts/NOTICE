@@ -1,0 +1,31 @@
+Solve3 DEX program
+Copyright 2026 Solve3 contributors
+
+This product includes software developed by the Orca Foundation:
+
+  Orca Whirlpools (https://github.com/orca-so/whirlpools)
+  Copyright 2022 Orca Foundation
+  Licensed under the Apache License, Version 2.0.
+
+The Orca-derived portions of this repository are taken from the Orca Whirlpools program as published under the
+Apache License 2.0 up to and including 26 February 2025 (whole-repository commit
+e528dd23bb41571f92cfdb49a2f15d4fa0b01bec; last change to the program source 7f0ca73f, 14 February 2025,
+program version 0.3.4). No Orca code committed on or after 27 February 2025 (the date from which Orca licenses its
+repository under the "Orca License") is included.
+
+Modifications made by Solve3 to the Orca-derived files:
+
+  - Renamed "Whirlpool"/"whirlpool"/"whirlpools" to "Solve"/"solve"/"solves" in identifiers, paths and text.
+  - Removed Orca's tests; added Solve3's own tests.
+  - Ported to Anchor 0.32.1 and Solana 2.x crates.
+  - Changed NFT/position metadata, token-transfer memo text, security.txt and the program id.
+  - Added a default protocol-fee-rate cap.
+  - Added trading-pause flags to the config account (using former padding bytes) and a config-account check in swap,
+    two-hop-swap and increase-liquidity instructions.
+  - Added gauge emissions and an activity gate, stored in the reward-authority bytes of reward slots 1 and 2 of a
+    pool that is managed by the governance program.
+
+Files that are entirely Solve3's own work: state/gate.rs, instructions/set_gauge_emissions.rs,
+instructions/burn_unearned_gauge_emissions.rs, instructions/set_trading_pauses.rs.
+
+Solve3 is not affiliated with Orca. This notice is provided for attribution and does not modify the license.

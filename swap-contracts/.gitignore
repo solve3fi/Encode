@@ -1,0 +1,7 @@
+target/
+.anchor/
+node_modules/
+*.so
+id.json
+*.key
+.env*
