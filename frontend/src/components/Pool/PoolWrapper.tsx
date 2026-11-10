@@ -14,9 +14,13 @@ import { PoolPriceRange } from "./PoolPriceRange";
 import { PoolStatus } from "./PoolStatus";
 import classes from "./PoolWrapper.module.css";
 import { FundNudge } from "@/components/Fund/FundNudge";
+import { ArenaPairCard } from "@/components/V2/ArenaPairCard";
+import { useState } from "react";
 
 export const PoolWrapper: React.FC = () => {
 	const { i18n } = useLingui();
+	// Phones show one pane at a time: the pair and fee tier, then the range and deposit.
+	const [step, setStep] = useState<"pool" | "range">("pool");
 
 	const currencyA = usePool((state) => state.currencyA);
 	const currencyB = usePool((state) => state.currencyB);
@@ -104,7 +108,11 @@ export const PoolWrapper: React.FC = () => {
 							)}
 				</p>
 			</div>
-			<div className={classes.grid}>
+			<div className={classes.steps} role="tablist" aria-label="Add liquidity steps">
+				<button type="button" role="tab" aria-selected={step === "pool"} onClick={() => setStep("pool")}><span>1</span> Pool</button>
+				<button type="button" role="tab" aria-selected={step === "range"} onClick={() => { setStep("range"); window.scrollTo({ top: 0, behavior: "smooth" }); }}><span>2</span> Range &amp; deposit</button>
+			</div>
+			<div className={classes.grid} data-step={step}>
 				<section className={classes.panel} aria-label={i18n._("Pool setup")}>
 					<PoolAssetPanel
 						priceLower={priceLower}
@@ -123,6 +131,9 @@ export const PoolWrapper: React.FC = () => {
 						{i18n._("Token missing?")}{" "}
 						<Link href="/liquidity/request-token">{i18n._("Request a token listing")}</Link>
 					</p>
+					<button type="button" className={classes.cont} onClick={() => { setStep("range"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+						Continue to range
+					</button>
 					{wide && (
 						<PoolSummary
 							baseCurrency={baseCurrency}
@@ -138,6 +149,11 @@ export const PoolWrapper: React.FC = () => {
 					)}
 				</section>
 				<div className={classes.right}>
+					{!isCreate && (
+						<div style={{ marginBottom: 16 }}>
+							<ArenaPairCard mintA={baseCurrency?.address} mintB={quoteCurrency?.address} feeRate={feeTier} heading="THIS POOL IN THE ARENA" />
+						</div>
+					)}
 					<PoolPriceRange
 						baseCurrency={baseCurrency}
 						quoteCurrency={quoteCurrency}

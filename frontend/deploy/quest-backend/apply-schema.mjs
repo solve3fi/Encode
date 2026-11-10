@@ -109,6 +109,8 @@ try {
 		["030_referral_eligibility.sql", "quest.referral_eligible_sources"],
 		["031_lp_receipt_coverage.sql", "fn:quest.lock_lp_test_source(text,text,bigint,bigint)"],
         ["032_lp_inventory_cohorts.sql", "quest.lp_inventory_cohorts"],
+		["033_clans.sql", "quest.clans"],
+		["034_clan_rallies.sql", "quest.clan_rallies"],
 	]) {
 		const exists = marker.startsWith("fn:")
 			? (
@@ -152,6 +154,8 @@ try {
 		`GRANT SELECT ON quest.xp_events, quest.devnet_onboarding_rules TO ${runtime}, ${operator}`,
 		// Referrals are written only by these SECURITY DEFINER functions (and the bonus trigger).
 		`GRANT EXECUTE ON FUNCTION quest.referral_overview(uuid), quest.redeem_referral(uuid,text) TO ${runtime}, ${operator}`,
+		// Clans (migration 033): the tables stay closed; only these SECURITY DEFINER functions are callable.
+		`GRANT EXECUTE ON FUNCTION quest.clan_overview(uuid), quest.clan_board(uuid,text,integer,integer), quest.clan_create(uuid,text,text), quest.clan_join(uuid,uuid,text), quest.clan_leave(uuid), quest.clan_invite(uuid), quest.clan_kick(uuid,uuid), quest.clan_rally(uuid,text,text,text,boolean) TO ${runtime}, ${operator}`,
 		// Voting XP is read through a SECURITY DEFINER function; the tables stay closed to the serving roles.
 	...votingRuntimeGrants(runtime),
 	...votingRuntimeGrants(operator),

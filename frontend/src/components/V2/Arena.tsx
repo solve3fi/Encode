@@ -38,9 +38,13 @@ import { VoteCastProvider, useVoteCast } from "../Vote/VoteCast";
 import { getEpochClockState, VOTE_CUTOFF_SECONDS } from "../Vote/epochClock";
 import { epochEmission, GAUGE_EMISSION_SHARE } from "../Vote/voteEstimate";
 import { Flywheel as HomeFlywheel } from "../ProtocolHome/Flywheel";
+import { ClanWarCard } from "../Clans/ClanWarCard";
+import { useClans } from "../Clans/useClans";
 import { type ArenaRow, useArenaGauges } from "./useArenaGauges";
 
 const STEP = 5;
+/** Contenders shown before "Load more"; per-row reads (APR) only run for rows on screen. */
+const PAGE = 6;
 const PALETTE = ["#8C84FF", "#58D7FF", "#7BE0A8", "#F5B14C", "#FF8FB1", "#B3ADFF"];
 const TOKEN_COLORS = ["#4F45D6", "#2B9E93", "#2775CA", "#6B4F3A", "#2E8B57", "#C9742B"];
 
@@ -184,6 +188,7 @@ const useProtocolTvl = () => {
 	};
 };
 
+/** Reads the raw pool: the gauge rows overwrite tokenAInfo/tokenBInfo with display data, which the APR math cannot use. */
 const EmissionAprText: React.FC<{ addr: string }> = ({ addr }) => {
 	const { data: pool } = usePoolInfo(addr);
 	const { apr, isLoading, pricingComplete } = useEmissionApr(pool);
@@ -213,6 +218,10 @@ type Phase = "open" | "closing-soon" | "closed";
 
 const ArenaFull: React.FC = () => {
 	const { publicKey } = useWallet();
+	const clanData = useClans();
+	const myClan = clanData.ready ? clanData.overview?.clan : undefined;
+	const rallies = myClan?.rallies ?? [];
+	const rallied = new Set(rallies.map((x) => x.pool));
 	const connected = Boolean(publicKey);
 	const { network } = useCluster();
 	const accelerated = useAcceleratedPools(network);
@@ -228,6 +237,28 @@ const ArenaFull: React.FC = () => {
 
 	const [sort, setSort] = useState<"share" | "tvl" | "bribes" | "fees" | "total">("share");
 	const [comm, setComm] = useState(false);
+	const [rallyOnly, setRallyOnly] = useState(false);
+	const [view, setView] = useState<"detailed" | "compact">("compact");
+	const [expanded, setExpanded] = useState<string | null>(null);
+	// Phones: the leaders and community strips start folded behind one summary line.
+	const [winnersOpen, setWinnersOpen] = useState(false);
+	const [count, setCount] = useState(PAGE);
+	useEffect(() => {
+		try {
+			const saved = window.localStorage.getItem("arena:view");
+			if (saved === "compact" || saved === "detailed") setView(saved);
+		} catch {
+			/* storage unavailable: keep the default */
+		}
+	}, []);
+	const chooseView = (next: "detailed" | "compact") => {
+		setView(next);
+		try {
+			window.localStorage.setItem("arena:view", next);
+		} catch {
+			/* storage unavailable */
+		}
+	};
 	const [review, setReview] = useState(false);
 
 	// Last live rows, kept in this browser only. Shown read-only while the live chain data loads, then replaced by it.
@@ -283,6 +314,22 @@ const ArenaFull: React.FC = () => {
 		},
 		[voteState, setVoteState],
 	);
+
+	// ---- clan rally: put the whole draft on the rally pools (the member still reviews and confirms) ----
+	const backRally = (targets: ArenaRow[]) => {
+		if (targets.length === 0) return;
+		const each = Math.floor(100 / targets.length / STEP) * STEP;
+		const extra = 100 - each * targets.length;
+		resetVoteState();
+		targets.forEach((r, i) => setVoteState(Object.assign(Object.create(Object.getPrototypeOf(r.info)), r.info, { votePercent: each + (i === 0 ? extra : 0) })));
+	};
+	// Arriving from the Clans tab (/arena#rally): bring the strip into view once it has rendered.
+	const [rallyScrolled, setRallyScrolled] = useState(false);
+	useEffect(() => {
+		if (rallyScrolled || rallies.length === 0 || typeof window === "undefined" || window.location.hash !== "#rally") return;
+		setRallyScrolled(true);
+		window.setTimeout(() => document.getElementById("rally")?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+	}, [rallies.length, rallyScrolled]);
 
 	// ---- phase ----
 	let phase: Phase = "open";
@@ -402,7 +449,12 @@ const ArenaFull: React.FC = () => {
 		return [...rows].sort((a, b) => (b[key] as number) - (a[key] as number) || b.share - a.share);
 	}, [rows, sort]);
 	const ranked = useMemo(() => new Map([...rows].sort((a, b) => b.share - a.share).map((r, i) => [r.addr, i + 1])), [rows]);
-	const shown = comm ? sorted.filter((r) => !r.core) : sorted;
+	// Your clan's rally pools sit at the top; the rest keep the chosen sort.
+	const pinned = rallied.size > 0 ? [...sorted.filter((r) => rallied.has(r.addr)), ...sorted.filter((r) => !rallied.has(r.addr))] : sorted;
+	const shown = pinned.filter((r) => (!comm || !r.core) && (!rallyOnly || rallied.has(r.addr)));
+	const rallyRows = sorted.filter((r) => rallied.has(r.addr));
+	const draftedAddrs = new Set(voteState.map((v) => v.getAddress().toString()));
+	const visibleRows = shown.filter((r, i) => i < count || draftedAddrs.has(r.addr));
 	const top3 = [...rows].sort((a, b) => b.share - a.share).slice(0, 3);
 	const topComm = [...rows].filter((r) => !r.core).sort((a, b) => b.share - a.share).slice(0, 3);
 	const picked = voteState.map((v) => {
@@ -441,11 +493,11 @@ const ArenaFull: React.FC = () => {
 				</div>
 				<div className="ar-top">
 					<div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-						<h1 style={{ fontSize: "clamp(36px, 4.4vw, 56px)", lineHeight: 1.02, letterSpacing: "-0.035em", fontWeight: 700 }}>Epoch Arena</h1>
-						<p style={{ fontSize: 17, lineHeight: 1.55, color: "#C9C7D6", maxWidth: 560 }}>
+						<h1 className="ar-title" style={{ fontSize: "clamp(36px, 4.4vw, 56px)", lineHeight: 1.02, letterSpacing: "-0.035em", fontWeight: 700 }}>Epoch Arena</h1>
+						<p className="ar-lede" style={{ fontSize: 17, lineHeight: 1.55, color: "#C9C7D6", maxWidth: 560 }}>
 							Back the pools you want to grow. Vote with your veSOLV3, add liquidity to the contenders, and claim what they earn.
 						</p>
-						<div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 4 }}>
+						<div className="ar-cta" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 4 }}>
 							<Link className="btn2 pri" href="/liquidity/create">Add liquidity</Link>
 							<Link className="btn2" href="/lock">Get voting power</Link>
 						</div>
@@ -457,9 +509,9 @@ const ArenaFull: React.FC = () => {
 								<circle cx="98" cy="98" r="84" fill="none" stroke={ringColor} strokeWidth="10" strokeLinecap="round" transform="rotate(-90 98 98)" style={{ strokeDasharray: `${(C * frac).toFixed(1)} ${C.toFixed(1)}`, transition: "stroke-dasharray .6s ease" }} />
 							</svg>
 							<div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4, textAlign: "center", padding: "0 28px" }}>
-								<span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", color: "#A6A4B8" }}>EPOCH {epoch || "—"}</span>
-								<span style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.1, color: isClosed ? "#F6F5F9" : "#F5B14C" }}>{ringMid}</span>
-								<span style={{ fontSize: 12, fontWeight: 500, color: "#C9C7D6", lineHeight: 1.3 }}>{ringBot}</span>
+								<span className="ar-r1" style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", color: "#A6A4B8" }}>EPOCH {epoch || "—"}</span>
+								<span className="ar-r2" style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.1, color: isClosed ? "#F6F5F9" : "#F5B14C" }}>{ringMid}</span>
+								<span className="ar-r3" style={{ fontSize: 12, fontWeight: 500, color: "#C9C7D6", lineHeight: 1.3 }}>{ringBot}</span>
 							</div>
 						</div>
 					</div>
@@ -473,36 +525,55 @@ const ArenaFull: React.FC = () => {
 			</section>
 
 			{rows.length > 0 && (
-				<section className="ar-card" aria-label={isClosed ? "Epoch winners" : "Current leaders"} style={{ gap: 20 }}>
+				<section className="ar-card ar-fold" data-open={winnersOpen} aria-label={isClosed ? "Epoch winners" : "Current leaders"} style={{ gap: 12, padding: "16px 20px" }}>
+					<button type="button" className="ar-foldbtn" aria-expanded={winnersOpen} onClick={() => setWinnersOpen((o) => !o)}>
+						<span style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+							<span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "#F5B14C" }}>{isClosed ? `EPOCH ${epoch} FINAL TALLY` : `EPOCH ${epoch} · LEADING NOW`}</span>
+							<span style={{ fontSize: 15, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{top3[0] ? `${top3[0].name} leads · ${top3[0].share.toFixed(1)}%` : "Top pools"}</span>
+						</span>
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+					</button>
 					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
-						<div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-							<span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", color: "#F5B14C" }}>{isClosed ? `EPOCH ${epoch} FINAL TALLY` : `EPOCH ${epoch} · LEADING NOW`}</span>
-							<h2 style={{ fontSize: 22, fontWeight: 700, letterSpacing: "-0.01em" }}>Top 3 pools</h2>
+						<div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+							<h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em" }}>Top 3 pools</h2>
+							<span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "#F5B14C" }}>{isClosed ? `EPOCH ${epoch} FINAL TALLY` : `EPOCH ${epoch} · LEADING NOW`}</span>
 						</div>
-						<span style={{ fontSize: 13, color: "#A6A4B8" }}>{isClosed ? "By gauge vote share" : "By gauge vote share so far. Votes can still change until voting closes."}</span>
+						<span style={{ fontSize: 12, color: "#A6A4B8" }}>{isClosed ? "By gauge vote share" : "By vote share so far. Votes can change until voting closes."}</span>
 					</div>
 					<div className="pod">
 						{top3.map((r, k) => (
-							<div key={r.addr} className="rise" style={{ display: "flex", flexDirection: "column", gap: 8, padding: "16px 18px", borderRadius: 14, background: "#141428", border: "1px solid rgba(246,245,249,0.10)", borderTop: `3px solid ${["#F5B14C", "#C9C7D6", "#C9742B"][k]}`, animationDelay: `${k * 120}ms` }}>
-								<span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", color: ["#F5B14C", "#C9C7D6", "#C9742B"][k] }}>{["1ST", "2ND", "3RD"][k]}</span>
-								<span style={{ fontSize: 20, fontWeight: 700 }}>{r.name}</span>
-								<span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, fontSize: 13, color: "#A6A4B8" }}><TagChip core={r.core} /><span className="dv" style={{ fontSize: 16 }}>{r.share.toFixed(1)}%</span></span>
+							<div key={r.addr} className="rise" style={{ display: "flex", flexDirection: "column", gap: 6, padding: "10px 14px", borderRadius: 12, background: "#141428", border: "1px solid rgba(246,245,249,0.10)", borderTop: `3px solid ${["#F5B14C", "#C9C7D6", "#C9742B"][k]}`, animationDelay: `${k * 120}ms` }}>
+								<span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+									<span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: ["#F5B14C", "#C9C7D6", "#C9742B"][k] }}>{["1ST", "2ND", "3RD"][k]}</span>
+									<span className="dv" style={{ fontSize: 15 }}>{r.share.toFixed(1)}%</span>
+								</span>
+								<span style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+									<span style={{ display: "flex", alignItems: "center", flex: "none" }} aria-hidden="true"><TokenDot sym={r.symA} logo={r.logoA} /><TokenDot sym={r.symB} logo={r.logoB} second /></span>
+									<span style={{ fontSize: 16, fontWeight: 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.name}</span>
+									<TagChip core={r.core} />
+								</span>
 							</div>
 						))}
 					</div>
 					{topComm.length > 0 && (
 						<>
 							<div style={{ height: 1, background: "rgba(246,245,249,0.10)" }} />
-							<div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-								<span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", color: "#58D7FF" }}>COMMUNITY SPOTLIGHT</span>
-								<h2 style={{ fontSize: 22, fontWeight: 700 }}>Top 3 community pools</h2>
+							<div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+								<h2 style={{ fontSize: 18, fontWeight: 700 }}>Top 3 community pools</h2>
+								<span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "#58D7FF" }}>COMMUNITY SPOTLIGHT</span>
 							</div>
 							<div className="pod">
 								{topComm.map((r, k) => (
-									<div key={r.addr} className="rise" style={{ display: "flex", flexDirection: "column", gap: 8, padding: "16px 18px", borderRadius: 14, background: k === 0 ? "linear-gradient(135deg, rgba(88,215,255,0.16), rgba(104,93,247,0.20))" : "#141428", border: `1px solid ${k === 0 ? "rgba(88,215,255,0.5)" : "rgba(246,245,249,0.10)"}`, animationDelay: `${k * 120 + 360}ms` }}>
-										<span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", color: k === 0 ? "#58D7FF" : "#A6A4B8" }}>{k === 0 ? "COMMUNITY WINNER" : k === 1 ? "COMMUNITY 2ND" : "COMMUNITY 3RD"}</span>
-										<span style={{ fontSize: 20, fontWeight: 700 }}>{r.name}</span>
-										<span style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#A6A4B8" }}><span>Overall #{ranked.get(r.addr)}</span><span className="dv" style={{ fontSize: 16 }}>{r.share.toFixed(1)}%</span></span>
+									<div key={r.addr} className="rise" style={{ display: "flex", flexDirection: "column", gap: 6, padding: "10px 14px", borderRadius: 12, background: k === 0 ? "linear-gradient(135deg, rgba(88,215,255,0.16), rgba(104,93,247,0.20))" : "#141428", border: `1px solid ${k === 0 ? "rgba(88,215,255,0.5)" : "rgba(246,245,249,0.10)"}`, animationDelay: `${k * 120 + 360}ms` }}>
+										<span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+											<span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: k === 0 ? "#58D7FF" : "#A6A4B8" }}>{k === 0 ? "COMMUNITY WINNER" : k === 1 ? "COMMUNITY 2ND" : "COMMUNITY 3RD"}</span>
+											<span className="dv" style={{ fontSize: 15 }}>{r.share.toFixed(1)}%</span>
+										</span>
+										<span style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+											<span style={{ display: "flex", alignItems: "center", flex: "none" }} aria-hidden="true"><TokenDot sym={r.symA} logo={r.logoA} /><TokenDot sym={r.symB} logo={r.logoB} second /></span>
+											<span style={{ fontSize: 16, fontWeight: 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.name}</span>
+											<span style={{ fontSize: 12, color: "#A6A4B8", flex: "none" }}>Overall #{ranked.get(r.addr)}</span>
+										</span>
 									</div>
 								))}
 							</div>
@@ -543,27 +614,13 @@ const ArenaFull: React.FC = () => {
 				<Note tone="grey"><b>Voting is closed for the end of Epoch {epoch}.</b> {settling ? "The epoch is settling; " : ""}Epoch {epoch + 1} starts in <span className="dv">{formatDuration(toEnd)}</span> (Thursday 00:00 UTC) and voting reopens then. Liquidity and swaps are not affected.</Note>
 			)}
 
-			<ol className="ar-track" aria-label="Epoch phases" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-				{[
-					["1", "Epoch starts", "Thursday 00:00 UTC"],
-					["2", "Voting", "Allocate veSOLV3 to pools"],
-					["3", "Final minutes: closed", "Weights fixed, epoch keeps running"],
-					["4", "Next epoch", "Starts right away, voting reopens"],
-				].map(([n, t, d], i) => {
-					const cur = isClosed ? 2 : 1;
-					const done = i < cur;
-					const now = i === cur;
-					return (
-						<li key={t} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "14px 16px", borderRadius: 14, background: now ? "rgba(104,93,247,0.14)" : "#0E0E1C", border: `1px solid ${now ? "#8C84FF" : "rgba(246,245,249,0.10)"}` }}>
-							<span style={{ width: 26, height: 26, borderRadius: "50%", flex: "none", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, background: done ? "#7BE0A8" : now ? "#685DF7" : "#1B1B36", color: done ? "#07130d" : "#fff" }}>{done ? "✓" : n}</span>
-							<span style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
-								<span style={{ fontSize: 14, fontWeight: 700 }}>{t}</span>
-								<span style={{ fontSize: 12.5, color: "#A6A4B8", lineHeight: 1.4 }}>{d}</span>
-							</span>
-						</li>
-					);
-				})}
-			</ol>
+			<div className="ar-launch" role="region" aria-label="Launch on Solve3">
+				<span className="ar-launch-t"><b>Launching a token?</b> <span>Open a pool for it, or ask us to list it so it can get a gauge.</span></span>
+				<span className="ar-launch-b">
+					<Link className="btn2 pri" href="/liquidity/create">Create a pool</Link>
+					<Link className="btn2" href="/liquidity/request-token">Request a token listing</Link>
+				</span>
+			</div>
 
 			<div className="ar-main">
 				<section aria-label="Pools" style={{ display: "flex", flexDirection: "column", gap: 14, minWidth: 0 }}>
@@ -574,11 +631,34 @@ const ArenaFull: React.FC = () => {
 								<button key={k} type="button" className="chip" aria-pressed={sort === k} onClick={() => setSort(k)}>{l}</button>
 							))}
 							<button type="button" className="chip" aria-pressed={comm} onClick={() => setComm((c) => !c)} style={{ borderColor: "rgba(88,215,255,0.5)" }}>Community only</button>
+							{rallied.size > 0 && (
+								<button type="button" className="chip" aria-pressed={rallyOnly} onClick={() => setRallyOnly((c) => !c)} style={{ borderColor: "rgba(245,177,76,0.6)" }}>Clan rally</button>
+							)}
+							<span role="group" aria-label="Row layout" style={{ display: "inline-flex", gap: 6 }}>
+								<button type="button" className="chip" aria-pressed={view === "detailed"} onClick={() => chooseView("detailed")}>Detailed</button>
+								<button type="button" className="chip" aria-pressed={view === "compact"} onClick={() => chooseView("compact")}>Compact</button>
+							</span>
 						</div>
 					</div>
 					<p style={{ fontSize: 13, color: "#A6A4B8", lineHeight: 1.5 }}>
 						Ranked by gauge vote share for this epoch. Step a vote up or down in {STEP}% increments, type an exact percentage, or use Max to fill what is left. Incentives and fee rewards go to voters, not LPs.
 					</p>
+
+					{myClan && rallyRows.length > 0 && (
+						<div id="rally" className="ar-rallybar" role="region" aria-label="Your clan's rally">
+							<div className="ar-rallybar-t">
+								<span className="ar-rally" style={{ marginLeft: 0 }}>Clan rally</span>
+								<strong>{myClan.name} is rallying behind {rallyRows.map((r) => r.name).join(", ").replace(/, ([^,]*)$/, " and $1")}</strong>
+								<span>
+									{rallies.map((x) => (x.backed !== null ? `${x.label}: ${x.backed} of ${x.members} backing` : null)).filter(Boolean).join(" · ") ||
+										"Each member votes with their own veSOLV3. Nothing is pooled."}
+								</span>
+							</div>
+							<button type="button" className="btn2" disabled={!canVoteNow} onClick={() => backRally(rallyRows)} style={{ minHeight: 44, whiteSpace: "nowrap" }}>
+								{rallyRows.length === 1 ? "Put my vote on it" : "Split my vote across them"}
+							</button>
+						</div>
+					)}
 
 					{!connected && (
 						<p role="note" style={{ fontSize: 13, lineHeight: 1.5, color: "#C9C7D6", background: "rgba(88,215,255,0.07)", border: "1px solid rgba(88,215,255,0.25)", borderRadius: 12, padding: "10px 14px" }}>
@@ -639,19 +719,97 @@ const ArenaFull: React.FC = () => {
 						<div className="ar-card"><span style={{ fontSize: 15, fontWeight: 700 }}>No active gauges</span><span style={{ fontSize: 13.5, color: "#C9C7D6" }}>No pools are eligible for votes in this epoch. Check again after the next gauge activation.</span></div>
 					)}
 
-					{!isLoading && !gError && shown.map((r) => {
+					{!isLoading && !gError && view === "compact" && visibleRows.length > 0 && (
+						<div className="ar-chead" aria-hidden="true">
+							<span>#</span><span /><span>Pool</span><span>Vote share</span><span>APR</span><span>Est. SOLV3</span><span>Incentives</span><span>Fees</span><span>TVL</span><span>Your vote</span><span />
+						</div>
+					)}
+					{!isLoading && !gError && visibleRows.map((r) => {
 						const v = draftOf(r.addr);
 						const others = total - v;
 						const rank = ranked.get(r.addr) ?? 0;
 						const disabled = isClosed;
 						const info = r.info.getData();
+						const stepper = (
+								<div style={{ display: "flex", alignItems: "center", gap: 8 }} role="group" aria-label={`Vote allocation for ${r.name}`}>
+									<button type="button" className="stp" aria-label={`Decrease vote for ${r.name}`} disabled={disabled || v <= 0} onClick={() => setDraft(r, v - STEP)}>−</button>
+									<input
+										aria-label={`${r.name} vote percentage`}
+										inputMode="numeric"
+										disabled={disabled}
+										value={`${v}%`}
+										onChange={(e) => {
+											const d = e.currentTarget.value.replace(/[^0-9]/g, "");
+											setDraft(r, d === "" ? 0 : Number(d));
+										}}
+										style={{ width: 62, minHeight: 44, textAlign: "center", fontFamily: "inherit", fontSize: 18, fontWeight: 700, background: "#141428", border: "1px solid rgba(246,245,249,0.14)", borderRadius: 12, color: v ? "#58D7FF" : "#A6A4B8" }}
+									/>
+									<button type="button" className="stp" aria-label={`Max vote for ${r.name}`} disabled={disabled || 100 - others <= 0 || v >= 100 - others} onClick={() => setDraft(r, 100 - others)} style={{ width: "auto", padding: "0 12px", fontSize: 13, fontWeight: 700 }}>Max</button>
+									<button type="button" className="stp" aria-label={`Increase vote for ${r.name}`} disabled={disabled || total >= 100} onClick={() => setDraft(r, v + STEP)}>+</button>
+								</div>
+						);
+						if (view === "compact") {
+							const isOpen = expanded === r.addr;
+							const ids = posByPool.get(r.addr);
+							return (
+								<article key={r.addr} className="ar-row ar-crow" aria-label={r.name} data-open={isOpen} data-rally={rallied.has(r.addr)}>
+									<div className="ar-crow-h" style={{ cursor: "pointer" }} onClick={(e) => { if (!(e.target as HTMLElement).closest("button, input, a, select")) setExpanded(isOpen ? null : r.addr); }}>
+										<span className="ar-rank" data-top={rank <= 3}>{rank}</span>
+										<span style={{ display: "flex", alignItems: "center" }} aria-hidden="true"><TokenDot sym={r.symA} logo={r.logoA} /><TokenDot sym={r.symB} logo={r.logoB} second /></span>
+										<div className="ar-cname">
+											<div className="ar-cn1"><strong>{r.name}</strong>{rallied.has(r.addr) && <span className="ar-rally" title="Your clan is rallying votes for this pool">Clan rally</span>}</div>
+											<span>{r.feePct.toFixed(2)}% fee · <span className="dv" title={r.addr}>{short(r.addr)}</span></span>
+										</div>
+										<div className="ar-cshare" aria-label={`Gauge vote share ${r.share.toFixed(1)}%`}>
+											<span className="dv">{r.share.toFixed(1)}%</span>
+											<span className="ar-cbar"><span style={{ width: `${Math.min(100, r.share)}%` }} />{v > 0 && <span className="mine" style={{ left: `${Math.min(100, r.share)}%`, width: `${Math.min(v / 2, 100 - Math.min(100, r.share))}%` }} />}</span>
+										</div>
+										<span className="ar-cnum" data-label="APR"><span className="dv">{late ? <EmissionAprText addr={r.addr} /> : "…"}</span></span>
+										<span className="ar-cnum" data-label="Est. SOLV3"><span className="dv">{r.estSolv3 > 0 ? num(r.estSolv3) : "—"}</span></span>
+										<span className="ar-cnum" data-label="Incentives"><span className="dv">{compactUsd(r.bribesUsd)}</span></span>
+										<span className="ar-cnum" data-label="Fees"><span className="dv">{compactUsd(r.feesUsd)}</span></span>
+										<span className="ar-cnum" data-label="TVL"><span className="dv">{compactUsd(r.tvlUsd)}</span></span>
+										<div className="ar-cvote">{stepper}</div>
+										<button type="button" className="ar-cex" aria-expanded={isOpen} aria-label={`${isOpen ? "Hide" : "Show"} details for ${r.name}`} onClick={() => setExpanded(isOpen ? null : r.addr)}>
+											<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+										</button>
+									</div>
+									{isOpen && (
+										<div className="ar-crow-d">
+											<div className="vr" aria-label={`Voter rewards for ${r.name}`}>
+												<div><span>Gauge vote share</span><span className="dv">{r.share.toFixed(1)}%</span></div>
+												<div><span>Votes</span><span className="dv">{num(r.votes)}</span></div>
+												<div><span>Emission APR</span><span className="dv">{late ? <EmissionAprText addr={r.addr} /> : "…"}</span></div>
+												<div><span>Est. SOLV3</span><span className="dv">{r.estSolv3 > 0 ? num(r.estSolv3) : "—"}</span></div>
+												<div><span>Total rewards</span><span className="dv">{compactUsd(r.rewardsUsd)}</span><span style={{ fontSize: 11, color: "#A6A4B8" }}>Fees + incentives</span></div>
+												<div><span>Incentives</span><span className="dv">{compactUsd(r.bribesUsd)}</span></div>
+												<div><span>Fee rewards</span><span className="dv">{compactUsd(r.feesUsd)}</span></div>
+												<div><span>TVL</span><span className="dv">{compactUsd(r.tvlUsd)}</span></div>
+											</div>
+											<div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+												<TagChip core={r.core} />
+												{accelerated.get(r.addr) && <AccelChip epochs={accelerated.get(r.addr)?.epochsRemaining ?? 0} />}
+												<Link href={`/bribes?pool=${r.addr}`} style={{ fontSize: 13, fontWeight: 600, textDecoration: "none", minHeight: 44, display: "inline-flex", alignItems: "center" }}>Add incentives →</Link>
+												<span style={{ flex: 1 }} />
+												{ids && ids.length > 0 && (
+													<Link className="btn2" href={ids.length === 1 ? `/liquidity/manager?positionId=${ids[0]}` : `/liquidity?q=${encodeURIComponent(r.name)}`}>
+														{ids.length === 1 ? "Manage position" : `Manage ${ids.length} positions`}
+													</Link>
+												)}
+												<Link className="btn2 pri" href={`/liquidity/create?currencyA=${info.tokenMintA.toString()}&currencyB=${info.tokenMintB.toString()}&pool=manual&fee=${info.feeRate}`}>Add liquidity</Link>
+											</div>
+										</div>
+									)}
+								</article>
+							);
+						}
 						return (
-							<article key={r.addr} className="ar-row" aria-label={r.name}>
+							<article key={r.addr} className="ar-row" aria-label={r.name} data-rally={rallied.has(r.addr)}>
 								<div className="ar-row-h">
 									<span style={{ width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, flex: "none", ...(rank <= 3 ? { background: "linear-gradient(135deg,#685DF7,#8C84FF)", color: "#fff" } : { background: "#141428", color: "#C9C7D6" }) }}>{rank}</span>
 									<span style={{ display: "flex", alignItems: "center" }} aria-hidden="true"><TokenDot sym={r.symA} logo={r.logoA} /><TokenDot sym={r.symB} logo={r.logoB} second /></span>
 									<div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0, flex: "1 1 160px" }}>
-										<span style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em" }}>{r.name}</span>
+										<span style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em" }}>{r.name}{rallied.has(r.addr) && <span className="ar-rally" title="Your clan is rallying votes for this pool">Clan rally</span>}</span>
 										<span style={{ fontSize: 12.5, color: "#A6A4B8", display: "flex", flexWrap: "wrap", gap: "0 8px" }}><span>Fee tier {r.feePct.toFixed(2)}%</span><span style={{ whiteSpace: "nowrap" }}>Pool <span className="dv" title={r.addr}>{short(r.addr)}</span></span></span>
 									</div>
 									<TagChip core={r.core} />
@@ -674,22 +832,7 @@ const ArenaFull: React.FC = () => {
 										</div>
 									</div>
 									<div style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-end" }}>
-									<div style={{ display: "flex", alignItems: "center", gap: 8 }} role="group" aria-label={`Vote allocation for ${r.name}`}>
-										<button type="button" className="stp" aria-label={`Decrease vote for ${r.name}`} disabled={disabled || v <= 0} onClick={() => setDraft(r, v - STEP)}>−</button>
-										<input
-											aria-label={`${r.name} vote percentage`}
-											inputMode="numeric"
-											disabled={disabled}
-											value={`${v}%`}
-											onChange={(e) => {
-												const d = e.currentTarget.value.replace(/[^0-9]/g, "");
-												setDraft(r, d === "" ? 0 : Number(d));
-											}}
-											style={{ width: 62, minHeight: 44, textAlign: "center", fontFamily: "inherit", fontSize: 18, fontWeight: 700, background: "#141428", border: "1px solid rgba(246,245,249,0.14)", borderRadius: 12, color: v ? "#58D7FF" : "#A6A4B8" }}
-										/>
-										<button type="button" className="stp" aria-label={`Max vote for ${r.name}`} disabled={disabled || 100 - others <= 0 || v >= 100 - others} onClick={() => setDraft(r, 100 - others)} style={{ width: "auto", padding: "0 12px", fontSize: 13, fontWeight: 700 }}>Max</button>
-										<button type="button" className="stp" aria-label={`Increase vote for ${r.name}`} disabled={disabled || total >= 100} onClick={() => setDraft(r, v + STEP)}>+</button>
-									</div>
+									{stepper}
 									<div style={{ display: "flex", gap: 10, justifyContent: "flex-end", flexWrap: "wrap" }}>
 										{(() => {
 											const ids = posByPool.get(r.addr);
@@ -709,12 +852,20 @@ const ArenaFull: React.FC = () => {
 					})}
 
 					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", padding: "4px 4px 0" }}>
-						<span style={{ fontSize: 13, color: "#A6A4B8" }}>Showing {shown.length} gauge {shown.length === 1 ? "pool" : "pools"}.</span>
+						<span style={{ fontSize: 13, color: "#A6A4B8" }}>Showing {visibleRows.length} of {shown.length} gauge {shown.length === 1 ? "pool" : "pools"}.</span>
+						{visibleRows.length < shown.length && (
+							<button type="button" className="btn2" onClick={() => setCount((c) => c + PAGE)} style={{ cursor: "pointer", fontFamily: "inherit" }}>Load more</button>
+						)}
 						<Link href="/liquidity/create" style={{ fontSize: 14, fontWeight: 600, textDecoration: "none", minHeight: 44, display: "inline-flex", alignItems: "center" }}>Create a pool →</Link>
 					</div>
 					<p style={{ fontSize: 12.5, lineHeight: 1.6, color: "#A6A4B8" }}>
-						Emission APR is the annualized value of a gauge's SOLV3 stream against its TVL. Split up to 100% across active gauges. Pool spot prices, not real market values; historical volume and fees are not indexed. Shared chain data on this page can be up to about 30 seconds old; transactions always use live state.
+						Emission APR is the annualized value of a gauge's SOLV3 stream against its TVL. Split up to 100% across active gauges.
 					</p>
+					{!isLoading && !gError && (
+						<div style={{ marginTop: 16 }}>
+							<LiquidityOnlyPools exclude={new Set(rows.map((r) => r.addr))} />
+						</div>
+					)}
 				</section>
 
 				<aside className="ar-side" aria-label="Your Arena">
@@ -830,6 +981,7 @@ const ArenaFull: React.FC = () => {
 						</div>
 						<p style={{ fontSize: 12.5, lineHeight: 1.5, color: "#A6A4B8" }}>Rewards for votes in epoch N are claimable from epoch N+1. Claim all sends each LP position and each voted gauge separately; the Rewards page claims them one at a time.</p>
 					</section>
+					<ClanWarCard data={clanData} />
 					<Link href="/quests" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, textDecoration: "none", background: "#0E0E1C", border: "1px solid rgba(246,245,249,0.10)", borderRadius: 16, padding: "14px 18px", color: "#F6F5F9", minHeight: 44 }}>
 						<span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
 							<span style={{ fontSize: 14, fontWeight: 700 }}>Genesis XP &amp; quests</span>
@@ -839,8 +991,6 @@ const ArenaFull: React.FC = () => {
 					</Link>
 				</aside>
 			</div>
-
-			{!isLoading && !gError && <LiquidityOnlyPools exclude={new Set(rows.map((r) => r.addr))} />}
 
 			<Flywheel />
 
@@ -966,8 +1116,8 @@ const ArenaLite: React.FC = () => {
 			<section className="ar-hero" aria-label="Epoch Arena">
 				<div className="ar-top" style={{ gridTemplateColumns: "minmax(0,1fr)" }}>
 					<div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-						<h1 style={{ fontSize: "clamp(36px, 4.4vw, 56px)", lineHeight: 1.02, letterSpacing: "-0.035em", fontWeight: 700 }}>Epoch Arena</h1>
-						<p style={{ fontSize: 17, lineHeight: 1.55, color: "#C9C7D6", maxWidth: 560 }}>Provide liquidity and earn trading fees. Gauge voting and emissions switch on at Full Launch.</p>
+						<h1 className="ar-title" style={{ fontSize: "clamp(36px, 4.4vw, 56px)", lineHeight: 1.02, letterSpacing: "-0.035em", fontWeight: 700 }}>Epoch Arena</h1>
+						<p className="ar-lede" style={{ fontSize: 17, lineHeight: 1.55, color: "#C9C7D6", maxWidth: 560 }}>Provide liquidity and earn trading fees. Gauge voting and emissions switch on at Full Launch.</p>
 						<div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}><Link className="btn2 pri" href="/liquidity/create">Add liquidity</Link></div>
 					</div>
 				</div>

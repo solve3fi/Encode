@@ -2,12 +2,13 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import { ClansTab } from "@/components/Clans/ClansTab";
 import { FundNudge } from "@/components/Fund/FundNudge";
 import { QuestsView } from "@/components/Genesis/QuestsView";
 import { PassView } from "@/components/Pass/PassView";
 import { useQuestSession } from "@/components/QuestTest/QuestSessionProvider";
 
-type Tab = "quests" | "pass";
+type Tab = "quests" | "pass" | "clans";
 
 type SessionXp = {
 	totalXp: number;
@@ -21,13 +22,13 @@ type SessionXp = {
 export const QuestPassHub: React.FC = () => {
 	const params = useSearchParams();
 	const router = useRouter();
-	const tab: Tab = params.get("tab") === "pass" ? "pass" : "quests";
+	const tab: Tab = params.get("tab") === "pass" ? "pass" : params.get("tab") === "clans" || params.get("invite") ? "clans" : "quests";
 	const { state } = useQuestSession();
 	const xp = (state as { xp?: SessionXp }).xp ?? null;
 
 	const select = useCallback(
 		(next: Tab) => {
-			router.replace(next === "pass" ? "/quests?tab=pass" : "/quests", { scroll: false });
+			router.replace(next === "pass" ? "/quests?tab=pass" : next === "clans" ? "/quests?tab=clans" : "/quests", { scroll: false });
 		},
 		[router],
 	);
@@ -62,11 +63,12 @@ export const QuestPassHub: React.FC = () => {
 					{stat("Quest XP", xp ? xp.totalXp.toLocaleString() : "—")}
 					{stat("Voting XP", xp?.voting ? xp.voting.votingXp.toLocaleString() : "—")}
 				</div>
-				<div role="tablist" aria-label="Quests and Pass" style={{ display: "flex", gap: 8 }}>
+				<div role="tablist" aria-label="Quests, Pass and Clans" style={{ display: "flex", gap: 8 }}>
 					{(
 						[
 							["quests", "Quests"],
 							["pass", "Pass"],
+							["clans", "Clans"],
 						] as const
 					).map(([k, label]) => (
 						<button
@@ -97,7 +99,7 @@ export const QuestPassHub: React.FC = () => {
 			{tab === "pass" && (
 				<FundNudge when="always" asset="choose" title="Need SOL or USDC to get started?" text="Bring funds from another chain to your wallet. This is a tip, not a quest, and it earns no XP." />
 			)}
-			{tab === "pass" ? <PassView embedded /> : <QuestsView compact />}
+			{tab === "pass" ? <PassView embedded /> : tab === "clans" ? <ClansTab /> : <QuestsView compact />}
 		</div>
 	);
 };

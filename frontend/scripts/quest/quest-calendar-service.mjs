@@ -398,6 +398,92 @@ export function createQuestCalendarService({
 				};
 			});
 		},
+		/**
+		 * Devnet TEST clans: overview, board, create, join, leave, invite and kick. Every read and write is a SECURITY
+		 * DEFINER function (migration 033) for this Passport only; no response carries another Passport's id.
+		 */
+		async clans(input, authentication, context) {
+			const keys = {
+				overview: "campaignId action",
+				board: "campaignId action query limit offset",
+				create: "campaignId action name tag",
+				join: "campaignId action clanId code",
+				leave: "campaignId action",
+				invite: "campaignId action",
+				kick: "campaignId action memberRef",
+				"rally-add": "campaignId action gauge pool label",
+				"rally-remove": "campaignId action gauge",
+			};
+			if (!input || typeof input.action !== "string" || !Object.hasOwn(keys, input.action))
+				fail("INVALID_REQUEST");
+			exact(input, keys[input.action]);
+			id(input.campaignId);
+			const action = input.action;
+			const uuid = (v) =>
+				typeof v === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(v);
+			if (action === "board") {
+				if (
+					typeof input.query !== "string" ||
+					input.query.length > 24 ||
+					!Number.isSafeInteger(input.limit) ||
+					input.limit < 1 ||
+					input.limit > 50 ||
+					!Number.isSafeInteger(input.offset) ||
+					input.offset < 0 ||
+					input.offset > 10000
+				)
+					fail("INVALID_REQUEST");
+			}
+			if (action === "create") {
+				if (
+					typeof input.name !== "string" ||
+					input.name.length > 40 ||
+					typeof input.tag !== "string" ||
+					input.tag.length > 8
+				)
+					fail("INVALID_REQUEST");
+			}
+			if (action === "join") {
+				const byId = input.clanId !== null && uuid(input.clanId);
+				const byCode =
+					input.code !== null && typeof input.code === "string" && /^[A-Za-z0-9]{8}$/.test(input.code);
+				if (byId === byCode || (input.clanId !== null && !byId) || (input.code !== null && !byCode))
+					fail("INVALID_REQUEST");
+			}
+			if (action === "kick" && !uuid(input.memberRef)) fail("INVALID_REQUEST");
+			const b58 = (v) => typeof v === "string" && v.length >= 32 && v.length <= 44 && /^[1-9A-HJ-NP-Za-km-z]+$/.test(v);
+			if (action === "rally-add" && (!b58(input.gauge) || !b58(input.pool) || typeof input.label !== "string" || input.label.length > 40))
+				fail("INVALID_REQUEST");
+			if (action === "rally-remove" && !b58(input.gauge)) fail("INVALID_REQUEST");
+			return protect(authentication, context, async ({ client, session }) => {
+				const pid = session.passportId;
+				const one = async (sql, params) => (await client.query(sql, params)).rows[0].r;
+				let result;
+				if (action === "create")
+					result = await one("SELECT quest.clan_create($1::uuid,$2::text,$3::text) AS r", [pid, input.name, input.tag]);
+				else if (action === "join")
+					result = await one("SELECT quest.clan_join($1::uuid,$2::uuid,$3::text) AS r", [pid, input.clanId, input.code]);
+				else if (action === "leave") result = await one("SELECT quest.clan_leave($1::uuid) AS r", [pid]);
+				else if (action === "invite") result = await one("SELECT quest.clan_invite($1::uuid) AS r", [pid]);
+				else if (action === "rally-add")
+					result = await one("SELECT quest.clan_rally($1::uuid,$2::text,$3::text,$4::text,true) AS r", [pid, input.gauge, input.pool, input.label]);
+				else if (action === "rally-remove")
+					result = await one("SELECT quest.clan_rally($1::uuid,$2::text,NULL,NULL,false) AS r", [pid, input.gauge]);
+				else if (action === "kick")
+					result = await one("SELECT quest.clan_kick($1::uuid,$2::uuid) AS r", [pid, input.memberRef]);
+				const out = { campaignId: input.campaignId, passportId: pid, testOnly: true, action };
+				if (result !== undefined) out.result = result;
+				if (action === "board")
+					out.board = await one("SELECT quest.clan_board($1::uuid,$2::text,$3::int,$4::int) AS r", [
+						pid,
+						input.query,
+						input.limit,
+						input.offset,
+					]);
+				else out.overview = await one("SELECT quest.clan_overview($1::uuid) AS r", [pid]);
+				return out;
+			});
+		},
 		async redeemReferral(input, authentication, context) {
 			exact(input, "campaignId code");
 			id(input.campaignId);

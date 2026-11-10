@@ -7,6 +7,7 @@ import type Decimal from "decimal.js";
 import { Field } from "@/stores/swap";
 import { useSwapActions } from "@/stores/swap/SwapProvider";
 import classes from "./Swap.module.css";
+import { CurrencyShortfall } from "../Fund/FundShortfall";
 import { SwapCurrency } from "./SwapCurrency";
 import { SwapTokenBalance } from "./SwapTokenBalance";
 
@@ -55,6 +56,7 @@ export const SwapField: React.FC<SwapFieldProps> = ({
 				/>
 				<SwapCurrency token={currency} method={method} />
 			</div>
+			{isInput && <CurrencyShortfall currency={currency} amount={value ? value.toNumber() : undefined} />}
 		</div>
 	);
 };

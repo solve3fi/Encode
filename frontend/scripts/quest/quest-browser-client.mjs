@@ -466,6 +466,45 @@ export function createQuestBrowserClient({
 			// Redeeming never changes the redeemer's own XP; refresh totals on the next read.
 			return value;
 		},
+		/**
+		 * Clans (devnet test). action: overview | board | create | join | leave | invite | kick. Returns
+		 * { result?, overview?, board? } exactly as the backend sent it; the server enforces every rule.
+		 */
+		async clans(action, params = {}) {
+			const bodies = {
+				overview: () => ({}),
+				board: () => ({
+					query: typeof params.query === "string" ? params.query : "",
+					limit: Number.isSafeInteger(params.limit) ? params.limit : 20,
+					offset: Number.isSafeInteger(params.offset) ? params.offset : 0,
+				}),
+				create: () => ({ name: params.name, tag: params.tag }),
+				join: () => ({ clanId: params.clanId ?? null, code: params.code ?? null }),
+				leave: () => ({}),
+				invite: () => ({}),
+				kick: () => ({ memberRef: params.memberRef }),
+				"rally-add": () => ({ gauge: params.gauge, pool: params.pool, label: params.label }),
+				"rally-remove": () => ({ gauge: params.gauge }),
+			};
+			if (
+				!csrf ||
+				state.status !== "READY" ||
+				identity.network !== "devnet" ||
+				typeof action !== "string" ||
+				!Object.hasOwn(bodies, action)
+			)
+				fail();
+			const value = await post("calendar", "clans", { campaignId, action, ...bodies[action]() });
+			if (
+				value?.testOnly !== true ||
+				value.campaignId !== campaignId ||
+				value.passportId !== passportId ||
+				value.action !== action ||
+				(action === "board" ? typeof value.board !== "object" : typeof value.overview !== "object")
+			)
+				fail();
+			return { result: value.result, overview: value.overview, board: value.board };
+		},
 		setIdentity(wallet, network) {
 			generation++;
 			controller?.abort();

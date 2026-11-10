@@ -5,6 +5,7 @@ import { CreateLock } from "../CreateLock";
 import classes from "./Lock.module.css";
 import { LockLists } from "./LockLists";
 import { FundNudge } from "@/components/Fund/FundNudge";
+import { LockPowerCard } from "@/components/V2/LockPowerCard";
 
 const STEPS = [
 	["01", "Lock SOLV3", "Create a permanent lock and receive veSOLV3 at 1:1."],
@@ -39,6 +40,7 @@ export const Lock: React.FC = () => {
 				<CreateLock />
 
 				<div className={classes.side}>
+					<LockPowerCard />
 					<section className={classes.panel} aria-label={i18n._("How locks work")}>
 						<h2 className={classes.eyebrow}>{i18n._("How locks work")}</h2>
 						<ol className={classes.steps}>

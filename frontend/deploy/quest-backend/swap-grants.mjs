@@ -20,6 +20,8 @@ export const indexerGrants = (role) => [
 	// Voting XP evidence (migration 020). The worker records what it read from the ve program; it cannot
 	// read or write Levels.
 	`GRANT SELECT, INSERT ON quest.vote_observations, quest.vote_epoch_heads TO ${role}`,
+	// Which gauges each vote backed (migration 034), so clans can see rally progress. Replaced per vote each round.
+	`GRANT SELECT, INSERT, DELETE ON quest.vote_allocations TO ${role}`,
 	// Pool price samples for range-aware LP quests (migration 023). Append-only evidence.
 	`GRANT SELECT, INSERT ON quest.pool_tick_samples TO ${role}`,
 ];

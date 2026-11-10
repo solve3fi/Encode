@@ -15,14 +15,14 @@ trading fees and partner incentives of the pools they back.
 | --- | --- |
 | `contracts/` | Anchor workspace with three programs: `solve` (concentrated-liquidity DEX), `vesolve` (vote-escrow locks, gauges, voting, rewards) and `token`. Also tests, scripts, docs and the security audit notes. |
 | `swap-contracts/` | Standalone Solve3 Swap program from [solve3fi/contracts](https://github.com/solve3fi/contracts), including its Anchor workspace, source, license and notices. |
-| `frontend/` | Next.js app: Epoch Arena, swap, liquidity, locks and voting, quests and Pass, partner portal and accelerator, Just Ask command bar, Aurora Intents funding, and the private ALM and Yield Hunter preview pages. Includes the SDK packages it uses (`frontend/packages`). |
+| `frontend/` | Next.js app: Epoch Arena, swap, liquidity, locks and voting, quests, Pass and Clans, partner portal and accelerator, Just Ask command bar, Aurora Intents funding, and the private ALM and Yield Hunter preview pages. Includes the SDK packages it uses (`frontend/packages`). |
 | `frontend/deploy/quest-backend/` and `frontend/db/quest/` | Devnet quest backend, worker scripts, database migrations and database tests. |
 
 ## Provenance
 
 - **Contracts:** commit `d55804d4da512617209df6b4aa1366a436e936b6` (2026-10-13) of the Solve3 `ve33-contracts` repository. This revision makes voter rewards from epoch N claimable in epoch N+1.
 - **Standalone Swap contracts:** [commit `98fb091`](https://github.com/solve3fi/contracts/commit/98fb091c08a0bfe18dbdda133c69714daede2b56). Build this workspace separately from `contracts/`. Its program configuration is documented in [swap-contracts/README.md](swap-contracts/README.md) and [swap-contracts/Anchor.toml](swap-contracts/Anchor.toml).
-- **Frontend:** the source behind the dev site (https://dev.solve3.fi), taken 2026-11-06.
+- **Frontend:** the November 6, 2026 dev-site snapshot, with the November 8 Clans and Arena rally updates from frontend commit `bd3bc45b`. The Clans backend uses quest migrations `033_clans.sql` and `034_clan_rallies.sql`.
 
 ## Devnet deployment
 

@@ -13,12 +13,12 @@ import type {
 	WalletName,
 } from "@solana/wallet-adapter-base";
 import {
-	ConnectionProvider,
+	ConnectionContext,
 	useConnection,
 	useWallet,
 	WalletProvider,
 } from "@solana/wallet-adapter-react";
-import type { Cluster, PublicKey } from "@solana/web3.js";
+import type { Cluster, ConnectionConfig, PublicKey } from "@solana/web3.js";
 import {
 	buildSolveClient,
 	type SolveClient,
@@ -26,6 +26,7 @@ import {
 	type SolveContextOpts,
 } from "@solve3fi/sdk";
 import { type PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { PollingConnection } from "@/lib/pollingConnection";
 import { ClusterNetwork, useCluster } from "./ClusterProvider";
 
 export const DappProvider: React.FC<PropsWithChildren> = ({ children }) => {
@@ -149,14 +150,22 @@ export const DappProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		[mwaEnv],
 	);
 
+	// Same settings the stock ConnectionProvider used, but confirmations poll our RPC instead of the public websocket.
+	const connectionConfig: ConnectionConfig =
+		process.env.NEXT_PUBLIC_SITE_VARIANT === "main"
+			? { wsEndpoint: "wss://api.mainnet-beta.solana.com", disableRetryOnRateLimit: true }
+			: cluster.network === ClusterNetwork.Devnet
+				? { wsEndpoint: "wss://api.devnet.solana.com", disableRetryOnRateLimit: true }
+				: { commitment: "confirmed" };
+	const wsEndpoint = connectionConfig.wsEndpoint;
+	const connection = useMemo(
+		() => new PollingConnection(cluster.endpoint, connectionConfig),
+		// biome-ignore lint/correctness/useExhaustiveDependencies: the config is fully determined by the endpoint and network
+		[cluster.endpoint, wsEndpoint],
+	);
+
 	return (
-		<ConnectionProvider endpoint={cluster.endpoint} config={
-			process.env.NEXT_PUBLIC_SITE_VARIANT === "main"
-				? { wsEndpoint: "wss://api.mainnet-beta.solana.com", disableRetryOnRateLimit: true }
-				: cluster.network === ClusterNetwork.Devnet
-					? { wsEndpoint: "wss://api.devnet.solana.com", disableRetryOnRateLimit: true }
-					: undefined
-		}>
+		<ConnectionContext.Provider value={{ connection }}>
 			{walletsReady && KitProvider ? (
 				<KitProvider wallets={wallets} config={unifiedConfig}>
 					{children}
@@ -169,7 +178,7 @@ export const DappProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					{children}
 				</WalletProvider>
 			)}
-		</ConnectionProvider>
+		</ConnectionContext.Provider>
 	);
 };
 

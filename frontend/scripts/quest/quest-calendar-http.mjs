@@ -18,6 +18,7 @@ const operations = new Set([
 	"redeem-referral",
 	"partner-lead",
 	"social-claim",
+	"clans",
 	"budget",
 	"operator-plan",
 	"publish",
@@ -132,6 +133,8 @@ export function createQuestCalendarHttpAdapter({
 								? await service.referral(input, authentication, context)
 								: operation === "redeem-referral"
 									? await service.redeemReferral(input, authentication, context)
+									: operation === "clans"
+										? await service.clans(input, authentication, context)
 									: operation === "social-claim"
 										? await service.socialClaim(input, authentication, context)
 									: operation === "partner-lead"

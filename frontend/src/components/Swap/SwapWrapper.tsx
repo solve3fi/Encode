@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Link from "next/link";
 import { GenesisProgressPanel } from "@/components/Genesis/GenesisCampaignPanels";
 import { GENESIS_PUBLIC_ENABLED } from "@/configs/genesis";
 import { useDerivedSwapInfo } from "@/hooks/useDerivedSwapInfo";
@@ -48,11 +47,6 @@ export const SwapWrapper: React.FC = () => {
 					isExactIn={isExactIn}
 				/>
 			</section>
-			<p className={classes.note}>
-				Quote is an estimate and updates until you confirm. Trading fees go to
-				each pool&apos;s bribe pool, shared with its voters.{" "}
-				<Link href="/liquidity">See pools →</Link>
-			</p>
 			{GENESIS_PUBLIC_ENABLED && <GenesisProgressPanel />}
 		</div>
 	);

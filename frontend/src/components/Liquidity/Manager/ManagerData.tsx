@@ -4,6 +4,7 @@ import type { Position, Solve } from "@solve3fi/sdk";
 import { useDerivedMintInfo } from "@/hooks/useDerivedMintInfo";
 import { useToken } from "@/hooks/useToken";
 import { usePoolManager } from "@/stores/pool-manager/PoolManagaerProvider";
+import { ArenaPairCard } from "@/components/V2/ArenaPairCard";
 import { ManagerAction } from "./ManagerAction";
 import { ManagerPosition } from "./ManagerPosition";
 
@@ -51,11 +52,15 @@ export const ManagerData: React.FC<ManagerDataProps> = ({ position, pool }) => {
 	);
 
 	return (
+		<>
+		<div style={{ maxWidth: 640, margin: "0 auto 8px" }}>
+			<ArenaPairCard mintA={token0Address} mintB={token1Address} feeRate={feeTier} heading="THIS POOL IN THE ARENA" />
+		</div>
 		<Grid
 			gutter={{ base: 5, xs: "md", md: "xl", xl: 30 }}
 			py={{
-				base: 20,
-				md: 80,
+				base: 12,
+				md: 24,
 			}}
 		>
 			<Grid.Col
@@ -104,5 +109,6 @@ export const ManagerData: React.FC<ManagerDataProps> = ({ position, pool }) => {
 				</Center>
 			</Grid.Col>
 		</Grid>
+		</>
 	);
 };

@@ -14,6 +14,7 @@ import { ProtocolContext } from "../Layout/ProtocolContext";
 import { DevnetBanner } from "../ProtocolStatus/DevnetBanner";
 import { WaveBackground } from "../WaveBackground";
 import { CommandBar } from "../CommandBar";
+import { FlowCards } from "./FlowStrip";
 import { WalletConnect } from "../Wallet";
 import "./v2.css";
 
@@ -27,6 +28,9 @@ const MORE: ReadonlyArray<readonly [string, string]> = [
 	["Charter", "/charter"],
 	...(INTENTS_ENABLED ? ([["Fund from any chain", "/fund"]] as const) : []),
 	["Pools", "/liquidity"],
+	["Clans", "/quests?tab=clans"],
+	["Create a pool", "/liquidity/create"],
+	["Request a token listing", "/liquidity/request-token"],
 	["Vote (advanced)", "/vote"],
 	["ALM (beta)", "/beta/alm-market"],
 	["Yield Hunter (beta)", "/beta/yield-hunter"],
@@ -95,6 +99,7 @@ const ClockChip: React.FC = () => {
 	}
 	return (
 		<span
+			className="dchip"
 			title="Chain clock"
 			style={{
 				fontSize: 13,
@@ -120,6 +125,7 @@ const ClockChip: React.FC = () => {
 /** Lite Launch has no epoch clock; say so instead of showing a chain countdown. */
 const LiteChip: React.FC = () => (
 	<span
+		className="dchip"
 		title="Chain clock"
 		style={{ fontSize: 13, fontWeight: 600, padding: "0 14px", minHeight: 44, borderRadius: 10, background: "rgba(88,215,255,0.08)", border: "1px solid rgba(88,215,255,0.28)", color: "#58D7FF", display: "flex", flexDirection: "column", justifyContent: "center", lineHeight: 1.25 }}
 	>
@@ -134,6 +140,14 @@ export const V2Shell: React.FC<PropsWithChildren> = ({ children }) => {
 	const onArena = /^\/arena(\/demo)?\/?$/.test(path);
 	const isDemo = /^\/arena\/demo\/?$/.test(path);
 	const isAt = (r: string) => path === `/${r}` || path.startsWith(`/${r}/`);
+	// The working pages share an epoch strip above them and the Quests and clan cards below.
+	const flowContext =
+		isAt("swap") ? "Swap"
+		: isAt("bribes") ? "Add incentives"
+		: isAt("lock") ? "Lock"
+		: path.startsWith("/liquidity/create") ? "Add liquidity"
+		: path.startsWith("/liquidity/manager") ? "Manage position"
+		: null;
 	const { network } = useCluster();
 	const moreItems = network === ClusterNetwork.Mainnet ? MORE_MAIN : MORE;
 	const [menuKey, setMenuKey] = useState(0);
@@ -166,6 +180,7 @@ export const V2Shell: React.FC<PropsWithChildren> = ({ children }) => {
 			<header style={{ borderBottom: "1px solid rgba(246,245,249,0.08)", position: "relative" }}>
 				<nav
 					aria-label="App"
+					className="dhead"
 					style={{
 						maxWidth: 1240,
 						margin: "0 auto",
@@ -177,7 +192,7 @@ export const V2Shell: React.FC<PropsWithChildren> = ({ children }) => {
 						flexWrap: "wrap",
 					}}
 				>
-					<div style={{ display: "flex", alignItems: "center", gap: 36 }}>
+					<div className="dhead-left" style={{ display: "flex", alignItems: "center", gap: 36 }}>
 						<Link href="/" aria-label="Solve3 home" style={{ display: "flex", alignItems: "center" }}>
 							{/* biome-ignore lint/performance/noImgElement: static brand logo */}
 							<img src="/assets/images/solve-logo.svg" width={110} height={30} alt="Solve3" style={{ display: "block" }} />
@@ -201,9 +216,10 @@ export const V2Shell: React.FC<PropsWithChildren> = ({ children }) => {
 							</details>
 						</div>
 					</div>
-					<div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+					<div className="dhead-right" style={{ display: "flex", alignItems: "center", gap: 12 }}>
 						{!isDemo && (DEX_ONLY ? <LiteChip /> : <ClockChip />)}
 						<span
+						className="dsol"
 							style={{
 								fontSize: 14,
 								fontWeight: 600,
@@ -239,9 +255,10 @@ export const V2Shell: React.FC<PropsWithChildren> = ({ children }) => {
 					display: "flex",
 					flexDirection: "column",
 					gap: 28,
-				} : { padding: "32px 0 64px", position: "relative" }}
+				} : { padding: flowContext ? "12px 0 48px" : "32px 0 64px", position: "relative" }}
 			>
 				<Suspense fallback={null}>{children}</Suspense>
+				{flowContext && <FlowCards />}
 			</main>
 			<footer style={{ borderTop: "1px solid rgba(246,245,249,0.08)", position: "relative" }}>
 				<div

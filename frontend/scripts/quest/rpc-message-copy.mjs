@@ -1,10 +1,13 @@
-import {PublicKey,MessageV1,VersionedMessage} from "@solana/web3.js";
+import {PublicKey,VersionedMessage} from "@solana/web3.js";
+import * as web3 from "@solana/web3.js";
 
 // web3.js 1.99 can read v1 but deliberately cannot serialize it. Copy its
 // decoded fields without rebuilding it as a legacy transaction or dropping
 // transactionConfig. This is a read-only evidence copy, never a signing path.
 export function copyRpcMessage(message){
  if(message.version!==1)return VersionedMessage.deserialize(Uint8Array.from(message.serialize()));
+ const {MessageV1}=web3;
+ if(typeof MessageV1!=="function")throw new Error("RPC message: version 1 evidence is unsupported by this web3.js version");
  const fail=()=>{throw new Error("RPC message: malformed version 1 evidence");};
  const keys=message.staticAccountKeys,header=message.header,instructions=message.compiledInstructions,config=message.transactionConfig;
  if(!(message instanceof MessageV1)||!Array.isArray(keys)||keys.length<1||keys.length>64||!Array.isArray(instructions)||instructions.length>64||message.addressTableLookups.length!==0||!header||!config)fail();

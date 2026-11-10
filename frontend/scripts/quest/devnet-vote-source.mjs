@@ -49,6 +49,12 @@ export function decodeUserVote(data) {
 	if (data.length < timeOffset + 8) throw new Error("UserVote account is truncated.");
 	const voteTime = new Date(Number(data.readBigInt64LE(timeOffset)) * 1000);
 	if (Number.isNaN(voteTime.getTime())) throw new Error("UserVote time is invalid.");
+	const allocations = [];
+	for (let i = 0; i < gaugeCount; i++) {
+		const at = 60 + 40 * i;
+		const weight = data.readBigUInt64LE(at + 32);
+		if (weight > 0n) allocations.push({ gauge: bs58.encode(data.subarray(at, at + 32)), weight: weight.toString() });
+	}
 	const votingPower = data.readBigUInt64LE(48);
 	if (votingPower === 0n) throw new Error("UserVote has no voting power.");
 	return {
@@ -56,6 +62,7 @@ export function decodeUserVote(data) {
 		epochId: safeNumber(data.readBigUInt64LE(40), "UserVote epoch"),
 		votingPower: votingPower.toString(),
 		gaugeCount,
+		allocations,
 		voteTime,
 	};
 }
@@ -96,6 +103,9 @@ export async function fetchEpochVotes({ connection, programKey, epochId }) {
 const INSERT_VOTE = `INSERT INTO quest.vote_observations
  (epoch_id, vote_account, owner_wallet, voting_power, gauge_count, vote_time, observed_slot)
  VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT DO NOTHING`;
+const DELETE_ALLOCATIONS = `DELETE FROM quest.vote_allocations WHERE epoch_id = $1 AND vote_account = $2`;
+const INSERT_ALLOCATION = `INSERT INTO quest.vote_allocations (epoch_id, vote_account, gauge, weight)
+ VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING`;
 const INSERT_HEAD = `INSERT INTO quest.vote_epoch_heads (epoch_id, epoch_start_time, observed_slot)
  VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`;
 
@@ -137,6 +147,14 @@ export async function runVoteObservations({
 				read.slot,
 			]);
 			totals.recorded += inserted.rowCount ?? 0;
+			// The latest allocation of this vote (a re-vote changes it). Never blocks the XP observation above.
+			try {
+				await client.query(DELETE_ALLOCATIONS, [vote.epochId, vote.voteAccount]);
+				for (const a of vote.allocations ?? [])
+					await client.query(INSERT_ALLOCATION, [vote.epochId, vote.voteAccount, a.gauge, a.weight]);
+			} catch (error) {
+				log?.({ action: "vote_allocation_failed", message: String(error?.message ?? error).slice(0, 120) });
+			}
 		}
 	}
 	await client.query(INSERT_HEAD, [head.epochId, head.epochStartTime.toISOString(), slot]);

@@ -34,7 +34,7 @@ export function createQuestTestWebHandler({
 			["prepare", "status"].includes(operation)
 		)
 			return passport(`pass-${operation}`, request);
-		if (scope === "calendar" && ["snapshot", "history", "xp", "referral", "redeem-referral", "partner-lead", "social-claim"].includes(operation))
+		if (scope === "calendar" && ["snapshot", "history", "xp", "referral", "redeem-referral", "partner-lead", "social-claim", "clans"].includes(operation))
 			return calendar(operation, request);
 		return Promise.resolve(
 			new Response(JSON.stringify({ error: "NOT_FOUND" }), {

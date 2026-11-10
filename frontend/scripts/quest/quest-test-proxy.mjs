@@ -7,7 +7,7 @@ const operations = {
 		"resume",
 		"logout",
 	],
-	calendar: ["snapshot", "history", "xp", "referral", "redeem-referral", "partner-lead", "social-claim"],
+	calendar: ["snapshot", "history", "xp", "referral", "redeem-referral", "partner-lead", "social-claim", "clans"],
 	pass: ["prepare", "status"],
 };
 const headers = {

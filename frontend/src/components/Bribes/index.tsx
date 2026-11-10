@@ -77,7 +77,7 @@ export const Bribes: React.FC = () => {
 	return (
 		<div className={classes.page}>
 			<Link href="/arena" className={classes.back}>
-				← {i18n._("Back to Vote")}
+				← Back to Arena
 			</Link>
 			<header className={classes.head}>
 				<h1>

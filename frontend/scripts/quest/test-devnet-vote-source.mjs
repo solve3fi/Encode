@@ -44,6 +44,51 @@ test("decodes a real UserVote account: the owner, epoch, power and last vote tim
 	assert.equal(vote.voteTime.toISOString(), "2026-10-02T23:07:15.000Z");
 });
 
+test("decodes which gauges a vote backed and with what weight, skipping zero weights", () => {
+	const real = decodeUserVote(REAL_VOTE);
+	assert.equal(real.allocations.length, 1);
+	assert.equal(real.allocations[0].gauge, "CmSNnBJV1j89bEb1JkVPmeaYj6F22oDFzuJo7AgdVrGt");
+	const data = userVote({ gauges: 3 });
+	Buffer.alloc(32, 9).copy(data, 60);
+	data.writeBigUInt64LE(700n, 60 + 32);
+	Buffer.alloc(32, 8).copy(data, 100);
+	// the second entry keeps weight 0 and is skipped
+	Buffer.alloc(32, 6).copy(data, 140);
+	data.writeBigUInt64LE(300n, 140 + 32);
+	const vote = decodeUserVote(data);
+	assert.deepEqual(vote.allocations.map((x) => x.weight), ["700", "300"]);
+	assert.equal(vote.allocations[0].gauge, bs58.encode(Buffer.alloc(32, 9)));
+});
+
+test("a round replaces each vote's allocations and a failing allocation write never blocks the observation", async () => {
+	const data = userVote({ epoch: 2n, gauges: 2 });
+	Buffer.alloc(32, 5).copy(data, 60);
+	data.writeBigUInt64LE(11n, 92);
+	const connection = chain({ epoch: 2, votesByEpoch: { 2: [{ address: "va", data }] } });
+	const client = recorder();
+	await runVoteObservations({ client, connection, programId: "ve-program", PublicKey: Key, epochsBack: 0 });
+	const del = client.queries.filter((q) => /DELETE FROM quest.vote_allocations/.test(q.sql));
+	const ins = client.queries.filter((q) => /INSERT INTO quest.vote_allocations/.test(q.sql));
+	assert.equal(del.length, 1);
+	assert.deepEqual(del[0].params, [2, "va"]);
+	assert.equal(ins.length, 1);
+	assert.deepEqual([ins[0].params[0], ins[0].params[1], ins[0].params[3]], [2, "va", "11"]);
+
+	const failing = {
+		queries: [],
+		async query(sql, params) {
+			this.queries.push({ sql, params });
+			if (/vote_allocations/.test(sql)) throw new Error("relation does not exist");
+			return { rowCount: 1 };
+		},
+	};
+	const logs = [];
+	const summary = await runVoteObservations({ client: failing, connection, programId: "ve-program", PublicKey: Key, epochsBack: 0, log: (v) => logs.push(v) });
+	assert.equal(summary.recorded, 1);
+	assert.ok(logs.some((l) => l.action === "vote_allocation_failed"));
+	assert.match(failing.queries.at(-1).sql, /vote_epoch_heads/);
+});
+
 test("the time field follows the real vote list, however many gauges were voted", () => {
 	for (const gauges of [1, 7, MAX_GAUGE_VOTES]) {
 		const vote = decodeUserVote(userVote({ gauges, time: 1_790_123_456n }));

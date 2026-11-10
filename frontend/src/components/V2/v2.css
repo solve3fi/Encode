@@ -122,3 +122,138 @@
 
 .s3v2 .dre section>div>p:first-of-type{display:none!important}
 .s3v2 .fw-home{display:block}
+
+/* Arena compact rows: one line per pool on desktop, accordion cards on narrow screens. */
+.s3v2 .ar-chead,.s3v2 .ar-crow-h{display:grid;grid-template-columns:34px 50px minmax(110px,1.2fr) minmax(96px,1fr) repeat(5,minmax(52px,.5fr)) 232px 44px;gap:8px;align-items:center}
+.s3v2 .ar-chead{padding:0 17px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#A6A4B8}
+.s3v2 .ar-crow{padding:10px 16px;gap:0}
+.s3v2 .ar-rank{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;background:#141428;color:#C9C7D6}
+.s3v2 .ar-rank[data-top=true]{background:linear-gradient(135deg,#685DF7,#8C84FF);color:#fff}
+.s3v2 .ar-cname{display:flex;flex-direction:column;gap:2px;min-width:0}
+.s3v2 .ar-cname strong{font-size:16px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s3v2 .ar-cname span{font-size:12px;color:#A6A4B8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s3v2 .ar-cshare{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.s3v2 .ar-cbar{position:relative;height:8px;border-radius:5px;background:#1B1B36;overflow:hidden;display:block}
+.s3v2 .ar-cbar>span{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:linear-gradient(90deg,#685DF7,#8C84FF)}
+.s3v2 .ar-cbar>.mine{background:#58D7FF;opacity:.85;border-radius:0 5px 5px 0}
+.s3v2 .ar-cnum{font-size:13.5px}
+.s3v2 .ar-cex{width:44px;height:44px;border-radius:12px;border:1px solid rgba(246,245,249,.14);background:#141428;color:#F6F5F9;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.s3v2 .ar-cex:focus-visible{outline:2px solid #8C84FF;outline-offset:2px}
+.s3v2 .ar-cex svg{transition:transform .2s}
+.s3v2 .ar-crow[data-open=true] .ar-cex svg{transform:rotate(180deg)}
+.s3v2 .ar-crow-d{display:flex;flex-direction:column;gap:12px;padding:14px 0 6px;margin-top:10px;border-top:1px solid rgba(246,245,249,.08)}
+/* The list is sized by its own column, not the window: full table when wide, share + APR + vote when medium, cards when narrow. */
+.s3v2 .ar-main>section[aria-label="Pools"]{container:arlist/inline-size}
+@container arlist (max-width:899px){
+.s3v2 .ar-chead,.s3v2 .ar-crow-h{grid-template-columns:34px 50px minmax(100px,1fr) 110px 64px 232px 44px}
+.s3v2 .ar-cnum:not([data-label="APR"]){display:none}
+.s3v2 .ar-chead>span:nth-child(n+6):nth-child(-n+9){display:none}
+}
+@container arlist (max-width:699px){
+.s3v2 .ar-chead{display:none}
+.s3v2 .ar-crow{padding:12px 14px}
+.s3v2 .ar-crow-h{grid-template-columns:34px 56px minmax(0,1fr) 44px}
+.s3v2 .ar-cshare,.s3v2 .ar-cnum{display:none}
+.s3v2 .ar-cex{grid-column:4;grid-row:1}
+.s3v2 .ar-cvote{grid-column:1/-1;grid-row:2;justify-self:end}
+}
+@media (prefers-reduced-motion:reduce){.s3v2 .ar-cex svg{transition:none}}
+
+/* Phones: a compressed Arena header (title, small epoch ring, two-by-two stats) so the pools start on the first screen. */
+@media (max-width:640px){
+.s3v2 .ar-hero{border-radius:18px}
+.s3v2 .ar-top{grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:14px 14px 8px;align-items:center}
+.s3v2 .ar-title{font-size:26px!important}
+.s3v2 .ar-lede{display:none}
+.s3v2 .ar-cta{margin-top:0!important;gap:8px!important}
+.s3v2 .ar-cta .btn2{min-height:40px;padding:0 12px;font-size:13px}
+.s3v2 .ar-ring{justify-self:end}
+.s3v2 .ar-ring>[role=img]{width:92px!important;height:92px!important}
+.s3v2 .ar-ring svg{width:100%!important;height:100%!important}
+.s3v2 .ar-ring [role=img]>div{padding:0 10px!important;gap:1px!important}
+.s3v2 .ar-r1{font-size:9px!important;letter-spacing:.08em!important}
+.s3v2 .ar-r2{font-size:15px!important}
+.s3v2 .ar-r3{display:none}
+.s3v2 .ar-stats,.s3v2 .ar-stats.three{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:0 10px 12px}
+.s3v2 .ar-stat{padding:8px 10px;border-radius:10px;gap:1px}
+.s3v2 .ar-stat>span:first-child{font-size:10.5px!important}
+.s3v2 .ar-stat>.dv{font-size:15px!important}
+.s3v2 .ar-stat>span:nth-child(3){display:none}
+}
+
+/* Phones: header on two short rows. Row 1: logo, Just Ask, Connect. Row 2: the epoch chip on one line. */
+@media (max-width:640px){
+.s3v2 .dhead{padding:8px 12px!important;gap:6px 8px!important}
+.s3v2 .dhead img{width:92px;height:auto}
+.s3v2 .dhead-left{flex:1 1 auto}
+.s3v2 .dhead-right{display:contents!important}
+.s3v2 .dhead .dsol{display:none!important}
+.s3v2 .dhead .dchip{order:3;flex:1 1 100%;flex-direction:row!important;align-items:center!important;gap:8px;min-height:32px!important;padding:0 12px!important;font-size:12.5px!important}
+.s3v2 .dhead .dchip>span:first-child{font-size:10px!important}
+.s3v2 .dhead-right>:nth-last-child(2){order:1}
+.s3v2 .dhead-right>:last-child{order:2}
+}
+
+/* Phones: the leaders and community strips fold behind one summary line. */
+.s3v2 .ar-foldbtn{display:none}
+@media (max-width:640px){
+.s3v2 .ar-foldbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer;padding:0}
+.s3v2 .ar-foldbtn:focus-visible{outline:2px solid #8C84FF;outline-offset:2px;border-radius:8px}
+.s3v2 .ar-fold{padding:10px 14px}
+.s3v2 .ar-fold[data-open="false"]>*:not(.ar-foldbtn){display:none!important}
+.s3v2 .ar-foldbtn svg{flex:none;transition:transform .2s}
+.s3v2 .ar-fold[data-open="true"] .ar-foldbtn svg{transform:rotate(180deg)}
+}
+
+/* Working pages: an epoch strip above, Quests and clan cards below. */
+/* The strip already shows the epoch and countdown, so the header chip steps aside on those pages. */
+.s3v2 .fs{max-width:1240px;margin:0 auto 8px;padding:0 24px 8px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.s3v2 .fs-l{display:flex;align-items:center;gap:12px;min-width:0}
+.s3v2 .fs-ring{flex:none}
+.s3v2 .fs-t{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.s3v2 .fs-t b{font-size:14px;color:#F6F5F9}
+.s3v2 .fs-t span{font-size:12.5px;color:#A6A4B8}
+.s3v2 .fs-r{font-size:13px;color:#A6A4B8;text-align:right;white-space:nowrap}
+.s3v2 .fs-r b{color:#F6F5F9}
+.s3v2 .fc{max-width:1240px;margin:28px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.s3v2 .fc-card{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;background:#0E0E1C;border:1px solid rgba(246,245,249,.10);border-radius:16px;padding:14px 18px;color:#F6F5F9;min-height:44px}
+.s3v2 .fc-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.s3v2 .fc-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;color:#8C84FF}
+.s3v2 .fc-title{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.s3v2 .fc-sub{font-size:12.5px;color:#A6A4B8}
+.s3v2 .fc-go{color:#8C84FF;font-weight:600;font-size:14px;white-space:nowrap}
+@media (max-width:700px){
+.s3v2 .fs{padding:0 16px 6px}
+.s3v2 .fs-r span{display:none}
+.s3v2 .fc{padding:0 16px;grid-template-columns:minmax(0,1fr)}
+}
+
+/* Context cards on the working pages (this pair in the Arena, your voting power). */
+.s3v2 .ap{background:#0E0E1C;border:1px solid rgba(246,245,249,.10);border-radius:16px;padding:14px 18px;display:flex;flex-direction:column;gap:10px;color:#F6F5F9}
+.s3v2 .ap-h{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.s3v2 .ap-h a{color:#8C84FF;font-weight:600;font-size:13px;text-decoration:none}
+.s3v2 .ap-name{display:flex;align-items:center;gap:10px}
+.s3v2 .ap-name strong{font-size:18px}
+.s3v2 .ap-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:rgba(88,215,255,.12);color:#58D7FF}
+.s3v2 .ap-row{display:flex;justify-content:space-between;font-size:13px;color:#A6A4B8}
+.s3v2 .ap-row b{color:#F6F5F9}
+.s3v2 .ap-bar{height:8px;border-radius:5px;background:#1B1B36;overflow:hidden}
+.s3v2 .ap-bar>span{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#685DF7,#8C84FF)}
+.s3v2 .ap-note{margin:0;font-size:12.5px;line-height:1.5;color:#A6A4B8}
+.s3v2 .ap-big{font-size:28px;font-weight:700;letter-spacing:-.02em}
+.s3v2 .ap-big small{font-size:14px;font-weight:600;color:#A6A4B8}
+
+/* Phones: dialogs open as bottom sheets. */
+@media (max-width:640px){
+.mantine-Modal-inner{align-items:flex-end!important;padding:0!important}
+.mantine-Modal-content{width:100%!important;max-width:100%!important;max-height:88vh;border-radius:20px 20px 0 0!important}
+}
+/* "Launching a token?" band: Create a pool and Request a token listing, up where people look. */
+.s3v2 .ar-launch{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding:14px 20px;border-radius:16px;background:linear-gradient(135deg,rgba(104,93,247,.18),rgba(88,215,255,.08));border:1px solid rgba(140,132,255,.35)}
+.s3v2 .ar-launch-t{font-size:14px;color:#C9C7D6;min-width:0;flex:1 1 280px}
+.s3v2 .ar-launch-t b{color:#F6F5F9;font-size:15px;margin-right:6px}
+.s3v2 .ar-launch-b{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:640px){.s3v2 .ar-launch{padding:12px 14px}.s3v2 .ar-launch-t span{display:none}.s3v2 .ar-launch-b{width:100%}.s3v2 .ar-launch-b .btn2{flex:1 1 0;text-align:center;justify-content:center}}
+.s3v2 .ar-rally{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:99px;color:#F5B14C;background:rgba(245,177,76,.12);border:1px solid rgba(245,177,76,.4);vertical-align:middle}
+.s3v2 .ar-cn1{display:flex;align-items:center;gap:8px;min-width:0}.s3v2 .ar-cn1 strong{flex:0 1 auto;min-width:0}.s3v2 .ar-cn1 .ar-rally{flex:none;margin-left:0}
+.s3v2 .ar-row[data-rally="true"]{border-color:rgba(245,177,76,.55);box-shadow:0 0 0 1px rgba(245,177,76,.3)}.s3v2 .ar-rallybar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 18px;border-radius:16px;background:rgba(245,177,76,.08);border:1px solid rgba(245,177,76,.45);scroll-margin-top:96px}.s3v2 .ar-rallybar-t{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 280px}.s3v2 .ar-rallybar-t strong{font-size:15px;color:#F6F5F9;line-height:1.35}.s3v2 .ar-rallybar-t span:last-child{font-size:12.5px;color:#C9C7D6}

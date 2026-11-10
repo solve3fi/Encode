@@ -6,6 +6,7 @@ import {
 	Alert, Anchor, Avatar, Button, CopyButton, Divider, Group,
 	Modal, NumberInput, Paper, SegmentedControl, Stack, Text,
 } from "@mantine/core";
+import { INTENTS_ENABLED } from "@/configs/intents";
 import {
 	AccountLayout, ASSOCIATED_TOKEN_PROGRAM_ID,
 	createAssociatedTokenAccountInstruction, getAssociatedTokenAddressSync,
@@ -325,6 +326,12 @@ export const CreateLock: React.FC = () => {
 				</div>
 			</div>
 
+			{INTENTS_ENABLED && connected && numericAmount > solv3Balance.toNumber() && (
+				<div role="note" style={{ display: "flex", gap: "6px 12px", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", padding: "8px 12px", borderRadius: 10, background: "rgba(88,215,255,0.07)", border: "1px solid rgba(88,215,255,0.28)", fontSize: 13, color: "#C9C7D6" }}>
+					<span>You need {(numericAmount - solv3Balance.toNumber()).toLocaleString("en-US", { maximumFractionDigits: 2 })} more SOLV3. Bring SOL from any chain, then swap it.</span>
+					<Link href="/fund?to=SOL" style={{ fontWeight: 600, color: "#58D7FF", textDecoration: "none" }}>Get SOL →</Link>
+				</div>
+			)}
 			<div className={classes.field}>
 				<div className={classes.fieldTop}>
 					<span className={classes.label}>{i18n._("You receive")}</span>

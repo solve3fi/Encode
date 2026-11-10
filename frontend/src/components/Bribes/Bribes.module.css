@@ -10,9 +10,9 @@
 
 .back { display: inline-flex; align-items: center; min-height: 44px; color: #8c84ff; font-size: 15px; font-weight: 600; text-decoration: none; }
 .head { display: flex; flex-direction: column; gap: 14px; }
-.head h1 { margin: 0; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+.head h1 { margin: 0; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
 .head p { margin: 0; font-size: 16px; line-height: 1.6; color: #c9c7d6; }
-.grad { background: linear-gradient(90deg, #8c84ff, #58d7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.grad { color: inherit; }
 
 .panel {
 	display: flex;
