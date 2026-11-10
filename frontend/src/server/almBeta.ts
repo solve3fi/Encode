@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {readFile,realpath} from 'node:fs/promises';
 import {resolve,sep,extname} from 'node:path';
+import {DEV_SITE_URL} from '@/configs/site';
 import manifest from './almBetaManifest.json';
 export type AlmBetaOptions={enabled?:string;root?:string};
 const files:Record<string,{sha256:string;bytes:number}>=manifest.files;
@@ -10,7 +11,7 @@ export async function almBeta(request:Request,path:string[],options:AlmBetaOptio
  const headers={'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow, noarchive','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer',Vary:'Host'};
  const response=(message:string,status:number)=>new Response(request.method==='HEAD'?null:message,{status,headers});
  const url=new URL(request.url),host=request.headers.get('host')??url.host;
- if(options.enabled==='0'||host!=='dev.solve3.fi')return response('Not found',404);
+ if(options.enabled==='0'||host!==new URL(DEV_SITE_URL).host)return response('Not found',404);
  if(!['GET','HEAD'].includes(request.method))return response('Method not allowed',405);
  if(path.some(p=>!p||p==='.'||p==='..'||/[\\/\u0000]/.test(p)))return response('Not found',404);
  const name=path.join('/')||'index.html',expected=files[name];

@@ -63,6 +63,7 @@ const SCENARIOS = [
 type Ctx = {
 	fearGreed: { available: boolean; value?: number; classification?: string; previous?: number; error?: string };
 	sol: { available: boolean; markPrice?: number; fundingPerHour?: number; fundingAnnualizedPct?: number; openInterestUsd?: number; error?: string };
+	market?: { available: boolean; lookbackHours: number; sigmaAnnualized?: number; driftPctPerHour?: number; bars?: number; error?: string };
 };
 
 const usd = (n: number | null | undefined, d = 0) =>
@@ -90,8 +91,14 @@ export const AlmMarket = () => {
 	const hold = count("hold-favored");
 	const lead = hold > lp + marg ? "hold" : lp > hold + marg ? "lp" : "mixed";
 	const asOf = new Date(snapshot.asOf).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" });
-	const drift = snapshot.driftPctPerHour;
+	// Live 72h drift + volatility from the context API (same formula as the ALM engine); the research snapshot is the
+	// labelled fallback when the live source is unavailable.
+	const liveMarket = ctx?.market?.available ? ctx.market : null;
+	const drift = liveMarket?.driftPctPerHour ?? snapshot.driftPctPerHour;
+	const sigma = liveMarket?.sigmaAnnualized ?? snapshot.sigmaAnnualized;
 	const momentum = Math.abs(drift) < 0.01 ? "Flat" : drift > 0 ? "Rising" : "Falling";
+	const fwd = snapshot.forward;
+	const liveSince = fwd.liveSince ? new Date(`${fwd.liveSince}T00:00:00Z`).toLocaleDateString("en-US", { day: "numeric", month: "short", timeZone: "UTC" }) : null;
 
 	return (
 		<div className={home.page}>
@@ -143,7 +150,7 @@ export const AlmMarket = () => {
 					<h2>Strategy view</h2>
 					<p className={home.sectionLede}>
 						This is the call ALM would make today, and the point of the tool: it is willing to say &quot;sit this one out&quot;. What the model says for a ${snapshot.capitalUSD.toLocaleString("en-US")} position over {snapshot.horizonHours} hours, across {pools.length} SOL/USDC pools.
-						Snapshot as of {asOf} UTC.
+						Model re-run {asOf} UTC on market data captured {snapshot.inputsAsOf}.
 					</p>
 					<div className={css.strategy}>
 						<div className={`${css.pick} ${lead === "lp" ? css.pickOn : css.pickOff}`}>
@@ -291,9 +298,15 @@ export const AlmMarket = () => {
 							<strong>{momentum}</strong>
 							<p>
 								Price drift {drift >= 0 ? "+" : ""}
-								{drift.toFixed(4)}% per hour · realised volatility about {(snapshot.sigmaAnnualized * 100).toFixed(0)}% a year.
+								{drift.toFixed(4)}% per hour · realised volatility about {(sigma * 100).toFixed(0)}% a year.
 							</p>
-							<small>From the research snapshot, not live</small>
+							<small>
+								{liveMarket
+									? `Live: last ${liveMarket.lookbackHours} hours of Coinbase SOL-USD hourly candles`
+									: ctx
+										? "Live source unavailable: showing the research snapshot"
+										: "Loading…"}
+							</small>
 						</div>
 					</div>
 				</section>
@@ -343,12 +356,14 @@ export const AlmMarket = () => {
 							"A keeper with commands to baseline, inspect, plan, simulate, run on devnet, harvest, exit, clean up and stop or reconcile (done 20 Oct 2026).",
 							"Exact integer range and liquidity planning that uses the canonical Solve3 SDK math, with persistent transaction records.",
 							"The research engine behind this page: pool verdicts, a forward log, an emissions comparison and a walk-forward test of sentiment inputs.",
-							"A private repository: 199 commits since 17 Oct 2026.",
+							"A private repository: 207 commits since 17 Oct 2026.",
+							"A price reference writer for the devnet pilot: the median of three public SOL/USD spot prices, written only when at least two agree (8 Nov 2026).",
 						]}
 						running={[
 							"A private trial app where the real planner runs on paper inventory: load a scenario, preview the keeper's decision, apply it, move the market, rebalance and exit. No wallet or funds.",
 							"A private dashboard that reads real, read-only observations and keeps an indexed history of positions and value.",
-							"Research outputs dated 1 Nov 2026 behind the numbers on this page.",
+							"Research outputs behind the numbers on this page, re-run on 8 Nov 2026 after a fee-rate correction.",
+							"A daily forward log that records one live verdict per day, so the track record builds from real, unseen data (since 8 Nov 2026).",
 						]}
 						tested={[
 							"The full pilot flow was run end to end on offline and local setups only: simulated actions, finalized receipts, a restart with recovery, and an owner exit (2 Nov 2026).",
@@ -360,10 +375,10 @@ export const AlmMarket = () => {
 						]}
 						notYet={[
 							"No funded run yet. The research found no settings that clear the proposed acceptance bar, so no strategy is approved for real funds. That gate is deliberate.",
-							"A funded devnet pilot with a bounded wallet and limits is the next step; nothing has signed on mainnet.",
+							"A funded devnet pilot is the next step. Its dedicated wallet, limits and config are prepared and waiting for funding approval; nothing has signed on devnet or mainnet.",
 							"The trial uses synthetic inventory, so its screens show how decisions work, not returns.",
 						]}
-						checked="Facts checked on 5 Nov 2026 against the private repository, its task log and research files. The screenshot is from the private trial app."
+						checked="Facts checked on 8 Nov 2026 against the private repository, its task log and research files. The screenshot is from the private trial app."
 					/>
 				</div>
 
@@ -372,19 +387,27 @@ export const AlmMarket = () => {
 						<h3>How much to trust this</h3>
 						<ul>
 							<li>
-								<strong>Unproven.</strong> Live-scored verdicts so far: {snapshot.forward.liveScored} (at least {snapshot.forward.minScored} are needed before a hit
-								rate means anything).
+								<strong>Unproven.</strong> Live-scored verdicts so far: {fwd.liveScored} (at least {fwd.minScored} are needed before a hit rate means
+								anything).{" "}
+								{liveSince
+									? `Live logging started ${liveSince}: one verdict a day, each scored three days later against what actually happened.`
+									: null}
 							</li>
 							<li>
-								Replayed on past data, the model&apos;s verdicts hit {(snapshot.forward.backfillHitRate * 100).toFixed(0)}% of {snapshot.forward.backfillScored} windows, but
-								that replay is in-sample and optimistic, and it disagrees with the stricter walk-forward test (which favored holding overall:{" "}
-								{snapshot.walkForward.lpFavoredFolds} of {snapshot.walkForward.folds} folds favored LP).
+								Replayed on past data, the model&apos;s verdicts hit {(fwd.backfillHitRate * 100).toFixed(0)}% of {fwd.backfillScored} windows. That is not skill:
+								holding beat providing liquidity in {(fwd.backfillAlwaysHoldRate * 100).toFixed(0)}% of those same windows, so a rule that always says
+								&quot;hold&quot; scores as well or better. The stricter walk-forward test agrees: {snapshot.walkForward.lpFavoredFolds} of {snapshot.walkForward.folds} folds
+								favored LP.
+							</li>
+							<li>
+								<strong>Correction, {snapshot.erratum.date}.</strong> {snapshot.erratum.text}
 							</li>
 							<li>Sentiment, funding and momentum were tested and did not improve results after costs, which is why they are context only.</li>
 							<li>Past data, model assumptions and a single point in time. Real results will differ.</li>
 						</ul>
 						<p className={css.fine}>
-							Source: {snapshot.source}. Snapshot generated {asOf} UTC. Live context above refreshes on load. Not investment advice.
+							Source: {snapshot.source}. Snapshot generated {asOf} UTC from market data captured {snapshot.inputsAsOf}. Live context above refreshes on load. Not
+							investment advice.
 						</p>
 					</div>
 				</section>

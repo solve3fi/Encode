@@ -25,6 +25,19 @@ import {
 
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
 
+/** Share one in-flight or recent read between pool rows: same key, same promise, until it expires. Failures are not kept. */
+const shared = new Map<string, { until: number; value: Promise<unknown> }>();
+const once = <T,>(key: string, ttlMs: number, load: () => Promise<T>): Promise<T> => {
+	const hit = shared.get(key);
+	if (hit && hit.until > Date.now()) return hit.value as Promise<T>;
+	const value = load().catch((error) => {
+		shared.delete(key);
+		throw error;
+	});
+	shared.set(key, { until: Date.now() + ttlMs, value });
+	return value;
+};
+
 /**
  * Emission APR for a pool's gauge: the annualized USD value of the vesolve
  * SOLV3 emissions its gauge is currently streaming, divided by the pool's
@@ -46,28 +59,27 @@ export const useEmissionApr = (pool: Solve | null | undefined) => {
 			if (!poolAddress) return null;
 
 			const [protocolPda] = getProtocolPDA();
-			const protocol = await vesolveAccount
-				.protocol(program)
-				.fetchNullable(protocolPda);
+			// Protocol-wide reads are the same for every pool row, so they are shared for a few seconds.
+			const protocol = await once(`protocol:${network}`, 15_000, () =>
+				vesolveAccount.protocol(program).fetchNullable(protocolPda),
+			);
 			if (!protocol) return null;
 
 			const [gaugePda] = getGaugePDA(protocolPda, poolAddress);
-			const gauge = await vesolveAccount.gauge(program).fetchNullable(gaugePda);
-			if (!gauge?.isActive) return null;
-
 			const [gaugeRewardPda] = getGaugeRewardPDA(gaugePda);
-			const legacyReward = await vesolveAccount
-				.gaugeReward(program)
-				.fetchNullable(gaugeRewardPda);
 			const addresses = nativeGaugeAddresses(
 				program.programId,
 				DEX_PROGRAM_ID[network],
 				gaugePda,
 				poolAddress,
 			);
-			const native = await vesolveAccount
-				.nativeGauge(program)
-				.fetchNullable(addresses.nativeGauge);
+			// The three gauge accounts do not depend on each other, so read them together.
+			const [gauge, legacyReward, native] = await Promise.all([
+				vesolveAccount.gauge(program).fetchNullable(gaugePda),
+				vesolveAccount.gaugeReward(program).fetchNullable(gaugeRewardPda),
+				vesolveAccount.nativeGauge(program).fetchNullable(addresses.nativeGauge),
+			]);
+			if (!gauge?.isActive) return null;
 			const gaugeReward = native
 				? {
 						rewardRateX64: native.rateX64,
@@ -84,12 +96,16 @@ export const useEmissionApr = (pool: Solve | null | undefined) => {
 			if (!fundedEpoch?.eq(protocol.currentEpoch) || fundedEpoch.isZero())
 				return null;
 			const [emission, votes] = await Promise.all([
-				vesolveAccount
-					.epochEmission(program)
-					.fetch(getEpochEmissionPDA(BigInt(fundedEpoch.toString()))[0]),
-				vesolveAccount
-					.epoch(program)
-					.fetch(getEpochPDA(BigInt(fundedEpoch.toString()) - BigInt(1))[0]),
+				once(`emission:${network}:${fundedEpoch.toString()}`, 15_000, () =>
+					vesolveAccount
+						.epochEmission(program)
+						.fetch(getEpochEmissionPDA(BigInt(fundedEpoch.toString()))[0]),
+				),
+				once(`votes:${network}:${fundedEpoch.toString()}`, 15_000, () =>
+					vesolveAccount
+						.epoch(program)
+						.fetch(getEpochPDA(BigInt(fundedEpoch.toString()) - BigInt(1))[0]),
+				),
 			]);
 			const weight =
 				votes.gaugeWeights.find((item) => item.gauge.equals(gaugePda))
@@ -100,7 +116,11 @@ export const useEmissionApr = (pool: Solve | null | undefined) => {
 				votes.totalVotingPower,
 			);
 
-			const rewardMintInfo = await getMint(connection, gaugeReward.rewardMint);
+			const rewardMintInfo = await once(
+				`mint:${network}:${gaugeReward.rewardMint.toString()}`,
+				120_000,
+				() => getMint(connection, gaugeReward.rewardMint),
+			);
 
 			// reward_rate_x64 is tokens/sec in Q64.64 fixed point — multiply by a
 			// week of seconds for the annualized APR rate, NOT the allocation.

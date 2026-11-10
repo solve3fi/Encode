@@ -1,5 +1,6 @@
 "use client";
 
+import { DEV_SITE_URL } from "@/configs/site";
 import {
 	createContext,
 	type PropsWithChildren,
@@ -80,7 +81,7 @@ export const ClusterProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			endpoint: network === ClusterNetwork.Mainnet && process.env.NEXT_PUBLIC_SITE_VARIANT === "main"
 				? new URL("/api/solana/mainnet", typeof window === "undefined" ? "https://solve3.fi" : window.location.origin).toString()
 				: network === ClusterNetwork.Devnet && process.env.NEXT_PUBLIC_SITE_VARIANT !== "main"
-					? new URL("/api/solana/devnet", typeof window === "undefined" ? "https://dev.solve3.fi" : window.location.origin).toString()
+					? new URL("/api/solana/devnet", typeof window === "undefined" ? DEV_SITE_URL : window.location.origin).toString()
 					: CLUSTER_RPCS[network],
 			network: toWalletAdaperNetwork(network),
 		}),

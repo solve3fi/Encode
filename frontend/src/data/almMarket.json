@@ -1,6 +1,7 @@
 {
- "asOf": "2026-11-01T20:05:55.676Z",
- "source": "Solve3 ALM research engine (snapshot of the T-150 verdicts, T-151 forward log and T-154 emissions comparison)",
+ "asOf": "2026-11-08T19:52:50.226Z",
+ "inputsAsOf": "2026-11-01",
+ "source": "Solve3 ALM research engine (T-150 verdicts, T-151 forward log and T-154 emissions comparison; re-run 2026-11-08 with corrected fee rates on the 2026-11-01 inputs)",
  "capitalUSD": 10000,
  "horizonHours": 96,
  "sigmaAnnualized": 0.646,
@@ -24,17 +25,24 @@
  ],
  "walkForward": {
   "folds": 4,
-  "lpFavoredFolds": 2,
-  "holdFavoredFolds": 1,
-  "marginalFolds": 1,
+  "lpFavoredFolds": 0,
+  "holdFavoredFolds": 4,
+  "marginalFolds": 0,
   "overall": "hold-on-net"
  },
  "forward": {
+  "liveLogged": 1,
+  "liveSince": "2026-11-08",
   "liveScored": 0,
   "backfillScored": 74,
-  "backfillHitRate": 0.5676,
+  "backfillHitRate": 0.9865,
+  "backfillAlwaysHoldRate": 1,
   "minScored": 30,
   "meaningful": false
+ },
+ "erratum": {
+  "date": "2026-11-08",
+  "text": "An earlier version of this page used fee rates 5 to 10 times too high for the large SOL/USDC pools. With the corrected rates every result moved further toward holding."
  },
  "sample": {
   "asOf": "2026-11-01",
