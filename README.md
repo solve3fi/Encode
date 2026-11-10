@@ -2,7 +2,12 @@
 
 Solve3 is a community-directed DEX on Solana. Traders swap, liquidity providers earn fees and emissions, and SOLV3 lockers vote in the Epoch Arena to direct those emissions. Quests guide newcomers, and Clans rally members behind pools.
 
-[Try the devnet app](https://dev.solve3.fi) · [Watch the Encode demo](https://youtu.be/vvV6mAKozQU)
+## Live deployments
+
+- **Mainnet** is live at [Solve3.fi](https://solve3.fi).
+- **Devnet** is live at [dev.solve3.fi](https://dev.solve3.fi). This repository mirrors the devnet app, which runs on Solana devnet with test tokens.
+
+[Watch the Encode demo](https://youtu.be/vvV6mAKozQU)
 
 ## Run the devnet frontend
 
